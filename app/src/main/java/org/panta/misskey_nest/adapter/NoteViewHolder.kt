@@ -197,6 +197,9 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         setRelationUserListener(note.user!!, userName, userId, userIcon)
         setImage(filterImageData(note))
         injectionMediaPlayButton(note.files?.firstOrNull(), mediaPlayButton)
+        if(note.renote != null){
+            setSubContent(note.renote)
+        }
 
     }
 
