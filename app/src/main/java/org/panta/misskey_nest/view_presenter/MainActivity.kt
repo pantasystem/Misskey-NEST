@@ -18,6 +18,7 @@ import android.support.v7.widget.SwitchCompat
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import android.widget.Switch
 import android.widget.Toast
 import android.widget.ToggleButton
@@ -117,7 +118,6 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
 
         mPresenter?.initDisplay()
 
-        mPresenter?.getPersonalMiniProfile()
 
         title = "ホーム"
 
@@ -252,6 +252,14 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
                 }
             }
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        mPresenter?.getPersonalMiniProfile()
+
     }
 
     override fun onBackPressed() {
