@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".view_presenter.user.UserActivity">
+
+    <!--ここにViewPager-->
+    <android.support.v4.view.ViewPager
+            android:id="@+id/profile_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="-20dp"
+
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+
+
+    <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
+            android:fitsSystemWindows="true"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
+                android:fitsSystemWindows="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:toolbarId="@+id/toolbar"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                >
+
+
+            <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_width="match_parent"
+                    app:layout_collapseMode="pin"
+
+                    android:background="?attr/colorPrimary"
+                    app:popupTheme="@style/AppTheme.PopupOverlay">
+                <TextView
+                        android:id="@+id/mainToolbarText"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:alpha="0"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="30sp"
+                        android:background="@android:color/holo_red_light"/>
+
+            </android.support.v7.widget.Toolbar>
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+
+                <ImageView
+                        android:id="@+id/header_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="centerCrop"/>
+                <ImageView
+                        android:id="@+id/profile_icon"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp" app:srcCompat="@drawable/human_icon"
+                        android:layout_marginStart="15dp"   android:layout_marginTop="-20dp"
+                        android:layout_below="@+id/header_image"
+                        />
+                <Button
+                        android:id="@+id/follow_and_status_button"
+                        android:text="Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/header_image"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginTop="15dp"
+                />
+                <com.vanniktech.emoji.EmojiTextView
+                        android:id="@+id/profile_user_name"
+                        android:text="UserName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp" android:layout_marginTop="10dp"
+                        android:layout_below="@+id/profile_icon" android:textSize="18sp"/>
+                <com.vanniktech.emoji.EmojiTextView
+                        android:id="@+id/profile_user_id"
+                        android:text="UserId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_user_name"
+                        android:layout_marginStart="15dp" android:layout_marginTop="5dp"/>
+                <com.vanniktech.emoji.EmojiTextView
+                        android:id="@+id/profile_description"
+                        android:text="@string/testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_user_id"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="15dp"   android:layout_marginEnd="15dp"/>
+
+                <TextView
+                        android:id="@+id/profile_age"
+                        android:text="UserId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_description"
+                        android:layout_marginStart="15dp" android:layout_marginTop="5dp" android:visibility="gone"/>
+
+                <TextView
+                        android:id="@+id/posts_count"
+                        android:text="200投稿"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_age"
+                        android:layout_marginStart="15dp" android:layout_marginTop="5dp"
+                        />
+
+                <TextView
+                        android:id="@+id/profile_follow_count"
+                        android:text="100フォロー"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_age"
+                        android:layout_marginStart="15dp" android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@id/posts_count"/>
+                <TextView
+                        android:id="@+id/profile_follower_count"
+                        android:text="100フォロワー"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_age"
+                        android:layout_marginStart="15dp" android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@id/profile_follow_count"/>
+                <android.support.design.widget.TabLayout
+                        android:id="@+id/profile_tab"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/posts_count">
+
+                    <android.support.design.widget.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Monday"/>
+
+                    <android.support.design.widget.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tuesday"/>
+
+                    <android.support.design.widget.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wednesday"/>
+                </android.support.design.widget.TabLayout>
+            </RelativeLayout>
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+
+
+
+</android.support.design.widget.CoordinatorLayout>

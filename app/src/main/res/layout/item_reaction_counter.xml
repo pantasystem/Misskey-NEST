@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+
+        android:background="@drawable/shape_normal_reaction_background"
+        android:layout_marginEnd="7dp"
+        android:id="@+id/reaction_frame_item">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:padding="4dp"
+            android:layout_height="wrap_content" android:id="@+id/reaction_counter_view">
+        <ImageButton
+                android:layout_width="21dp"
+                android:layout_height="21dp" app:srcCompat="@drawable/reaction_icon_hmm"
+                android:id="@+id/reaction_image_button" android:scaleType="centerCrop"
+                android:padding="1dp"
+                style="?android:attr/borderlessButtonStyle"/>
+        <com.vanniktech.emoji.EmojiTextView
+                android:text="@string/text_r"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content" android:textSize="15sp" android:id="@+id/reaction_type_string_view"
+                android:textColor="@color/dark_primary_text_color"
+                android:textStyle="normal"/>
+        <TextView
+                android:text="@string/number_0"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_height="wrap_content" android:textSize="15sp" android:id="@+id/reaction_count"
+                android:textColor="@color/dark_primary_text_color"/>
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view_presenter.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+    >
+
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:background="?attr/colorPrimary"
+                >
+            <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                         >
+                <android.support.design.widget.TabLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/timeline_tab_layout"
+                >
+
+                    <android.support.design.widget.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Monday"/>
+
+                    <android.support.design.widget.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tuesday"/>
+
+                    <android.support.design.widget.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wednesday"/>
+                </android.support.design.widget.TabLayout>
+            </FrameLayout>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_main"/>
+
+    <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+
+            android:layout_marginBottom="60dp"
+            android:layout_marginEnd="15dp"
+            app:srcCompat="@drawable/send_icon" app:backgroundTint="?attr/colorPrimary"
+            android:tint="@android:color/background_light"/>
+
+</android.support.design.widget.CoordinatorLayout>

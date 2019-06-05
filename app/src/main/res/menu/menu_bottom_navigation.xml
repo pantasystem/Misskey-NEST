@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+    <item
+            android:id="@+id/home_timeline"
+            android:icon="@drawable/home_icon"
+
+            android:title="ホーム"/>
+    <item
+            android:id="@+id/mix_timeline"
+            android:icon="@drawable/rice_icon"
+            android:title="炊き込みご飯"/>
+    <item
+            android:id="@+id/notification_item"
+            android:icon="@drawable/bell_icon"
+            android:title="通知"/>
+
+    <item
+            android:id="@+id/message_item"
+            android:icon="@drawable/mail_icon"
+            android:title="メッセージ"/>
+
+
+</menu>

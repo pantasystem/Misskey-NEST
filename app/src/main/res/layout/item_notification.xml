@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <ImageView
+            android:id="@+id/notification_user_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp" app:srcCompat="@drawable/human_icon"
+            android:layout_marginTop="8dp" android:layout_marginStart="8dp"
+            android:layout_marginBottom="10dp"
+    />
+    <ImageView
+            android:id="@+id/notification_status_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp" app:srcCompat="@drawable/re_note_icon"
+            android:layout_marginStart="8dp" android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/notification_user_icon"
+            android:scaleType="fitXY"/>
+    <com.vanniktech.emoji.EmojiTextView
+            android:id="@+id/notification_user_name"
+            android:text="TextView"
+            android:textColor="?android:textColorPrimary"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="5dp"
+            android:textSize="16sp"
+            android:layout_toEndOf="@+id/notification_status_icon"
+    />
+    <com.vanniktech.emoji.EmojiTextView
+            android:id="@+id/notification_content"
+            android:text="TextView"
+            android:textColor="?android:textColorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/notification_user_icon"
+            android:layout_below="@+id/notification_status_icon" android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp"/>
+    <View
+            android:id="@+id/horizon-line"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/notification_content"
+            android:background="@android:color/darker_gray"/>
+</RelativeLayout>
