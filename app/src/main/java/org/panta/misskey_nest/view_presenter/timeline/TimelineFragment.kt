@@ -46,20 +46,17 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         private const val USER_ID = "TIMELINE_FRAGMENT_USER_TIMELINE"
         private const val IS_MEDIA_ONLY = "IS_MEDIA_ONLY"
 
-        fun getInstance(info: ConnectionProperty, type: TimelineTypeEnum, userId: String? = null, isMediaOnly: Boolean = false): TimelineFragment{
+        fun getInstance(info: ConnectionProperty/*, type: TimelineTypeEnum, userId: String? = null, isMediaOnly: Boolean = false*/): TimelineFragment{
             return TimelineFragment().apply{
                 val args = Bundle()
                 args.putSerializable(CONNECTION_INFOMATION, info)
-                args.putString(TIMELINE_TYPE, type.name)
-                args.putString(USER_ID, userId)
-                args.putBoolean(IS_MEDIA_ONLY, isMediaOnly)
                 this.arguments = args
             }
         }
 
     }
 
-    override lateinit var mPresenter: TimelineContract.Presenter
+    override var mPresenter: TimelineContract.Presenter? = null
 
     private val reactionRequestCode = 23457
 
@@ -71,16 +68,20 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     private var mLayoutManager: LinearLayoutManager? = null
     private var mAdapter: TimelineAdapter? = null
 
-    private var isMediaOnly: Boolean? = null
-    private var userId: String? = null
+    //private var isMediaOnly: Boolean? = null
+    //private var userId: String? = null
 
     var mNoteRepository: IItemRepository<NoteViewData>? = null
         set(value) {
             field = value
-            if(value != null){
+            if(value != null && connectionInfo != null){
                 mPresenter = TimelinePresenter(this, this, value, connectionInfo!!)
+                mPresenter?.initTimeline()
+            }else{
+                Log.d(tag, if(value == null) "NULLだなんでだ！！！" else "重要な情報が来ない")
             }
         }
+
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -90,22 +91,18 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
         connectionInfo = args?.getSerializable(CONNECTION_INFOMATION) as ConnectionProperty
         val timelineType = args.getString(TIMELINE_TYPE)
-        isMediaOnly = args.getBoolean(IS_MEDIA_ONLY)
-        userId = args.getString(USER_ID)
+        //isMediaOnly = args.getBoolean(IS_MEDIA_ONLY)
+        //userId = args.getString(USER_ID)
 
         if(timelineType != null){
             mTimelineType = TimelineTypeEnum.toEnum(timelineType)
         }
 
-        val mTimeline: IItemRepository<NoteViewData> = when (mTimelineType) {
-            TimelineTypeEnum.GLOBAL -> GlobalTimeline(domain = connectionInfo!!.domain , authKey = connectionInfo!!.i)
-            TimelineTypeEnum.HOME -> HomeTimeline(domain = connectionInfo!!.domain  , authKey = connectionInfo!!.i)
-            TimelineTypeEnum.SOCIAL -> SocialTimeline(domain = connectionInfo!!.domain  , authKey = connectionInfo!!.i)
-            TimelineTypeEnum.LOCAL -> LocalTimeline(domain = connectionInfo!!.domain, authKey = connectionInfo!!.i)
-            TimelineTypeEnum.USER -> UserTimeline(domain = connectionInfo!!.domain , userId = userId!!, isMediaOnly = isMediaOnly)
-            else -> TODO("DESCRIPTIONを実装する")
+        if(mNoteRepository != null){
+            mPresenter = TimelinePresenter(this, this, mNoteRepository!!, connectionInfo!!)
+        }else{
+            Log.d(tag, "プレゼンターを作成することができなかった")
         }
-        mPresenter = TimelinePresenter(this, this, mTimeline, connectionInfo!!)
 
 
         return inflater.inflate(R.layout.fragment_timeline, container, false)
@@ -114,7 +111,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         timelineView.addOnScrollListener(listener)
-        mPresenter.initTimeline()
+        mPresenter?.initTimeline()
         mLayoutManager = LinearLayoutManager(context)
 
         refresh?.setOnRefreshListener(this)
@@ -123,7 +120,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
 
     override fun onRefresh() {
-        mPresenter.getNewTimeline()
+        mPresenter?.getNewTimeline()
     }
 
     override fun stopRefreshing() {
@@ -155,7 +152,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
 
     override fun showNewTimeline(list: List<NoteViewData>) {
-        mPresenter.onRefresh()
+        mPresenter?.onRefresh()
         activity?.runOnUiThread {
             stopRefreshing()
             mAdapter?.addAllFirst(list)
@@ -196,7 +193,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     }
 
     override fun onReactionClicked(targetId: String?, note: Note?, viewData: NoteViewData,reactionType: String?) {
-        mPresenter.setReactionSelectedState(targetId, note, viewData, reactionType)
+        mPresenter?.setReactionSelectedState(targetId, note, viewData, reactionType)
     }
 
     override fun showReactionSelectorView(targetId: String, viewData: NoteViewData) {
@@ -204,7 +201,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             override fun callBack(noteId: String?, reactionParameter: String) {
                 if(noteId != null){
                     Log.d("TimelineFragment", "成功した")
-                    mPresenter.sendReaction(noteId = noteId, reactionType = reactionParameter, viewData = viewData)
+                    mPresenter?.sendReaction(noteId = noteId, reactionType = reactionParameter, viewData = viewData)
                 }
             }
         })
@@ -294,7 +291,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             if( ! recyclerView.canScrollVertically(1)){
                 //最後に来た場合
                 refresh.isEnabled = false   //stopRefreshing関数を設けているがあえてこの形にしている
-                mPresenter.getOldTimeline()
+                mPresenter?.getOldTimeline()
             }
         }
     }

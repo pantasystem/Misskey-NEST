@@ -66,7 +66,7 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
     //一番目に表示されるフラグメント
     private var showFirstFragment = 0
 
-    override lateinit var mPresenter: MainContract.Presenter
+    override var mPresenter: MainContract.Presenter? = null
     //private var i: String? = null
     //private var domain: String? = null
     private lateinit var sharedOperator: ISharedPreferenceOperator
@@ -109,34 +109,34 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
 
 
         fab.setOnClickListener {
-            mPresenter.takeEditNote()
+            mPresenter?.takeEditNote()
         }
-        mPresenter.start()
+        mPresenter?.start()
 
-        mPresenter.getPersonalMiniProfile()
+        mPresenter?.getPersonalMiniProfile()
 
-        mPresenter.initDisplay()
+        mPresenter?.initDisplay()
 
-        mPresenter.getPersonalMiniProfile()
+        mPresenter?.getPersonalMiniProfile()
 
         title = "ホーム"
 
         val header = nav_view.getHeaderView(0)
         header.following_text.setOnClickListener {
-            mPresenter.getFollowFollower(FollowFollowerType.FOLLOWING)
+            mPresenter?.getFollowFollower(FollowFollowerType.FOLLOWING)
         }
 
         header.follower_text.setOnClickListener{
-            mPresenter.getFollowFollower(FollowFollowerType.FOLLOWER)
+            mPresenter?.getFollowFollower(FollowFollowerType.FOLLOWER)
         }
 
 
         val customView = nav_view.menu.findItem(R.id.nav_notification).actionView
         mNotificationEnabledSwitch = customView.findViewById(R.id.switch_button)
         mNotificationEnabledSwitch.setOnCheckedChangeListener { _, b ->
-            mPresenter.isEnabledNotification(b)
+            mPresenter?.isEnabledNotification(b)
         }
-        mPresenter.isEnabledNotification()
+        mPresenter?.isEnabledNotification()
 
         mUiModeManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
 
@@ -144,7 +144,7 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
 
         simple_send_button.setOnClickListener{
             val text = simple_edit_box.text.toString()
-            mPresenter.sendNote(text)
+            mPresenter?.sendNote(text)
         }
 
     }
@@ -286,9 +286,9 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_profile -> mPresenter.getPersonalProfilePage()
+            R.id.nav_profile -> mPresenter?.getPersonalProfilePage()
             R.id.nav_notification -> startActivity(Intent(this, NotificationActivity::class.java))
-            R.id.nav_open_web_misskey -> mPresenter.openMisskeyOnBrowser()
+            R.id.nav_open_web_misskey -> mPresenter?.openMisskeyOnBrowser()
             R.id.nav_ui_mode -> {
                 //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 

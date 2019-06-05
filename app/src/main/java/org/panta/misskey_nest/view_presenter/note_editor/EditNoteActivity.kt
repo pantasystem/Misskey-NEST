@@ -57,7 +57,7 @@ class EditNoteActivity : AppCompatActivity(), EditNoteContract.View {
 
     //private lateinit var builder:CreateNoteProperty.Builder
     //private lateinit var noteRepository: NoteRepository
-    override lateinit var mPresenter: EditNoteContract.Presenter
+    override var mPresenter: EditNoteContract.Presenter? = null
 
     private lateinit var connectionInfo: ConnectionProperty
 
@@ -94,14 +94,14 @@ class EditNoteActivity : AppCompatActivity(), EditNoteContract.View {
 
         mPresenter = EditNotePresenter(this, connectionInfo)
 
-        mPresenter.setNoteType(editType, targetId)
+        mPresenter?.setNoteType(editType, targetId)
 
         val visibilitySelection = arrayOf<CharSequence>("public", "home", "followers", "specified")
         visibility_button.setOnClickListener{
             AlertDialog.Builder(this)
                 .setTitle("公開範囲")
                 .setSingleChoiceItems(visibilitySelection, 0){ _, which ->
-                    mPresenter.setVisibility(visibilitySelection[which].toString())
+                    mPresenter?.setVisibility(visibilitySelection[which].toString())
                 }
                 .setPositiveButton(android.R.string.ok){ _, _->
 
@@ -127,8 +127,8 @@ class EditNoteActivity : AppCompatActivity(), EditNoteContract.View {
         post_button.setOnClickListener{
             val text = editText.text.toString()
 
-            mPresenter.setText(text)
-            mPresenter.postNote()
+            mPresenter?.setText(text)
+            mPresenter?.postNote()
         }
     }
 
@@ -182,8 +182,8 @@ class EditNoteActivity : AppCompatActivity(), EditNoteContract.View {
             R.id.post_button ->{
                 val text = editText.text.toString()
 
-                mPresenter.setText(text)
-                mPresenter.postNote()
+                mPresenter?.setText(text)
+                mPresenter?.postNote()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -212,7 +212,7 @@ class EditNoteActivity : AppCompatActivity(), EditNoteContract.View {
                         getDocumentFile(data)
                     }
                     if(file != null){
-                        mPresenter.setFile(file)
+                        mPresenter?.setFile(file)
                     }
                 }
 
@@ -295,7 +295,7 @@ class EditNoteActivity : AppCompatActivity(), EditNoteContract.View {
             .setPositiveButton(android.R.string.ok){ _, _ ->
                 runOnUiThread{
                     imagePreviewAdapter.removeFile(index)
-                    mPresenter.removeFile(index)
+                    mPresenter?.removeFile(index)
                 }
             }
             .setNegativeButton(android.R.string.cancel){ _, _ ->

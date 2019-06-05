@@ -23,7 +23,7 @@ import org.panta.misskey_nest.view_presenter.MainActivity
 
 class AuthActivity : AppCompatActivity(), AuthContract.View {
 
-    override lateinit var mPresenter: AuthContract.Presenter
+    override var mPresenter: AuthContract.Presenter? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +43,7 @@ class AuthActivity : AppCompatActivity(), AuthContract.View {
 
             Log.d("AuthActivity", "呼び出された")
 
-            mPresenter.getUserToken()
+            mPresenter?.getUserToken()
         }else{
             val instanceList = getInstanceInfoList()
             val defaultInfo = instanceList[0]
@@ -63,7 +63,7 @@ class AuthActivity : AppCompatActivity(), AuthContract.View {
         }
 
         auth_button.setOnClickListener{
-            mPresenter.getSession()
+            mPresenter?.getSession()
         }
 
     }

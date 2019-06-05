@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.util.Log
 import org.panta.misskey_nest.constant.TimelineTypeEnum
 import org.panta.misskey_nest.entity.ConnectionProperty
+import org.panta.misskey_nest.util.PopularTimelineRepositoryFactory
 import org.panta.misskey_nest.view_presenter.timeline.TimelineFragment
 
 class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo: ConnectionProperty) : FragmentPagerAdapter(fragmentManager){
@@ -22,9 +23,10 @@ class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo:
     }
 
     override fun getItem(p0: Int): Fragment? {
-        return when(p0){
+        /*return when(p0){
             0 ->{
-                TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.HOME)
+                TimelineFragment.getInstance(connectionInfo)
+
             }
             1 ->{
                 Log.d("PagerAdapter", "Localを表示中")
@@ -42,7 +44,19 @@ class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo:
             else -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.LOCAL)
 
 
-        }
+        }*/
+        val factory = PopularTimelineRepositoryFactory(connectionInfo)
+        val repository = when(p0){
+            0 -> factory.create(TimelineTypeEnum.HOME)
+            1 -> factory.create(TimelineTypeEnum.LOCAL)
+            2 -> factory.create(TimelineTypeEnum.SOCIAL)
+            3 -> factory.create(TimelineTypeEnum.GLOBAL)
+            else -> throw IllegalAccessException("おかしな呼び出し")
+
+        }!!
+        val fragment = TimelineFragment.getInstance(connectionInfo)
+        fragment.mNoteRepository= repository
+        return fragment
     }
 
 

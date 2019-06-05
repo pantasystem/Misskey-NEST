@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.util.Log
 import org.panta.misskey_nest.constant.TimelineTypeEnum
 import org.panta.misskey_nest.entity.ConnectionProperty
+import org.panta.misskey_nest.repository.LocalTimeline
+import org.panta.misskey_nest.repository.UserTimeline
 import org.panta.misskey_nest.view_presenter.timeline.TimelineFragment
 
 class UserPagerAdapter(fragmentManager: FragmentManager, private val userId: String, private val connectionInfo: ConnectionProperty) : FragmentPagerAdapter(fragmentManager){
@@ -21,24 +23,17 @@ class UserPagerAdapter(fragmentManager: FragmentManager, private val userId: Str
     }
 
     override fun getItem(p0: Int): Fragment? {
-        val tmp = p0 % 3
-        return when(tmp){
-            0 ->{
-                Log.d("PagerAdapter", "Localを表示中")
-                TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.LOCAL)
-            }
-            1 ->{
-                Log.d("PagerAdapter", "SOCIALを表示中")
-                TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.USER, userId)
-            }
-            2 ->{
-                TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.USER, userId, true)
-            }
 
-            else -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.LOCAL)
-
-
+        val repository = when(p0){
+            0 -> LocalTimeline(domain = connectionInfo.domain, authKey = connectionInfo.i)
+            1 -> UserTimeline(domain = connectionInfo.domain, userId = userId)
+            2 -> UserTimeline(domain = connectionInfo.domain, userId = userId, isMediaOnly = true)
+            else -> throw IllegalAccessException("想定していないタイムラインを要求している")
         }
+        val fragment = TimelineFragment.getInstance(connectionInfo)
+        fragment.mNoteRepository = repository
+        return fragment
+
     }
 
 }

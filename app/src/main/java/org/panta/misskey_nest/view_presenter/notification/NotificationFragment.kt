@@ -19,7 +19,7 @@ import org.panta.misskey_nest.view_data.NotificationViewData
 
 class NotificationFragment : Fragment(), NotificationContract.View{
 
-    override lateinit var mPresenter: NotificationContract.Presenter
+    override var mPresenter: NotificationContract.Presenter? = null
 
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var notificationAdapter: IOperationAdapter<NotificationViewData>
@@ -50,9 +50,9 @@ class NotificationFragment : Fragment(), NotificationContract.View{
         super.onViewCreated(view, savedInstanceState)
 
         mLayoutManager = LinearLayoutManager(context)
-        mPresenter.initNotification()
+        mPresenter?.initNotification()
         refresh.setOnRefreshListener{
-            mPresenter.getNewNotification()
+            mPresenter?.getNewNotification()
         }
 
     }
@@ -74,7 +74,7 @@ class NotificationFragment : Fragment(), NotificationContract.View{
         activity?.runOnUiThread{
             notificationAdapter.addAllFirst(list)
             stopRefreshing()
-            mPresenter.markAllAsRead()
+            mPresenter?.markAllAsRead()
         }
     }
 
@@ -86,7 +86,7 @@ class NotificationFragment : Fragment(), NotificationContract.View{
             notification_view?.adapter = adapter
             notificationAdapter = adapter
             notification_view?.addOnScrollListener(listener)
-            mPresenter.markAllAsRead()
+            mPresenter?.markAllAsRead()
             stopRefreshing()
         }
     }
@@ -108,7 +108,7 @@ class NotificationFragment : Fragment(), NotificationContract.View{
             if( ! recyclerView.canScrollVertically(1)){
                 //最後に来た場合
                 refresh.isEnabled = false   //stopRefreshing関数を設けているがあえてこの形にしている
-                mPresenter.getOldNotification()
+                mPresenter?.getOldNotification()
             }
         }
     }

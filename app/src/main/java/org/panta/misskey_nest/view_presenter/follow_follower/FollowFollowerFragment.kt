@@ -38,7 +38,7 @@ class FollowFollowerFragment : Fragment(), FollowFollowerContract.View,
         }
     }
 
-    override lateinit var mPresenter: FollowFollowerContract.Presenter
+    override var mPresenter: FollowFollowerContract.Presenter? = null
 
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var mAdapter: FollowsAdapter
@@ -65,10 +65,10 @@ class FollowFollowerFragment : Fragment(), FollowFollowerContract.View,
 
         mLayoutManager = LinearLayoutManager(context)
         follow_follower_recycler_view.addOnScrollListener(listener)
-        mPresenter.getItems()
+        mPresenter?.getItems()
 
         follow_follower_refresh.setOnRefreshListener {
-            mPresenter.getNewItems()
+            mPresenter?.getNewItems()
         }
 
     }
@@ -117,7 +117,7 @@ class FollowFollowerFragment : Fragment(), FollowFollowerContract.View,
     }
 
     override fun onFollowButtonClicked(item: FollowViewData) {
-        mPresenter.onFollowUnFollowButtonClicked(item)
+        mPresenter?.onFollowUnFollowButtonClicked(item)
     }
 
     override fun onUserClicked(user: User) {
@@ -136,7 +136,7 @@ class FollowFollowerFragment : Fragment(), FollowFollowerContract.View,
             if( ! recyclerView.canScrollVertically(1)){
                 //最後に来た場合
                 refresh?.isEnabled = false   //stopRefreshing関数を設けているがあえてこの形にしている
-                mPresenter.getOldItems()
+                mPresenter?.getOldItems()
             }
         }
     }
