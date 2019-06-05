@@ -288,6 +288,7 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
         when (item.itemId) {
             R.id.nav_profile -> mPresenter?.getPersonalProfilePage()
             R.id.nav_notification -> startActivity(Intent(this, NotificationActivity::class.java))
+            R.id.nav_search -> startActivity(Intent(this, SearchActivity::class.java))
             R.id.nav_open_web_misskey -> mPresenter?.openMisskeyOnBrowser()
             R.id.nav_ui_mode -> {
                 //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)

@@ -184,4 +184,5 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="search_keywords">キーワードを検索</string>
+    <string name="search">検索</string>
 </resources>

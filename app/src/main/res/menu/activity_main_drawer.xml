@@ -12,6 +12,10 @@
                 android:id="@+id/nav_notification"
                 android:title="@string/jp_notification"
                 app:actionLayout="@layout/switch_item" android:icon="@drawable/bell_icon"/>
+        <item
+            android:id="@+id/nav_search"
+            android:title="@string/search"
+            android:icon="@drawable/places_ic_search"/>
 
         <item
                 android:id="@+id/nav_open_web_misskey"

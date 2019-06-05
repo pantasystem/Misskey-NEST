@@ -16,5 +16,6 @@ import java.io.Serializable
     @JsonProperty("sinceId") var sinceId: String? = null,
     @JsonProperty("untilId") var untilId: String? = null,
     @JsonProperty("sinceDate") var sinceDate: Long? = null,
-    @JsonProperty("untilDate") var untilDate: Long? = null
+    @JsonProperty("untilDate") var untilDate: Long? = null,
+    @JsonProperty("query") var query: String? = null
 ): Serializable
