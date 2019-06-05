@@ -74,6 +74,14 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     private var isMediaOnly: Boolean? = null
     private var userId: String? = null
 
+    var mNoteRepository: IItemRepository<NoteViewData>? = null
+        set(value) {
+            field = value
+            if(value != null){
+                mPresenter = TimelinePresenter(this, this, value, connectionInfo!!)
+            }
+        }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
