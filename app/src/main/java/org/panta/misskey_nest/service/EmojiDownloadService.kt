@@ -54,7 +54,7 @@ class EmojiDownloadService : Service() {
                         if(it.type.endsWith("svg+xml")){
                             //saveSvg(it.url!!, "${it.name}.svg")
                         }else{
-                            saveImage(it.url!!, "${it.name}.jpg")
+                            saveImage(it.url!!, "${it.name}.png")
                         }
                     }
                 }
@@ -74,7 +74,13 @@ class EmojiDownloadService : Service() {
                 val bitmap = BitmapFactory.decodeStream(inputStream)
 
                 val fos = applicationContext.openFileOutput(fileName, Context.MODE_PRIVATE)
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+                /*var len = inputStream.read()
+                while(len != -1){
+                    fos.write(len)
+                    len = inputStream.read()
+                }
+                fos.flush()*/
                 Log.d(this.toString(), "保存成功 $fileName")
 
             }catch(e: Exception){

@@ -111,7 +111,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         }
 
         customEmojiList = context?.fileList()?.toList()?.map{
-            File(it)
+            File(context!!.filesDir,it)
         }
         return inflater.inflate(R.layout.fragment_timeline, container, false)
     }

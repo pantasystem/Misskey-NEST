@@ -47,6 +47,7 @@ import org.panta.misskey_nest.view_presenter.follow_follower.FollowFollowerActiv
 import org.panta.misskey_nest.view_presenter.mixed_timeline.PagerAdapter
 import org.panta.misskey_nest.view_presenter.note_editor.EditNoteActivity
 import org.panta.misskey_nest.view_presenter.notification.NotificationFragment
+import org.panta.misskey_nest.view_presenter.test_ui.TestActivity
 import org.panta.misskey_nest.view_presenter.timeline.TimelineFragment
 import org.panta.misskey_nest.view_presenter.user.UserActivity
 import org.panta.misskey_nest.view_presenter.user_auth.AuthActivity
@@ -297,6 +298,7 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
             R.id.nav_notification -> startActivity(Intent(this, NotificationActivity::class.java))
             R.id.nav_search -> startActivity(Intent(this, SearchActivity::class.java))
             R.id.nav_open_web_misskey -> mPresenter?.openMisskeyOnBrowser()
+            R.id.nav_open_test -> startActivity(Intent(this, TestActivity::class.java))
             R.id.nav_ui_mode -> {
                 //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
