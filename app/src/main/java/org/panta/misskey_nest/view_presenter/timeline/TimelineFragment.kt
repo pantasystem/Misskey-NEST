@@ -37,7 +37,7 @@ import org.panta.misskey_nest.view_presenter.user.UserActivity
 import java.net.URL
 
 class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, TimelineContract.View,
-    NoteClickListener, UserClickListener, IBindScrollPosition{
+    /*NoteClickListener,*/ /*UserClickListener,*/ IBindScrollPosition{
 
 
     companion object{
@@ -137,8 +137,8 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             timelineView?.visibility = View.VISIBLE
             Log.d("TimelineFragment", "データの取得が完了した")
             mAdapter = TimelineAdapter(context!!, list)
-            mAdapter?.addNoteClickListener(this)
-            mAdapter?.addUserClickListener(this)
+            mAdapter?.addNoteClickListener(noteClickListener)
+            mAdapter?.addUserClickListener(userClickListener)
 
 
             timelineView?.layoutManager = mLayoutManager
@@ -177,24 +177,13 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
     }
 
-    override fun onNoteClicked(targetId: String?, note: Note?) {
-        Log.d("TimelineFragment", "Noteをクリックした")
-        val intent = Intent(context, NoteDescriptionActivity::class.java)
-        intent.putExtra(NoteDescriptionActivity.NOTE_DESCRIPTION_NOTE_PROPERTY, note)
-        startActivity(intent)
-    }
+
 
     override fun onError(errorMsg: String) {
         Log.w("TimelineFragment", "エラー発生 message$errorMsg")
     }
 
-    override fun onReplyButtonClicked(targetId: String?, note: Note?) {
-        EditNoteActivity.startActivity(context!!, targetId, NoteType.REPLY)
-    }
 
-    override fun onReactionClicked(targetId: String?, note: Note?, viewData: NoteViewData,reactionType: String?) {
-        mPresenter?.setReactionSelectedState(targetId, note, viewData, reactionType)
-    }
 
     override fun showReactionSelectorView(targetId: String, viewData: NoteViewData) {
         val reactionDialog = ReactionDialog.getInstance(targetId, object : ReactionDialog.CallBackListener{
@@ -211,51 +200,6 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             reactionDialog.show(activity?.supportFragmentManager, "reaction_tag")
         }
 
-    }
-
-
-    override fun onReNoteButtonClicked(targetId: String?, note: Note?) {
-        EditNoteActivity.startActivity(context!!, targetId, NoteType.RE_NOTE)
-    }
-
-    override fun onDescriptionButtonClicked(targetId: String?, note: Note?) {
-        val item = arrayOf<CharSequence>("内容をコピー", "リンクをコピー", "お気に入り", "ウォッチ", "デバッグ（開発者向け）")
-
-        AlertDialog.Builder(activity).apply{
-            setTitle("詳細")
-            setItems(item){ dialog, which->
-                when(which){
-                    0 -> copyToClipboad(context, note?.text.toString())
-                    1 -> copyToClipboad(context, note?.url.toString())
-                    2,3 -> Toast.makeText(context, "未実装ですごめんなさい", Toast.LENGTH_SHORT)
-                    4 ->{
-                        AlertDialog.Builder(activity).apply{
-                            if(note is Note){
-                                val noteString = note.toString().replace(",","\n")
-                                setMessage(noteString)
-                            }
-                            setPositiveButton(android.R.string.ok){i ,b->
-                            }
-                        }.show()
-                    }
-                }
-
-            }
-        }.show()
-
-
-    }
-
-    override fun onImageClicked(clickedIndex: Int, clickedImageUrlCollection: Array<String>) {
-        ImageViewerActivity.startActivity(context, clickedImageUrlCollection, clickedIndex)
-    }
-
-    override fun onMediaPlayClicked(fileProperty: FileProperty) {
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(fileProperty.url)))
-    }
-
-    override fun onClickedUser(user: User) {
-        UserActivity.startActivity(context!!, user)
     }
 
     override fun bindFindItemCount(): Int? {
@@ -276,6 +220,70 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
     override fun pickViewData(viewData: NoteViewData): NoteViewData? {
         return mAdapter?.getItem(viewData)
+    }
+
+
+    private val userClickListener = object: UserClickListener{
+        override fun onClickedUser(user: User) {
+            UserActivity.startActivity(context!!, user)
+        }
+    }
+
+    private val noteClickListener = object: NoteClickListener{
+        override fun onNoteClicked(targetId: String?, note: Note?) {
+            Log.d("TimelineFragment", "Noteをクリックした")
+            val intent = Intent(context, NoteDescriptionActivity::class.java)
+            intent.putExtra(NoteDescriptionActivity.NOTE_DESCRIPTION_NOTE_PROPERTY, note)
+            startActivity(intent)
+        }
+        override fun onReplyButtonClicked(targetId: String?, note: Note?) {
+            EditNoteActivity.startActivity(context!!, targetId, NoteType.REPLY)
+        }
+
+        override fun onReactionClicked(targetId: String?, note: Note?, viewData: NoteViewData,reactionType: String?) {
+            mPresenter?.setReactionSelectedState(targetId, note, viewData, reactionType)
+        }
+
+        override fun onReNoteButtonClicked(targetId: String?, note: Note?) {
+            EditNoteActivity.startActivity(context!!, targetId, NoteType.RE_NOTE)
+        }
+
+        override fun onDescriptionButtonClicked(targetId: String?, note: Note?) {
+            val item = arrayOf<CharSequence>("内容をコピー", "リンクをコピー", "お気に入り", "ウォッチ", "デバッグ（開発者向け）")
+
+            AlertDialog.Builder(activity).apply{
+                setTitle("詳細")
+                setItems(item){ dialog, which->
+                    when(which){
+                        0 -> copyToClipboad(context, note?.text.toString())
+                        1 -> copyToClipboad(context, note?.url.toString())
+                        2,3 -> Toast.makeText(context, "未実装ですごめんなさい", Toast.LENGTH_SHORT)
+                        4 ->{
+                            AlertDialog.Builder(activity).apply{
+                                if(note is Note){
+                                    val noteString = note.toString().replace(",","\n")
+                                    setMessage(noteString)
+                                }
+                                setPositiveButton(android.R.string.ok){i ,b->
+                                }
+                            }.show()
+                        }
+                    }
+
+                }
+            }.show()
+
+
+        }
+        override fun onImageClicked(clickedIndex: Int, clickedImageUrlCollection: Array<String>) {
+            ImageViewerActivity.startActivity(context, clickedImageUrlCollection, clickedIndex)
+        }
+
+        override fun onMediaPlayClicked(fileProperty: FileProperty) {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(fileProperty.url)))
+        }
+
+
     }
 
 

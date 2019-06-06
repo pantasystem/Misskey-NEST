@@ -152,13 +152,9 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
 
     override fun initDisplay(connectionInfo: ConnectionProperty) {
 
-        val ad = timeline_pager.adapter
-        val adapter = if(ad == null){
-            PagerAdapter(supportFragmentManager, connectionInfo)
-        }else{
-            ad.notifyDataSetChanged()
-            ad
-        }
+        //val ad = timeline_pager.adapter
+        val adapter = PagerAdapter(supportFragmentManager, connectionInfo)
+
         timeline_pager.offscreenPageLimit = 4
         timeline_pager.adapter = adapter
 
