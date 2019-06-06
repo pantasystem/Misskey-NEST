@@ -1,6 +1,7 @@
 package org.panta.misskey_nest.adapter
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
@@ -9,9 +10,10 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import org.panta.misskey_nest.R
 import org.panta.misskey_nest.interfaces.ItemClickListener
+import java.io.File
 import kotlin.contracts.contract
 
-class ReactionHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+class ReactionHolder(itemView: View, private val customReactionFileList: List<File>? = null) : RecyclerView.ViewHolder(itemView){
 
     private val reactionIcon = itemView.findViewById<ImageButton>(R.id.reaction_image_button)
     private val reactionStringIcon = itemView.findViewById<TextView>(R.id.reaction_type_string_view)
@@ -38,7 +40,30 @@ class ReactionHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         if(resourceId == null){
             reactionIcon.visibility = View.GONE
             reactionStringIcon.visibility = View.VISIBLE
-            reactionStringIcon.text = emoji
+            if(emoji.startsWith(":") && emoji.endsWith(":")){
+                val customEmoji = emoji.replace(":","")
+                Log.d("ReactionHolder", "カスタム絵文字のご登場だ $customEmoji")
+                val customEmojiFile = customReactionFileList?.firstOrNull{
+                    it.name.contains(customEmoji)
+                }
+                if(customEmojiFile != null){
+                    Picasso
+                        .get()
+                        .load(customEmojiFile)
+                        .fit()
+                        .into(reactionIcon)
+
+
+                    reactionIcon.visibility = View.VISIBLE
+                    reactionStringIcon.visibility = View.GONE
+                }else{
+                    Log.d("ReactionHolder", "カスタム絵文字がNull")
+                    Log.d("ReactionHolder", customReactionFileList.toString())
+                    reactionStringIcon.text = emoji
+                }
+            }else{
+                reactionStringIcon.text = emoji
+            }
         }else{
             reactionIcon.visibility = View.VISIBLE
             reactionStringIcon.visibility = View.GONE

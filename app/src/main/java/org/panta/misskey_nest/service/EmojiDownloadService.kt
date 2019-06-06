@@ -75,6 +75,7 @@ class EmojiDownloadService : Service() {
 
                 val fos = applicationContext.openFileOutput(fileName, Context.MODE_PRIVATE)
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+                Log.d(this.toString(), "保存成功 $fileName")
 
             }catch(e: Exception){
                 Log.d(this.toString(), "保存中にエラー $url, $fileName", e)

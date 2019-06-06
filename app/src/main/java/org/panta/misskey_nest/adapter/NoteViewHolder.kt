@@ -16,6 +16,7 @@ import org.panta.misskey_nest.interfaces.NoteClickListener
 import org.panta.misskey_nest.interfaces.UserClickListener
 import org.panta.misskey_nest.util.RoundedTransformation
 import org.panta.misskey_nest.view_data.NoteViewData
+import java.io.File
 
 open class NoteViewHolder(itemView: View, private val linearLayoutManager: LinearLayoutManager?) : RecyclerView.ViewHolder(itemView){
 
@@ -53,6 +54,8 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
     private val showThreadButton: Button = itemView.show_thread_button
 
     private val mediaPlayButton: Button = itemView.media_play_button
+
+    var reactionIconFileList: List<File>? = null
 
     fun setNote(content: NoteViewData){
         val toShowNote = content.toShowNote
@@ -151,7 +154,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         if(linearLayoutManager == null ){
             reactionView.visibility = View.GONE
         }else{
-            val adapter = ReactionRecyclerAdapter(viewData.reactionCountPairList , viewData.toShowNote.myReaction)
+            val adapter = ReactionRecyclerAdapter(viewData.reactionCountPairList , viewData.toShowNote.myReaction, customReactionFileList = reactionIconFileList)
             adapter.reactionItemClickListener = object : ItemClickListener<String>{
                 override fun onClick(e: String) {
                     Log.d("NoteViewHolder", "setReactionCountがクリックされた")

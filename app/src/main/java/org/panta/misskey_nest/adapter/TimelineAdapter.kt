@@ -13,12 +13,15 @@ import org.panta.misskey_nest.interfaces.NoteClickListener
 import org.panta.misskey_nest.interfaces.UserClickListener
 import org.panta.misskey_nest.usecase.NoteAdjustment
 import org.panta.misskey_nest.view_data.NoteViewData
+import java.io.File
 
 class TimelineAdapter(private val context: Context, notesList: List<NoteViewData>) : RecyclerView.Adapter<NoteViewHolder>(), IOperationAdapter<NoteViewData>{
 
     private val mArrayList = ArrayList<NoteViewData>(notesList)
     private var noteClickListener: NoteClickListener? = null
     private var userClickListener: UserClickListener? = null
+
+    var reactionIconFileList: List<File>? = null
 
     override fun getItemCount(): Int {
         return mArrayList.size
@@ -33,6 +36,7 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
 
     override fun onBindViewHolder(viewHolder: NoteViewHolder, p1: Int) {
         val viewData = mArrayList[p1]
+        viewHolder.reactionIconFileList = reactionIconFileList
 
        //リアクションをセットしている
         if(viewData.reactionCountPairList.isNotEmpty()){

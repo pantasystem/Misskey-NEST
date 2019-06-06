@@ -34,6 +34,7 @@ import org.panta.misskey_nest.view_presenter.image_viewer.ImageViewerActivity
 import org.panta.misskey_nest.view_presenter.note_description.NoteDescriptionActivity
 import org.panta.misskey_nest.view_presenter.note_editor.EditNoteActivity
 import org.panta.misskey_nest.view_presenter.user.UserActivity
+import java.io.File
 import java.net.URL
 
 class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, TimelineContract.View,
@@ -70,6 +71,11 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
     //private var isMediaOnly: Boolean? = null
     //private var userId: String? = null
+    var customEmojiList: List<File>? = null
+        set(value){
+            field = value
+
+        }
 
     var mNoteRepository: IItemRepository<NoteViewData>? = null
         set(value) {
@@ -104,7 +110,9 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             Log.d(tag, "プレゼンターを作成することができなかった")
         }
 
-
+        customEmojiList = context?.fileList()?.toList()?.map{
+            File(it)
+        }
         return inflater.inflate(R.layout.fragment_timeline, container, false)
     }
 
@@ -137,6 +145,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             timelineView?.visibility = View.VISIBLE
             Log.d("TimelineFragment", "データの取得が完了した")
             mAdapter = TimelineAdapter(context!!, list)
+            mAdapter?.reactionIconFileList = customEmojiList
             mAdapter?.addNoteClickListener(noteClickListener)
             mAdapter?.addUserClickListener(userClickListener)
 
