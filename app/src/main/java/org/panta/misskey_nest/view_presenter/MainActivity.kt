@@ -39,6 +39,7 @@ import org.panta.misskey_nest.entity.ConnectionProperty
 import org.panta.misskey_nest.entity.User
 import org.panta.misskey_nest.interfaces.ISharedPreferenceOperator
 import org.panta.misskey_nest.interfaces.MainContract
+import org.panta.misskey_nest.service.EmojiDownloadService
 import org.panta.misskey_nest.service.NotificationService
 import org.panta.misskey_nest.storage.SharedPreferenceOperator
 import org.panta.misskey_nest.util.setThemeFromType
@@ -146,6 +147,8 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
             val text = simple_edit_box.text.toString()
             mPresenter?.sendNote(text)
         }
+
+        startService(Intent(applicationContext, EmojiDownloadService::class.java))
 
     }
 

@@ -18,6 +18,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <service
+                android:name=".service.EmojiDownloadService"
+                android:enabled="true"
+                android:exported="true">
+        </service>
+
         <activity android:name=".view_presenter.SearchActivity">
         </activity>
         <activity android:name=".view_presenter.NotificationActivity">
