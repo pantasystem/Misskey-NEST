@@ -71,11 +71,6 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
     //private var isMediaOnly: Boolean? = null
     //private var userId: String? = null
-    var customEmojiList: List<File>? = null
-        set(value){
-            field = value
-
-        }
 
     var mNoteRepository: IItemRepository<NoteViewData>? = null
         set(value) {
@@ -110,9 +105,6 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             Log.d(tag, "プレゼンターを作成することができなかった")
         }
 
-        customEmojiList = context?.fileList()?.toList()?.map{
-            File(context!!.filesDir,it)
-        }
         return inflater.inflate(R.layout.fragment_timeline, container, false)
     }
 
@@ -145,7 +137,10 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             timelineView?.visibility = View.VISIBLE
             Log.d("TimelineFragment", "データの取得が完了した")
             mAdapter = TimelineAdapter(context!!, list)
-            mAdapter?.reactionIconFileList = customEmojiList
+
+            mAdapter?.reactionIconFileList = context?.fileList()?.map{
+                File(context!!.filesDir, it)
+            }
             mAdapter?.addNoteClickListener(noteClickListener)
             mAdapter?.addUserClickListener(userClickListener)
 
