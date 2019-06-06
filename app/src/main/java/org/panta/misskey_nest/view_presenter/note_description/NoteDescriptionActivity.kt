@@ -11,6 +11,7 @@ import org.panta.misskey_nest.adapter.TimelineAdapter
 import org.panta.misskey_nest.entity.Note
 import org.panta.misskey_nest.repository.Description
 import org.panta.misskey_nest.view_data.NoteViewData
+import java.io.File
 
 class NoteDescriptionActivity : AppCompatActivity() {
 
@@ -47,7 +48,10 @@ class NoteDescriptionActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(applicationContext)
         note_description_view.layoutManager = layoutManager
-        note_description_view.adapter = TimelineAdapter(applicationContext, notes)
+        val emojiFileList = fileList().map{
+            File(filesDir, it)
+        }
+        note_description_view.adapter = TimelineAdapter(applicationContext, notes, emojiFileList)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

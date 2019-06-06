@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.panta.misskey_nest.R
 import org.panta.misskey_nest.constant.NotificationType
+import org.panta.misskey_nest.emoji.CustomEmoji
 import org.panta.misskey_nest.interfaces.IOperationAdapter
 import org.panta.misskey_nest.usecase.NoteAdjustment
 import org.panta.misskey_nest.view_data.NotificationViewData
+import java.io.File
 
 class NotificationAdapter(private val notificationList: List<NotificationViewData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), IOperationAdapter<NotificationViewData>{
     override fun getItemCount(): Int {
@@ -30,7 +32,10 @@ class NotificationAdapter(private val notificationList: List<NotificationViewDat
         }else{
             //Log.d("NotificationAdapter", "onCreateViewHolder params:$notificationType")
             val view = LayoutInflater.from(p0.context).inflate(R.layout.item_note, p0, false)
-            NoteViewHolder(view, null)
+            val emojiFileList = p0.context.fileList().map{
+                File(p0.context.filesDir, it)
+            }
+            NoteViewHolder(view, null, CustomEmoji(p0.context, emojiFileList))
         }
 
 

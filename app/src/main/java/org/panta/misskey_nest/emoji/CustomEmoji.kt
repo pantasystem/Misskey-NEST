@@ -6,15 +6,16 @@ import android.graphics.BitmapFactory
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ImageSpan
+import android.util.Log
 import android.widget.TextView
 import java.io.File
 
-class CustomEmoji(private val context: Context, private val emojiFileList: List<File>, private val size: Int){
+class CustomEmoji(private val context: Context, private val emojiFileList: List<File>){
     private val emojiMap = emojiFileList.map{
-        it.name.replace(":", "") to it
+        it.name.replace(":", "").split(".")[0] to it
     }.toMap()
 
-    fun setTextView(textView: TextView, text: String){
+    fun setTextView(textView: TextView, text: String, size: Int? = 60){
         val spannable = SpannableStringBuilder()
 
         val splitTextList = text.split(":")
@@ -24,15 +25,26 @@ class CustomEmoji(private val context: Context, private val emojiFileList: List<
                 spannable.append(t)
             }else{
                 val bitmap = BitmapFactory.decodeFile(emojiFile.path)
-                val scale = size / bitmap.width.toDouble()
-                val resizedBitmap = Bitmap.createScaledBitmap(bitmap, (bitmap.width * scale).toInt(), (bitmap.height * scale).toInt(), true)
+                val tmpSize = if(bitmap.width < 50){
+                    size ?: 80
+                }else{
+                    size
+                }
 
-                val imageSpan = ImageSpan(context, resizedBitmap)
+                val showBitmap = if(tmpSize == null){
+                    bitmap
+                }else{
+                    val scale = tmpSize / bitmap.width.toDouble()
+                    Bitmap.createScaledBitmap(bitmap, (bitmap.width * scale).toInt(), (bitmap.height * scale).toInt(), true)
+                }
+
+
+                val imageSpan = ImageSpan(context, showBitmap)
                 val start = spannable.length
                 spannable.append(t)
-                spannable.setSpan(imageSpan, start, start + t.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
+                spannable.setSpan(imageSpan, start, start + t.length , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
         }
+        textView.text = spannable
     }
 }

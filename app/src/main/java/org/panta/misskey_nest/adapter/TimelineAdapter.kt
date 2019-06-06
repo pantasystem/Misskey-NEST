@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.panta.misskey_nest.R
+import org.panta.misskey_nest.emoji.CustomEmoji
 import org.panta.misskey_nest.interfaces.IOperationAdapter
 import org.panta.misskey_nest.interfaces.NoteClickListener
 import org.panta.misskey_nest.interfaces.UserClickListener
@@ -15,13 +16,13 @@ import org.panta.misskey_nest.usecase.NoteAdjustment
 import org.panta.misskey_nest.view_data.NoteViewData
 import java.io.File
 
-class TimelineAdapter(private val context: Context, notesList: List<NoteViewData>) : RecyclerView.Adapter<NoteViewHolder>(), IOperationAdapter<NoteViewData>{
+class TimelineAdapter(private val context: Context, notesList: List<NoteViewData>, private val emojiFileList: List<File>) : RecyclerView.Adapter<NoteViewHolder>(), IOperationAdapter<NoteViewData>{
 
     private val mArrayList = ArrayList<NoteViewData>(notesList)
     private var noteClickListener: NoteClickListener? = null
     private var userClickListener: UserClickListener? = null
 
-    var reactionIconFileList: List<File>? = null
+    //var reactionIconFileList: List<File>? = null
 
     override fun getItemCount(): Int {
         return mArrayList.size
@@ -30,13 +31,13 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): NoteViewHolder {
         val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_note, p0, false)
         val lm = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        return NoteViewHolder(inflater, lm)
+        return NoteViewHolder(inflater, lm, CustomEmoji(p0.context, emojiFileList))
 
     }
 
     override fun onBindViewHolder(viewHolder: NoteViewHolder, p1: Int) {
         val viewData = mArrayList[p1]
-        viewHolder.reactionIconFileList = reactionIconFileList
+        viewHolder.reactionIconFileList = emojiFileList
 
        //リアクションをセットしている
         if(viewData.reactionCountPairList.isNotEmpty()){

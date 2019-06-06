@@ -8,6 +8,7 @@ import android.widget.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_note.view.*
 import org.panta.misskey_nest.R
+import org.panta.misskey_nest.emoji.CustomEmoji
 import org.panta.misskey_nest.entity.FileProperty
 import org.panta.misskey_nest.entity.Note
 import org.panta.misskey_nest.entity.User
@@ -18,7 +19,7 @@ import org.panta.misskey_nest.util.RoundedTransformation
 import org.panta.misskey_nest.view_data.NoteViewData
 import java.io.File
 
-open class NoteViewHolder(itemView: View, private val linearLayoutManager: LinearLayoutManager?) : RecyclerView.ViewHolder(itemView){
+open class NoteViewHolder(itemView: View, private val linearLayoutManager: LinearLayoutManager?, val customEmoji: CustomEmoji) : RecyclerView.ViewHolder(itemView){
 
     private var contentClickListener: NoteClickListener? = null
     private var userClickListener: UserClickListener? = null
@@ -183,7 +184,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
     private fun setWhoReactionUserLink(user: User?, status: String){
         whoReactionUserLink.visibility = View.VISIBLE
         val text = "${user?.name?:user?.userName}さんが${status}しました"
-        injectionTextGoneWhenNull(text, whoReactionUserLink)
+        injectionTextGoneWhenNull(text, whoReactionUserLink, 60)
         whoReactionUserLink.setOnClickListener{
             if(user != null){
                 userClickListener?.onClickedUser(user)
@@ -196,7 +197,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         injectionName(note.user?.name, note.user?.userName, userName)
         injectionId(note.user?.userName, note.user?.host, userId)
         roundInjectionImage(note.user?.avatarUrl?:"non", userIcon, 180)
-        injectionTextGoneWhenNull(note.text, noteText)
+        injectionTextGoneWhenNull(note.text, noteText, null)
         setRelationUserListener(note.user!!, userName, userId, userIcon)
         setImage(filterImageData(note))
         injectionMediaPlayButton(note.files?.firstOrNull(), mediaPlayButton)
@@ -210,7 +211,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         injectionName(note.user?.name, note.user?.userName, subUserName)
         injectionId(note.user?.userName, note.user?.host, subUserId)
         roundInjectionImage(note.user?.avatarUrl?:"non", subUserIcon, 180)
-        injectionTextGoneWhenNull(note.text, subNoteText)
+        injectionTextGoneWhenNull(note.text, subNoteText, null)
         setRelationUserListener(note.user!!, subUserName, subUserId, subUserIcon)
 
     }
@@ -273,12 +274,13 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
 
 
     //nullの場合はGONE
-    private fun injectionTextGoneWhenNull(text: String?, view: TextView){
+    private fun injectionTextGoneWhenNull(text: String?, view: TextView, emojiSize: Int?){
         if(text == null){
             view.visibility = View.GONE
         }else{
             view.visibility = View.VISIBLE
-            view.text= text
+            customEmoji.setTextView(view, text, emojiSize)
+            //view.text= text
         }
     }
 
