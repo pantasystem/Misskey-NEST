@@ -15,6 +15,7 @@ import org.panta.misskey_nest.entity.User
 import org.panta.misskey_nest.interfaces.ItemClickListener
 import org.panta.misskey_nest.interfaces.NoteClickListener
 import org.panta.misskey_nest.interfaces.UserClickListener
+import org.panta.misskey_nest.util.InjectionText
 import org.panta.misskey_nest.util.RoundedTransformation
 import org.panta.misskey_nest.view_data.NoteViewData
 import java.io.File
@@ -57,6 +58,8 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
     private val mediaPlayButton: Button = itemView.media_play_button
 
     var reactionIconFileList: List<File>? = null
+
+    private val injectionText = InjectionText(customEmoji)
 
     fun setNote(content: NoteViewData){
         val toShowNote = content.toShowNote
@@ -184,7 +187,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
     private fun setWhoReactionUserLink(user: User?, status: String){
         whoReactionUserLink.visibility = View.VISIBLE
         val text = "${user?.name?:user?.userName}さんが${status}しました"
-        injectionTextGoneWhenNull(text, whoReactionUserLink)
+        injectionText.injectionTextGoneWhenNull(text, whoReactionUserLink)
         whoReactionUserLink.setOnClickListener{
             if(user != null){
                 userClickListener?.onClickedUser(user)
@@ -197,7 +200,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         injectionName(note.user?.name, note.user?.userName, userName)
         injectionId(note.user?.userName, note.user?.host, userId)
         roundInjectionImage(note.user?.avatarUrl?:"non", userIcon, 180)
-        injectionTextGoneWhenNull(note.text, noteText)
+        injectionText.injectionTextGoneWhenNull(note.text, noteText)
         setRelationUserListener(note.user!!, userName, userId, userIcon)
         setImage(filterImageData(note))
         injectionMediaPlayButton(note.files?.firstOrNull(), mediaPlayButton)
@@ -211,7 +214,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         injectionName(note.user?.name, note.user?.userName, subUserName)
         injectionId(note.user?.userName, note.user?.host, subUserId)
         roundInjectionImage(note.user?.avatarUrl?:"non", subUserIcon, 180)
-        injectionTextGoneWhenNull(note.text, subNoteText)
+        injectionText.injectionTextGoneWhenNull(note.text, subNoteText)
         setRelationUserListener(note.user!!, subUserName, subUserId, subUserIcon)
 
     }
@@ -246,13 +249,13 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
 
     //NP
     private fun setReplyCount(count: Int){
-        injectionTextInvisible(count.toString(), replyCount, "0")
+        injectionText.injectionTextInvisible(count.toString(), replyCount, "0")
 
     }
 
     //NP
     private fun setReNoteCount(count: Int){
-        injectionTextInvisible(count.toString(), reNoteCount, "0")
+        injectionText.injectionTextInvisible(count.toString(), reNoteCount, "0")
     }
 
     private fun setFourControlButtonListener(note: Note, viewData: NoteViewData){
@@ -272,33 +275,9 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
 
 
 
-
-    //nullの場合はGONE
-    private fun injectionTextGoneWhenNull(text: String?, view: TextView){
-        if(text == null){
-            view.visibility = View.GONE
-            return
-        }
-        view.visibility = View.VISIBLE
-        if(text.contains(":")){
-            customEmoji.setTextView(view, text)
-        }else{
-            view.text = text
-        }
-    }
-
-    private fun injectionTextInvisible(text: String?, view:TextView, targetValue: String?){
-        if(text == targetValue){
-            view.visibility = View.INVISIBLE
-        }else{
-            view.visibility = View.VISIBLE
-            view.text= text
-        }
-    }
-
     private fun injectionName(name: String?, id: String?, view: TextView){
-        view.text = if(name == null) id.toString() else name.toString()
-        view.visibility = View.VISIBLE
+        val tmpName = name?: id.toString()
+        injectionText.injection(tmpName, view)
     }
 
     private fun injectionId(id: String?, host: String?, view: TextView){
