@@ -132,10 +132,11 @@ class CustomEmoji(private val context: Context, private val emojiFileList: List<
     }
 
     private fun appendImageSpan(spannable: SpannableStringBuilder, text: String, emojiFile: File, size: Int){
+        val finalSize = (size.toDouble() * 1.2).toInt()
         val bitmap = if(emojiFile.path.endsWith(".svg")){
-            getBitmapFromSVG(emojiFile, size, size)
+            getBitmapFromSVG(emojiFile, finalSize, finalSize)
         }else{
-            resizeBitmap(BitmapFactory.decodeFile(emojiFile.path), size)
+            resizeBitmap(BitmapFactory.decodeFile(emojiFile.path), finalSize)
         }
         val imageSpan = ImageSpan(context, bitmap)
         val start = spannable.length
