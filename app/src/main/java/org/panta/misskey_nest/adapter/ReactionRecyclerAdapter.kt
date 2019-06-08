@@ -35,7 +35,7 @@ class ReactionRecyclerAdapter(private val reactionList: List<ReactionCountPair>,
         val reaction = reactionList[position]
         val isMyReaction = reaction.reactionType == myReactionType
         //val drawable = Drawable.createFromPath("reaction_icon_${reaction.reactionType}.png")
-        p0.showReaction(reaction.reactionCount.toString(), reaction.reactionType, isMyReaction)
+        p0.onBind(reaction.reactionType, reaction.reactionCount, isMyReaction)
 
         p0.itemClickListener = reactionItemClickListener
 

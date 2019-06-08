@@ -45,29 +45,32 @@ class CustomEmoji(private val context: Context, private val emojiFileList: List<
         textView.text = spannable
     }
 
-    private fun getBitmapFromSVG(file: File, width: Int, height: Int): Bitmap{
-        if( ! file.path.endsWith(".svg") ) throw IllegalAccessException("This file is not svg file. You must use svg file")
+    companion object{
+        fun getBitmapFromSVG(file: File, width: Int, height: Int): Bitmap{
+            if( ! file.path.endsWith(".svg") ) throw IllegalAccessException("This file is not svg file. You must use svg file")
 
-        val stream = BufferedReader(InputStreamReader(file.inputStream()))
-        val builder = StringBuilder()
-        while(true){
-            val next: String? = stream.readLine()
-            if(next == null){
-                break
-            }else{
-                builder.append(next)
+            val stream = BufferedReader(InputStreamReader(file.inputStream()))
+            val builder = StringBuilder()
+            while(true){
+                val next: String? = stream.readLine()
+                if(next == null){
+                    break
+                }else{
+                    builder.append(next)
+                }
             }
+
+            val svg = SVG.getFromString(builder.toString())
+
+            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+            svg.renderToCanvas(canvas)
+
+            return bitmap
+
         }
-
-        val svg = SVG.getFromString(builder.toString())
-
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        svg.renderToCanvas(canvas)
-
-        return bitmap
-
     }
+
 
     private fun resizeBitmap(bitmap: Bitmap, size: Int?): Bitmap{
         val tmpSize = if(bitmap.width < 50){

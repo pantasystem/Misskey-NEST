@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import org.panta.misskey_nest.R
+import org.panta.misskey_nest.emoji.CustomEmoji
 import org.panta.misskey_nest.interfaces.ItemClickListener
 import java.io.File
 import kotlin.contracts.contract
@@ -35,7 +36,7 @@ class ReactionHolder(itemView: View, private val customReactionFileList: List<Fi
         "pudding" to R.drawable.reaction_icon_pudding)
 
 
-    fun showReaction(count: String, emoji: String, isHasMyReaction: Boolean = false){
+    /*fun showReaction(count: String, emoji: String, isHasMyReaction: Boolean = false){
         val resourceId= reactionImageMapping[emoji]
         if(resourceId == null){
             reactionIcon.visibility = View.GONE
@@ -89,6 +90,60 @@ class ReactionHolder(itemView: View, private val customReactionFileList: List<Fi
         reactionCountItem.setOnClickListener(listener)
         reactionViewItem.setOnClickListener(listener)
 
+    }*/
+
+    fun onBind(emoji: String, count: Int, isMyReaction: Boolean){
+        val resourceId = reactionImageMapping[emoji]
+        val emojiFile = customReactionFileList?.firstOrNull{ it -> it.name.contains(emoji.replace(":", "")) }
+
+        if(resourceId == null && emojiFile == null){
+            reactionStringIcon.visibility = View.VISIBLE
+            reactionIcon.visibility = View.GONE
+            reactionStringIcon.text = emoji
+        }else if(resourceId != null){
+            reactionStringIcon.visibility = View.GONE
+            reactionIcon.visibility = View.VISIBLE
+            Picasso
+                .get()
+                .load(resourceId)
+                .fit()
+                .into(reactionIcon)
+        }else if(emojiFile != null && emojiFile.name.endsWith(".svg")){
+            reactionStringIcon.visibility = View.GONE
+            reactionIcon.visibility = View.VISIBLE
+            val bitmap = CustomEmoji.getBitmapFromSVG(emojiFile, 50, 50)
+            reactionIcon.setImageBitmap(bitmap)
+            //Log.d("ReactionHolder", "SVGタイプの画像が来た")
+        }else if(emojiFile != null && ! emojiFile.name.endsWith(".svg")){
+            reactionStringIcon.visibility = View.GONE
+            reactionIcon.visibility = View.VISIBLE
+            Picasso
+                .get()
+                .load(emojiFile)
+                .fit()
+                .into(reactionIcon)
+        }
+
+
+
+        //リアクションのカウントを設定
+        reactionCount.text = count.toString()
+
+        if(isMyReaction){
+            reactionCountItem.setBackgroundResource(R.drawable.shape_selected_reaction_background)
+        }else{
+            reactionCountItem.setBackgroundResource(R.drawable.shape_normal_reaction_background)
+
+        }
+
+        val listener = View.OnClickListener {
+            itemClickListener?.onClick(emoji)
+        }
+        reactionIcon.setOnClickListener(listener)
+        reactionStringIcon.setOnClickListener(listener)
+        reactionCount.setOnClickListener(listener)
+        reactionCountItem.setOnClickListener(listener)
+        reactionViewItem.setOnClickListener(listener)
     }
 
 }
