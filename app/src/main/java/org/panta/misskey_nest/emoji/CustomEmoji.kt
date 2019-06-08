@@ -4,11 +4,17 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.os.Handler
+import android.os.Looper
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ImageSpan
+import android.util.Log
+import android.view.View
 import android.widget.TextView
 import com.caverock.androidsvg.SVG
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.panta.misskey_nest.util.BitmapCache
 import java.io.BufferedReader
 import java.io.File
@@ -56,30 +62,44 @@ class CustomEmoji(private val context: Context, private val emojiFileList: List<
     }.toMap()
 
     fun setTextView(textView: TextView, text: String, size: Int? = 60){
-        val spannable = SpannableStringBuilder()
-
-        val splitTextList = text.split(":")
-        for(t in splitTextList){
-            val emojiFile = emojiMap[t]
-            if(emojiFile == null){
-                spannable.append(t)
-            }else{
-                val bitmap = if(emojiFile.path.endsWith(".svg")){
-                    getBitmapFromSVG(emojiFile, textView.textSize.toInt(), textView.textSize.toInt())
-                }else{
-                    resizeBitmap(BitmapFactory.decodeFile(emojiFile.path), textView.textSize.toInt())
-                }
-
-
-
-                val imageSpan = ImageSpan(context, bitmap)
-                val start = spannable.length
-                spannable.append(t)
-                spannable.setSpan(imageSpan, start, start + t.length , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            }
+        Handler(Looper.getMainLooper()).post{
+            textView.visibility = View.INVISIBLE
         }
-        //Log.d("CustomEmoji", "描画しました")
-        textView.text = spannable
+        GlobalScope.launch {
+            try{
+                val spannable = SpannableStringBuilder()
+
+                val splitTextList = text.split(":")
+                for(t in splitTextList){
+                    val emojiFile = emojiMap[t]
+                    if(emojiFile == null){
+                        spannable.append(t)
+                    }else{
+                        val bitmap = if(emojiFile.path.endsWith(".svg")){
+                            getBitmapFromSVG(emojiFile, textView.textSize.toInt(), textView.textSize.toInt())
+                        }else{
+                            resizeBitmap(BitmapFactory.decodeFile(emojiFile.path), textView.textSize.toInt())
+                        }
+
+
+
+                        val imageSpan = ImageSpan(context, bitmap)
+                        val start = spannable.length
+                        spannable.append(t)
+                        spannable.setSpan(imageSpan, start, start + t.length , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    }
+                }
+                //Log.d("CustomEmoji", "描画しました")
+                Handler(Looper.getMainLooper()).post{
+                    textView.text = spannable
+                    textView.visibility = View.VISIBLE
+                }
+            }catch(e: Exception){
+                Log.d("CustomEmoji", "error", e)
+            }
+
+        }
+
     }
 
 
