@@ -61,7 +61,7 @@ class CustomEmoji(private val context: Context, private val emojiFileList: List<
         it.name.replace(":", "").split(".")[0] to it
     }.toMap()
 
-    fun setTextView(textView: TextView, text: String, size: Int? = 60){
+    fun setTextView(textView: TextView, text: String){
         Handler(Looper.getMainLooper()).post{
             textView.visibility = View.INVISIBLE
         }

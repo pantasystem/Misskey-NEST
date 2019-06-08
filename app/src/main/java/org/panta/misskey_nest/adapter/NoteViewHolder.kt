@@ -184,7 +184,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
     private fun setWhoReactionUserLink(user: User?, status: String){
         whoReactionUserLink.visibility = View.VISIBLE
         val text = "${user?.name?:user?.userName}さんが${status}しました"
-        injectionTextGoneWhenNull(text, whoReactionUserLink, 60)
+        injectionTextGoneWhenNull(text, whoReactionUserLink)
         whoReactionUserLink.setOnClickListener{
             if(user != null){
                 userClickListener?.onClickedUser(user)
@@ -197,7 +197,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         injectionName(note.user?.name, note.user?.userName, userName)
         injectionId(note.user?.userName, note.user?.host, userId)
         roundInjectionImage(note.user?.avatarUrl?:"non", userIcon, 180)
-        injectionTextGoneWhenNull(note.text, noteText, null)
+        injectionTextGoneWhenNull(note.text, noteText)
         setRelationUserListener(note.user!!, userName, userId, userIcon)
         setImage(filterImageData(note))
         injectionMediaPlayButton(note.files?.firstOrNull(), mediaPlayButton)
@@ -211,7 +211,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         injectionName(note.user?.name, note.user?.userName, subUserName)
         injectionId(note.user?.userName, note.user?.host, subUserId)
         roundInjectionImage(note.user?.avatarUrl?:"non", subUserIcon, 180)
-        injectionTextGoneWhenNull(note.text, subNoteText, null)
+        injectionTextGoneWhenNull(note.text, subNoteText)
         setRelationUserListener(note.user!!, subUserName, subUserId, subUserIcon)
 
     }
@@ -274,13 +274,16 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
 
 
     //nullの場合はGONE
-    private fun injectionTextGoneWhenNull(text: String?, view: TextView, emojiSize: Int?){
+    private fun injectionTextGoneWhenNull(text: String?, view: TextView){
         if(text == null){
             view.visibility = View.GONE
+            return
+        }
+        view.visibility = View.VISIBLE
+        if(text.contains(":")){
+            customEmoji.setTextView(view, text)
         }else{
-            view.visibility = View.VISIBLE
-            customEmoji.setTextView(view, text, emojiSize)
-            //view.text= text
+            view.text = text
         }
     }
 
