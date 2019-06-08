@@ -85,12 +85,7 @@ class EmojiDownloadService : Service() {
 
                 val fos = applicationContext.openFileOutput("$fileName.png", Context.MODE_PRIVATE)
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
-                /*var len = inputStream.read()
-                while(len != -1){
-                    fos.write(len)
-                    len = inputStream.read()
-                }
-                fos.flush()*/
+
                 Log.d(this.toString(), "保存成功 $fileName")
 
             }catch(e: Exception){
@@ -107,19 +102,7 @@ class EmojiDownloadService : Service() {
                 connection.connect()
                 val inputStream = BufferedInputStream(connection.inputStream)
 
-                /*val xppf = XmlPullParserFactory.newInstance()
-                val parser = xppf.newPullParser()
-                parser.setInput(inputStream, null)
 
-                val drawable = VectorDrawableCompat.createFromXml(applicationContext.resources, parser)*/
-                /*SVGParser
-                val svg = SVGParser.getSVGFromInputStream(inputStream)
-                val drawable: Drawable = SVGParser.createPictureDrawable()
-                val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
-                val canvas = Canvas(bitmap)
-                drawable.setBounds(0,0, canvas.width, canvas.height)
-                drawable.draw(canvas)
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, applicationContext.openFileOutput("$fileName.png", Context.MODE_PRIVATE))*/
                 val ops = applicationContext.openFileOutput("$fileName.svg", Context.MODE_PRIVATE)
                 var next = inputStream.read()
                 while(next != -1){
