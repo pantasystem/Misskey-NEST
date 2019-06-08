@@ -16,6 +16,7 @@ import com.caverock.androidsvg.SVG
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.panta.misskey_nest.util.BitmapCache
+import org.panta.misskey_nest.util.SpannableStringBuilderCache
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -61,7 +62,15 @@ class CustomEmoji(private val context: Context, private val emojiFileList: List<
         it.name.replace(":", "").split(".")[0] to it
     }.toMap()
 
+    private val spannableCache = SpannableStringBuilderCache()
+
     fun setTextView(textView: TextView, text: String){
+        val cache = spannableCache.get(text)
+        if(cache != null){
+            textView.text = cache
+            textView.visibility = View.VISIBLE
+            return
+        }
         Handler(Looper.getMainLooper()).post{
             textView.visibility = View.INVISIBLE
         }
@@ -90,6 +99,7 @@ class CustomEmoji(private val context: Context, private val emojiFileList: List<
                     }
                 }
                 //Log.d("CustomEmoji", "描画しました")
+                spannableCache.put(text, spannable)
                 Handler(Looper.getMainLooper()).post{
                     textView.text = spannable
                     textView.visibility = View.VISIBLE
