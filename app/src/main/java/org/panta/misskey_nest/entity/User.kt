@@ -32,7 +32,7 @@ import java.io.Serializable
     @JsonProperty("avatarUrl") val avatarUrl: String?,
     @JsonProperty("bannerUrl") val bannerUrl: String?,
     @JsonProperty("avatarColor") val avatarColor: Any?,
-    @JsonProperty("emojis") val emojis: List<Any?>?,
+    @JsonProperty("emojis") val emojis: List<EmojiProperty?>?,
     @JsonProperty("isVerified") val isVerified: Boolean,
     @JsonProperty("isLocked") val isLocked: Boolean
     ): Serializable

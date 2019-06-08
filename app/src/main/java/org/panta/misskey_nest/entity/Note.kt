@@ -22,6 +22,7 @@ import java.util.*
     @JsonProperty("url") val url: String?,
     @JsonProperty("renoteCount") val reNoteCount: Int,
     @JsonProperty("reactions") val reactionCounts: Map<String, Int>?,
+    @JsonProperty("emojis") val emojis: List<EmojiProperty?>?,
     @JsonProperty("repliesCount") val replyCount: Int,
     @JsonProperty("user") val user: User?,
     @JsonProperty("files") val files: List<FileProperty?>?,

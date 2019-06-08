@@ -61,7 +61,7 @@ class EmojiDownloadService : Service() {
                     }else{
 
                         //val fileName = it.name.split("/").last()
-                        if(it.type.endsWith("svg+xml")){
+                        if(it.type?.endsWith("svg+xml") == true){
                             saveSvg(it.url!!, it.name)
                         }else{
                             saveImage(it.url!!, it.name)
