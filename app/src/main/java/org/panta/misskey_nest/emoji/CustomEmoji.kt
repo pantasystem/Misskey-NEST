@@ -78,38 +78,69 @@ class CustomEmoji(private val context: Context, private val emojiFileList: List<
             try{
                 val spannable = SpannableStringBuilder()
 
-                val splitTextList = text.split(":")
-                for(t in splitTextList){
-                    val emojiFile = emojiMap[t]
-                    if(emojiFile == null){
-                        spannable.append(t)
-                    }else{
-                        val bitmap = if(emojiFile.path.endsWith(".svg")){
-                            getBitmapFromSVG(emojiFile, textView.textSize.toInt(), textView.textSize.toInt())
+                val charArray = text.toCharArray()
+                val iterator = charArray.iterator()
+
+                var charTmp = StringBuilder()
+                while(iterator.hasNext()){
+                    val c = iterator.next()
+
+                    if(c == ':'){
+                        val midwayText = charTmp.toString()
+                        Log.d("CustomEmoji", "midwayText: $midwayText")
+                        val emojiFile = emojiMap[midwayText]
+                        if(emojiFile != null){
+
+                            appendImageSpan(spannable, midwayText, emojiFile, textView.textSize.toInt())
+
                         }else{
-                            resizeBitmap(BitmapFactory.decodeFile(emojiFile.path), textView.textSize.toInt())
+                            //通常の文字列だった場合
+                            spannable.append(midwayText)
+                            spannable.append(c)
+
                         }
 
+                        charTmp = StringBuilder()
 
 
-                        val imageSpan = ImageSpan(context, bitmap)
-                        val start = spannable.length
-                        spannable.append(t)
-                        spannable.setSpan(imageSpan, start, start + t.length , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    }else{
+                        charTmp.append(c)
                     }
                 }
-                //Log.d("CustomEmoji", "描画しました")
+
+                //最後に残ったテキストを解析
+                val last = charTmp.toString()
+                val emojiFile = emojiMap[last.replace(":", "")]
+                if(emojiFile != null){
+                    appendImageSpan(spannable, last, emojiFile, textView.textSize.toInt())
+                }else{
+                    spannable.append(last)
+                }
+
                 spannableCache.put(text, spannable)
                 Handler(Looper.getMainLooper()).post{
                     textView.text = spannable
                     textView.visibility = View.VISIBLE
                 }
+
             }catch(e: Exception){
                 Log.d("CustomEmoji", "error", e)
             }
 
         }
 
+    }
+
+    private fun appendImageSpan(spannable: SpannableStringBuilder, text: String, emojiFile: File, size: Int){
+        val bitmap = if(emojiFile.path.endsWith(".svg")){
+            getBitmapFromSVG(emojiFile, size, size)
+        }else{
+            resizeBitmap(BitmapFactory.decodeFile(emojiFile.path), size)
+        }
+        val imageSpan = ImageSpan(context, bitmap)
+        val start = spannable.length
+        spannable.append(text)
+        spannable.setSpan(imageSpan, start - 1, start + text.length , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
 
 
