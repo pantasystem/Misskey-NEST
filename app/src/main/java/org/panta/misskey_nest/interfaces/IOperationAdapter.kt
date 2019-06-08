@@ -8,8 +8,8 @@ interface IOperationAdapter<E> {
 
     fun addAllLast(list: List<E>)
 
-    fun getItem(index: Int): E
-    fun getItem(item: E): E
+    fun getItem(index: Int): E?
+    fun getItem(item: E): E?
     fun updateItem(item: E)
 
     fun removeItem(item: E)

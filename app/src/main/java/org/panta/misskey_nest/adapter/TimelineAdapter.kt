@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.panta.misskey_nest.R
@@ -90,15 +91,26 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
         }
     }
 
-    override fun getItem(index: Int): NoteViewData{
+    override fun getItem(index: Int): NoteViewData?{
         synchronized(mArrayList){
-            return mArrayList[index]
+            return try{
+                mArrayList[index]
+            }catch(e: Exception){
+                Log.d("TimelineAdapter", "インデックスがオーバーしてる！！", e)
+                null
+            }
         }
     }
 
-    override fun getItem(item: NoteViewData): NoteViewData {
+    override fun getItem(item: NoteViewData): NoteViewData? {
         synchronized(mArrayList){
-            return mArrayList.first { it.id == item.id }
+            return try{
+                mArrayList.first { it.id == item.id }
+
+            }catch(e: Exception){
+                Log.d("TimelineAdapter", "インデックスがオーバーしてる！！", e)
+                null
+            }
         }
     }
 
