@@ -1,5 +1,6 @@
 package org.panta.misskey_nest.adapter
 
+import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
@@ -8,6 +9,9 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.panta.misskey_nest.R
 import org.panta.misskey_nest.emoji.CustomEmoji
 import org.panta.misskey_nest.interfaces.ItemClickListener
@@ -109,10 +113,31 @@ class ReactionHolder(itemView: View, private val customReactionFileList: List<Fi
                 .fit()
                 .into(reactionIcon)
         }else if(emojiFile != null && emojiFile.name.endsWith(".svg")){
-            reactionStringIcon.visibility = View.GONE
-            reactionIcon.visibility = View.VISIBLE
-            val bitmap = CustomEmoji.getBitmapFromSVG(emojiFile, 50, 50)
-            reactionIcon.setImageBitmap(bitmap)
+            reactionIcon.visibility = View.INVISIBLE
+            GlobalScope.apply{
+                try{
+                    launch {
+                        launch(Dispatchers.Main){
+                            reactionStringIcon.visibility = View.GONE
+                        }
+                        val bitmap = CustomEmoji.getBitmapFromSVG(emojiFile, 50, 50)
+                        launch(Dispatchers.Main){
+                            try{
+                                reactionIcon.setImageBitmap(bitmap)
+                                reactionIcon.visibility = View.VISIBLE
+                            }catch(e: Exception){
+                                Log.d("ReactionHolder", "error", e)
+                            }
+
+                        }
+                    }
+                }catch(e: Exception){
+                    Log.d("ReactionHolder", "error", e)
+                }
+
+            }
+
+
             //Log.d("ReactionHolder", "SVGタイプの画像が来た")
         }else if(emojiFile != null && ! emojiFile.name.endsWith(".svg")){
             reactionStringIcon.visibility = View.GONE
