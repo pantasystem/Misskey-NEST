@@ -24,15 +24,15 @@ class CustomEmoji(private val context: Context, private val emojiFileList: List<
 
     companion object{
 
-        //private val bitmapCache = BitmapCache(10)
+        private val bitmapCache = BitmapCache(10)
 
         fun getBitmapFromSVG(file: File, width: Int, height: Int): Bitmap{
             if( ! file.path.endsWith(".svg") ) throw IllegalAccessException("This file is not svg file. You must use svg file")
 
-            //val cache = bitmapCache.getBitmap(file.path)
-            /*if(cache != null){
+            val cache = bitmapCache.getBitmap(file.path)
+            if(cache != null){
                 return cache
-            }*/
+            }
 
             val stream = BufferedReader(InputStreamReader(file.inputStream()))
             val builder = StringBuilder()
@@ -50,7 +50,7 @@ class CustomEmoji(private val context: Context, private val emojiFileList: List<
             val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)
             svg.renderToCanvas(canvas)
-            //bitmapCache.pushCache(file.path, bitmap)
+            bitmapCache.pushCache(file.path, bitmap)
 
             return bitmap
 
