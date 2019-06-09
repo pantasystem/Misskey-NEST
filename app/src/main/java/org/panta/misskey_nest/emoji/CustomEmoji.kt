@@ -77,18 +77,15 @@ class CustomEmoji(private val context: Context){
                         val emojiFile = getEmojisFile(midwayText)
                         val notesEmoji = notesEmojiList?.firstOrNull{ it.name == midwayText }
                         if(emojiFile != null){
-
-                            appendImageSpan(spannable, midwayText, emojiFile, textView.textSize.toInt())
-
+                            //ローカルストレージに存在する場合
+                            appendImageSpanFromFile(spannable, midwayText, emojiFile, textView.textSize.toInt())
                         }else if(notesEmoji != null){
-
-                            appendImageSpan(spannable, midwayText, notesEmoji, textView.textSize.toInt())
-
+                            //ローカルストレージに存在しない場合
+                            appendImageSpanFromEmojiProperty(spannable, midwayText, notesEmoji, textView.textSize.toInt())
                         }else{
                             //通常の文字列だった場合
                             spannable.append(midwayText)
                             spannable.append(c)
-
                         }
 
                         charTmp = StringBuilder()
@@ -103,7 +100,7 @@ class CustomEmoji(private val context: Context){
                 val last = charTmp.toString()
                 val emojiFile = emojiMap[last.replace(":", "")]
                 if(emojiFile != null){
-                    appendImageSpan(spannable, last, emojiFile, textView.textSize.toInt())
+                    appendImageSpanFromFile(spannable, last, emojiFile, textView.textSize.toInt())
                 }else{
                     spannable.append(last)
                 }
@@ -122,6 +119,9 @@ class CustomEmoji(private val context: Context){
 
     }
 
+    fun getEmojisFile(emoji: String): File?{
+        return emojiMap[emoji.replace(":", "")]
+    }
 
     private suspend fun getEmojisBitmap(emojiProperty: EmojiProperty, size: Int): Bitmap{
 
@@ -136,7 +136,7 @@ class CustomEmoji(private val context: Context){
         return bitmap
     }
 
-    fun getEmojisBitmap(emojiFile: File, size: Int): Bitmap{
+    private fun getEmojisBitmap(emojiFile: File, size: Int): Bitmap{
 
         return if(emojiFile.path.endsWith(".svg")){
             svgParser.getBitmapFromFile(emojiFile, size, size)
@@ -145,40 +145,32 @@ class CustomEmoji(private val context: Context){
         }
     }
 
-    fun getEmojisFile(emoji: String): File?{
-        return emojiMap[emoji.replace(":", "")]
-    }
 
-    private fun appendImageSpan(spannable: SpannableStringBuilder, text: String, emojiFile: File, size: Int){
+
+    private fun appendImageSpanFromFile(spannable: SpannableStringBuilder, text: String, emojiFile: File, size: Int){
         try{
             val finalSize = (size.toDouble() * 1.2).toInt()
             val bitmap = getEmojisBitmap(emojiFile, finalSize)
-            /*val imageSpan = ImageSpan(context, bitmap)
-            val start = spannable.length
-            spannable.append(text)
-            spannable.setSpan(imageSpan, start - 1, start + text.length , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)*/
-            appendImageSpan(spannable, text, bitmap)
+
+            appendImageSpanFromBitmap(spannable, text, bitmap)
         }catch(e: Exception){
             Log.d("CustomEmoji", "appendImageSpan method. エラー発生 text:$text, emojiFile: ${emojiFile.path}")
         }
     }
 
 
-    private suspend fun appendImageSpan(spannable: SpannableStringBuilder, text: String, emoji: EmojiProperty, size: Int){
+    private suspend fun appendImageSpanFromEmojiProperty(spannable: SpannableStringBuilder, text: String, emoji: EmojiProperty, size: Int){
         try{
             val finalSize = (size.toDouble() * 1.2).toInt()
             val bitmap = getEmojisBitmap(emoji, finalSize)
-            /*val imageSpan = ImageSpan(context, bitmap)
-            val start = spannable.length
-            spannable.append(text)
-            spannable.setSpan(imageSpan, start - 1, start + text.length , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)*/
-            appendImageSpan(spannable, text, bitmap)
+
+            appendImageSpanFromBitmap(spannable, text, bitmap)
         }catch(e: Exception){
             Log.d("CustomEmoji", "appendImageSpan method. エラー発生 text:$text, emoji$emoji}")
         }
     }
 
-    private fun appendImageSpan(spannable: SpannableStringBuilder, text: String, bitmap: Bitmap){
+    private fun appendImageSpanFromBitmap(spannable: SpannableStringBuilder, text: String, bitmap: Bitmap){
         try{
             val imageSpan = ImageSpan(context, bitmap)
             val start = spannable.length
