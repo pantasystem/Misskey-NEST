@@ -132,16 +132,21 @@ class CustomEmoji(private val context: Context, private val emojiFileList: List<
     }
 
     private fun appendImageSpan(spannable: SpannableStringBuilder, text: String, emojiFile: File, size: Int){
-        val finalSize = (size.toDouble() * 1.2).toInt()
-        val bitmap = if(emojiFile.path.endsWith(".svg")){
-            getBitmapFromSVG(emojiFile, finalSize, finalSize)
-        }else{
-            resizeBitmap(BitmapFactory.decodeFile(emojiFile.path), finalSize)
+        try{
+            val finalSize = (size.toDouble() * 1.2).toInt()
+            val bitmap = if(emojiFile.path.endsWith(".svg")){
+                getBitmapFromSVG(emojiFile, finalSize, finalSize)
+            }else{
+                resizeBitmap(BitmapFactory.decodeFile(emojiFile.path), finalSize)
+            }
+            val imageSpan = ImageSpan(context, bitmap)
+            val start = spannable.length
+            spannable.append(text)
+            spannable.setSpan(imageSpan, start - 1, start + text.length , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }catch(e: Exception){
+            Log.d("CustomEmoji", "appendImageSpan method. エラー発生 text:$text, emojiFile: ${emojiFile.path}")
         }
-        val imageSpan = ImageSpan(context, bitmap)
-        val start = spannable.length
-        spannable.append(text)
-        spannable.setSpan(imageSpan, start - 1, start + text.length , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
     }
 
 
