@@ -1,6 +1,7 @@
 package org.panta.misskey_nest.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import java.io.Serializable
 
 @JsonIgnoreProperties(ignoreUnknown=true) data class EmojiProperty(
     val id: String?,
@@ -12,4 +13,4 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
     val type: String?
     //val aliases: List<String>
 
-)
+): Serializable
