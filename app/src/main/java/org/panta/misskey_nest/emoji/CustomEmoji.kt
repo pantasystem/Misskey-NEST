@@ -90,7 +90,7 @@ class CustomEmoji(private val context: Context){
                     if(c == ':'){
                         val midwayText = charTmp.toString()
                         Log.d("CustomEmoji", "midwayText: $midwayText")
-                        val emojiFile = emojiMap[midwayText]
+                        val emojiFile = getEmojisFile(midwayText)
                         if(emojiFile != null){
 
                             appendImageSpan(spannable, midwayText, emojiFile, textView.textSize.toInt())
@@ -133,14 +133,23 @@ class CustomEmoji(private val context: Context){
 
     }
 
+    fun getEmojisBitmap(emojiFile: File, size: Int): Bitmap{
+
+        return if(emojiFile.path.endsWith(".svg")){
+            getBitmapFromSVG(emojiFile, size, size)
+        }else{
+            resizeBitmap(BitmapFactory.decodeFile(emojiFile.path), size)
+        }
+    }
+
+    fun getEmojisFile(emoji: String): File?{
+        return emojiMap[emoji.replace(":", "")]
+    }
+
     private fun appendImageSpan(spannable: SpannableStringBuilder, text: String, emojiFile: File, size: Int){
         try{
             val finalSize = (size.toDouble() * 1.2).toInt()
-            val bitmap = if(emojiFile.path.endsWith(".svg")){
-                getBitmapFromSVG(emojiFile, finalSize, finalSize)
-            }else{
-                resizeBitmap(BitmapFactory.decodeFile(emojiFile.path), finalSize)
-            }
+            val bitmap = getEmojisBitmap(emojiFile, finalSize)
             val imageSpan = ImageSpan(context, bitmap)
             val start = spannable.length
             spannable.append(text)

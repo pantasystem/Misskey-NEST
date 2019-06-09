@@ -7,11 +7,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.panta.misskey_nest.R
+import org.panta.misskey_nest.emoji.CustomEmoji
 import org.panta.misskey_nest.entity.ReactionCountPair
 import org.panta.misskey_nest.interfaces.ItemClickListener
 import java.io.File
 
-class ReactionRecyclerAdapter(private val reactionList: List<ReactionCountPair>, private val myReactionType: String?, private val customReactionFileList: List<File>? = null)
+class ReactionRecyclerAdapter(private val reactionList: List<ReactionCountPair>, private val myReactionType: String?, private val customEmoji: CustomEmoji)
     : RecyclerView.Adapter<ReactionHolder>(){
 
     /*private val reactionList = reactionCountMap.map{
@@ -28,7 +29,7 @@ class ReactionRecyclerAdapter(private val reactionList: List<ReactionCountPair>,
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ReactionHolder {
         val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_reaction_counter, p0, false)
 
-        return ReactionHolder(inflater, customReactionFileList)
+        return ReactionHolder(inflater, customEmoji)
     }
 
     override fun onBindViewHolder(p0: ReactionHolder, position: Int) {

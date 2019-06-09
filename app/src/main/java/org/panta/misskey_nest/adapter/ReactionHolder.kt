@@ -20,7 +20,7 @@ import org.panta.misskey_nest.interfaces.ItemClickListener
 import java.io.File
 import kotlin.contracts.contract
 
-class ReactionHolder(itemView: View, private val customReactionFileList: List<File>? = null) : RecyclerView.ViewHolder(itemView){
+class ReactionHolder(itemView: View, private val  customEmoji: CustomEmoji) : RecyclerView.ViewHolder(itemView){
 
     private val reactionIcon = itemView.findViewById<ImageButton>(R.id.reaction_image_button)
     private val reactionStringIcon = itemView.findViewById<TextView>(R.id.reaction_type_string_view)
@@ -100,7 +100,8 @@ class ReactionHolder(itemView: View, private val customReactionFileList: List<Fi
 
     fun onBind(emoji: String, count: Int, isMyReaction: Boolean){
         val resourceId = reactionImageMapping[emoji]
-        val emojiFile = customReactionFileList?.firstOrNull{ it -> it.name.contains(emoji.replace(":", "")) }
+        //val emojiFile = customReactionFileList?.firstOrNull{ it -> it.name.contains(emoji.replace(":", "")) }
+        val emojiFile = customEmoji.getEmojisFile(emoji)
 
         if(resourceId == null && emojiFile == null){
             reactionStringIcon.visibility = View.VISIBLE

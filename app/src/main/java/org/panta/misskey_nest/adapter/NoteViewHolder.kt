@@ -20,7 +20,7 @@ import org.panta.misskey_nest.util.RoundedTransformation
 import org.panta.misskey_nest.view_data.NoteViewData
 import java.io.File
 
-open class NoteViewHolder(itemView: View, private val linearLayoutManager: LinearLayoutManager?, val customEmoji: CustomEmoji) : RecyclerView.ViewHolder(itemView){
+open class NoteViewHolder(itemView: View, private val linearLayoutManager: LinearLayoutManager?, private val customEmoji: CustomEmoji) : RecyclerView.ViewHolder(itemView){
 
     private var contentClickListener: NoteClickListener? = null
     private var userClickListener: UserClickListener? = null
@@ -56,8 +56,6 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
     private val showThreadButton: Button = itemView.show_thread_button
 
     private val mediaPlayButton: Button = itemView.media_play_button
-
-    var reactionIconFileList: List<File>? = null
 
     private val injectionText = InjectionText(customEmoji)
 
@@ -158,7 +156,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         if(linearLayoutManager == null ){
             reactionView.visibility = View.GONE
         }else{
-            val adapter = ReactionRecyclerAdapter(viewData.reactionCountPairList , viewData.toShowNote.myReaction, customReactionFileList = reactionIconFileList)
+            val adapter = ReactionRecyclerAdapter(viewData.reactionCountPairList , viewData.toShowNote.myReaction, customEmoji)
             adapter.reactionItemClickListener = object : ItemClickListener<String>{
                 override fun onClick(e: String) {
                     Log.d("NoteViewHolder", "setReactionCountがクリックされた")
