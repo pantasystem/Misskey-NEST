@@ -185,7 +185,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
     private fun setWhoReactionUserLink(user: User?, status: String){
         whoReactionUserLink.visibility = View.VISIBLE
         val text = "${user?.name?:user?.userName}さんが${status}しました"
-        injectionText.injectionTextGoneWhenNull(text, whoReactionUserLink)
+        injectionText.injectionTextGoneWhenNull(text, whoReactionUserLink, user?.emojis)
         whoReactionUserLink.setOnClickListener{
             if(user != null){
                 userClickListener?.onClickedUser(user)
@@ -198,7 +198,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         injectionName(note.user?.name, note.user?.userName, userName)
         injectionId(note.user?.userName, note.user?.host, userId)
         roundInjectionImage(note.user?.avatarUrl?:"non", userIcon, 180)
-        injectionText.injectionTextGoneWhenNull(note.text, noteText)
+        injectionText.injectionTextGoneWhenNull(note.text, noteText, note.emojis)
         setRelationUserListener(note.user!!, userName, userId, userIcon)
         setImage(filterImageData(note))
         injectionMediaPlayButton(note.files?.firstOrNull(), mediaPlayButton)
