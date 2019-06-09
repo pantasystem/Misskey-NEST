@@ -32,10 +32,8 @@ class NotificationAdapter(private val notificationList: List<NotificationViewDat
         }else{
             //Log.d("NotificationAdapter", "onCreateViewHolder params:$notificationType")
             val view = LayoutInflater.from(p0.context).inflate(R.layout.item_note, p0, false)
-            val emojiFileList = p0.context.fileList().map{
-                File(p0.context.filesDir, it)
-            }
-            NoteViewHolder(view, null, CustomEmoji(p0.context, emojiFileList))
+
+            NoteViewHolder(view, null, CustomEmoji(p0.context))
         }
 
 

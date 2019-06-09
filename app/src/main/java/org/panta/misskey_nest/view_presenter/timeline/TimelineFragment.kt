@@ -137,10 +137,8 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             timelineView?.visibility = View.VISIBLE
             Log.d("TimelineFragment", "データの取得が完了した")
 
-            val emojiFileList = context?.fileList()?.map{
-                File(context!!.filesDir, it)
-            }
-            mAdapter = TimelineAdapter(context!!, list, emojiFileList!!)
+
+            mAdapter = TimelineAdapter(context!!, list)
 
             mAdapter?.addNoteClickListener(noteClickListener)
             mAdapter?.addUserClickListener(userClickListener)

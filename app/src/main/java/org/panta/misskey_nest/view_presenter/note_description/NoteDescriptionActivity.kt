@@ -48,10 +48,8 @@ class NoteDescriptionActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(applicationContext)
         note_description_view.layoutManager = layoutManager
-        val emojiFileList = fileList().map{
-            File(filesDir, it)
-        }
-        note_description_view.adapter = TimelineAdapter(applicationContext, notes, emojiFileList)
+
+        note_description_view.adapter = TimelineAdapter(applicationContext, notes)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -21,7 +21,7 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 
-class CustomEmoji(private val context: Context, private val emojiFileList: List<File>){
+class CustomEmoji(private val context: Context){
 
     companion object{
 
@@ -57,7 +57,9 @@ class CustomEmoji(private val context: Context, private val emojiFileList: List<
 
         }
     }
-
+    private val emojiFileList = context.fileList().map{
+        File(context.filesDir, it)
+    }
     private val emojiMap = emojiFileList.map{
         it.name.replace(":", "").split(".")[0] to it
     }.toMap()

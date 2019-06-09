@@ -17,7 +17,7 @@ import org.panta.misskey_nest.usecase.NoteAdjustment
 import org.panta.misskey_nest.view_data.NoteViewData
 import java.io.File
 
-class TimelineAdapter(private val context: Context, notesList: List<NoteViewData>, private val emojiFileList: List<File>) : RecyclerView.Adapter<NoteViewHolder>(), IOperationAdapter<NoteViewData>{
+class TimelineAdapter(private val context: Context, notesList: List<NoteViewData>) : RecyclerView.Adapter<NoteViewHolder>(), IOperationAdapter<NoteViewData>{
 
     private val mArrayList = ArrayList<NoteViewData>(notesList)
     private var noteClickListener: NoteClickListener? = null
@@ -32,13 +32,13 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): NoteViewHolder {
         val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_note, p0, false)
         val lm = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        return NoteViewHolder(inflater, lm, CustomEmoji(p0.context, emojiFileList))
+        return NoteViewHolder(inflater, lm, CustomEmoji(p0.context))
 
     }
 
     override fun onBindViewHolder(viewHolder: NoteViewHolder, p1: Int) {
         val viewData = mArrayList[p1]
-        viewHolder.reactionIconFileList = emojiFileList
+        //viewHolder.reactionIconFileList = emojiFileList
 
        //リアクションをセットしている
         if(viewData.reactionCountPairList.isNotEmpty()){
