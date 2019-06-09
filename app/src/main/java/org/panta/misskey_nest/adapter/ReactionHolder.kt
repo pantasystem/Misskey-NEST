@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import org.panta.misskey_nest.R
 import org.panta.misskey_nest.emoji.CustomEmoji
 import org.panta.misskey_nest.interfaces.ItemClickListener
+import org.panta.misskey_nest.util.SVGParser
 import java.io.File
 import kotlin.contracts.contract
 
@@ -65,7 +66,7 @@ class ReactionHolder(itemView: View, private val  customEmoji: CustomEmoji) : Re
             reactionStringIcon.visibility = View.GONE
             GlobalScope.launch {
                 try{
-                    val bitmap = CustomEmoji.getBitmapFromSVG(emojiFile, 50, 50)
+                    val bitmap = SVGParser(null).getBitmapFromFile(emojiFile, 50, 50)
 
                     Handler(Looper.getMainLooper()).post{
                         try{

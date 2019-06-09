@@ -16,10 +16,12 @@ import com.caverock.androidsvg.SVG
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.panta.misskey_nest.util.BitmapCache
+import org.panta.misskey_nest.util.SVGParser
 import org.panta.misskey_nest.util.SpannableStringBuilderCache
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
+import java.net.URL
 
 class CustomEmoji(private val context: Context){
 
@@ -27,36 +29,10 @@ class CustomEmoji(private val context: Context){
 
         private val bitmapCache = BitmapCache(10)
 
-        fun getBitmapFromSVG(file: File, width: Int, height: Int): Bitmap{
-            if( ! file.path.endsWith(".svg") ) throw IllegalAccessException("This file is not svg file. You must use svg file")
 
-            val cache = bitmapCache.getBitmap(file.path)
-            if(cache != null){
-                return cache
-            }
-
-            val stream = BufferedReader(InputStreamReader(file.inputStream()))
-            val builder = StringBuilder()
-            while(true){
-                val next: String? = stream.readLine()
-                if(next == null){
-                    break
-                }else{
-                    builder.append(next)
-                }
-            }
-
-            val svg = SVG.getFromString(builder.toString())
-
-            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
-            svg.renderToCanvas(canvas)
-            bitmapCache.pushCache(file.path, bitmap)
-
-            return bitmap
-
-        }
     }
+
+    private val svgParser = SVGParser(bitmapCache)
     private val emojiFileList = context.fileList().map{
         File(context.filesDir, it)
     }
@@ -133,10 +109,12 @@ class CustomEmoji(private val context: Context){
 
     }
 
+
+
     fun getEmojisBitmap(emojiFile: File, size: Int): Bitmap{
 
         return if(emojiFile.path.endsWith(".svg")){
-            getBitmapFromSVG(emojiFile, size, size)
+            svgParser.getBitmapFromFile(emojiFile, size, size)
         }else{
             resizeBitmap(BitmapFactory.decodeFile(emojiFile.path), size)
         }
