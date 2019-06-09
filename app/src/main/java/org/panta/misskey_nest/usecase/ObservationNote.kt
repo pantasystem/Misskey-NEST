@@ -107,10 +107,10 @@ class ObservationNote(private val bindStreamingAPI: IBindStreamingAPI, private v
                     it.value.toShowNote.id == viewData.toShowNote.id
                 }
                 if(count > 0 ){
-                    Log.d("Observation", "登録回避")
+                    //Log.d("Observation", "登録回避")
 
                 }else{
-                    Log.d("Observation", "登録した")
+                    //Log.d("Observation", "登録した")
                     captureNoteMap.put(index, viewData)
                     capture.captureNote(viewData)
                 }
@@ -120,7 +120,7 @@ class ObservationNote(private val bindStreamingAPI: IBindStreamingAPI, private v
 
     private fun cancelCapture(index: Int){
         synchronized(captureNoteMap){
-            Log.d("Observation", "解除した")
+            //Log.d("Observation", "解除した")
             val removeItem = captureNoteMap[index]
             captureNoteMap.remove(index)
             if(removeItem != null){

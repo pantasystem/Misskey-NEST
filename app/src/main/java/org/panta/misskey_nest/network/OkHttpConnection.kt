@@ -14,7 +14,7 @@ class OkHttpConnection{
             val request = Request.Builder().url(url).post(requestBody).build()
             val response = client.newCall(request).execute()
             val code = response.code()
-            Log.d("OkHttpConnection", "statusCode:$code")
+            //Log.d("OkHttpConnection", "statusCode:$code")
             if(code < 300){
                 response.body()?.string()
             }else{
