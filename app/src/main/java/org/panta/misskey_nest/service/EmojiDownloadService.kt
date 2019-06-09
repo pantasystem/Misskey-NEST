@@ -11,18 +11,23 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.VectorDrawable
 import android.os.IBinder
 import android.support.graphics.drawable.VectorDrawableCompat
+import android.support.v4.app.NotificationCompat
 import android.util.Log
 import android.util.Xml
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.panta.misskey_nest.R
 import org.panta.misskey_nest.entity.ConnectionProperty
 import org.panta.misskey_nest.entity.MetaProperty
 import org.panta.misskey_nest.network.HttpsConnection
 import org.panta.misskey_nest.network.OkHttpConnection
 import org.panta.misskey_nest.repository.PersonalRepository
 import org.panta.misskey_nest.storage.SharedPreferenceOperator
+import org.panta.misskey_nest.util.createFileName
+import org.panta.misskey_nest.util.saveImage
+import org.panta.misskey_nest.util.saveSVG
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.BufferedInputStream
@@ -34,25 +39,40 @@ import javax.net.ssl.HttpsURLConnection
 class EmojiDownloadService : Service() {
 
     override fun onBind(intent: Intent): IBinder? {
-        return null
+                return null
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val  notification = NotificationCompat.Builder(this).apply{
+            setContentTitle("カスタム絵文字を更新中")
+            setContentTitle("カスタム絵文字を更新しています。")
+            setSmallIcon(R.drawable.misskey_icon)
+        }.build()
+        startForeground(1, notification)
+        Log.d("EmojiDownloadService", "onStartCommand　サービスを開始しました！！！！")
+
+        Log.d("EmojiDownloadService", "onCreateが呼び出された")
+        val info = PersonalRepository(SharedPreferenceOperator(this)).getDomain()
+        if(info == null){
+            Log.d("EmojiDownloadService" ,"ドメイン情報がNULLのため終了する")
+            stopSelf()
+        }else{
+            saveEmoji(info)
+        }
+        return super.onStartCommand(intent, flags, startId)
     }
 
     override fun onCreate() {
         super.onCreate()
 
-        val info = PersonalRepository(SharedPreferenceOperator(this)).getConnectionInfo()
-        if(info == null){
-            return
-        }else{
-            saveEmoji(info)
-        }
+
     }
 
-    private fun saveEmoji(info: ConnectionProperty){
+    private fun saveEmoji(domain: String){
         GlobalScope.launch{
 
             try{
-                val meta = getMeta(info)
+                val meta = getMeta(domain)
                 meta?.emojis?: return@launch
                 meta.emojis.forEach{
                     val fileList = applicationContext.fileList()
@@ -62,9 +82,11 @@ class EmojiDownloadService : Service() {
 
                         //val fileName = it.name.split("/").last()
                         if(it.type?.endsWith("svg+xml") == true){
-                            saveSvg(it.url!!, it.name)
+                            //saveSvg(it.url!!, it.name)
+                            it.saveSVG(applicationContext.openFileOutput(it.createFileName() , Context.MODE_PRIVATE))
                         }else{
-                            saveImage(it.url!!, it.name)
+                            //saveImage(it.url!!, it.name)
+                            it.saveImage(applicationContext.openFileOutput(it.createFileName() , Context.MODE_PRIVATE))
                         }
                     }
                 }
@@ -120,10 +142,9 @@ class EmojiDownloadService : Service() {
         }
     }
 
-    private suspend fun getMeta(info: ConnectionProperty): MetaProperty?{
-        val map = mapOf("detail" to false, "i" to info.i)
+    private suspend fun getMeta(domain: String): MetaProperty?{
         return try{
-            val net = OkHttpConnection().postString(URL("${info.domain}/api/meta"), jacksonObjectMapper().writeValueAsString(map))
+            val net = OkHttpConnection().postString(URL("$domain/api/meta"), "")
             jacksonObjectMapper().readValue(net!!)
         }catch(e: Exception){
             Log.d(this.toString(), "meta取得中にエラー発生", e)

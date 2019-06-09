@@ -1,14 +1,17 @@
 package org.panta.misskey_nest.view_presenter
 
+import android.app.Service
 import android.app.UiModeManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -149,7 +152,6 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
             mPresenter?.sendNote(text)
         }
 
-        startService(Intent(applicationContext, EmojiDownloadService::class.java))
 
     }
 
@@ -257,8 +259,14 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
     override fun onStart() {
         super.onStart()
 
+        Log.d("MainActivity", "あああああああああああああああああああああああああああonStartが呼び出された")
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         mPresenter?.getPersonalMiniProfile()
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            startForegroundService(Intent(applicationContext, EmojiDownloadService::class.java))
+        }else{
+            startService(Intent(applicationContext, EmojiDownloadService::class.java))
+        }
 
     }
 

@@ -22,7 +22,7 @@
         </activity>
 
         <service
-                android:name=".service.EmojiDownloadService"
+                android:name="org.panta.misskey_nest.service.EmojiDownloadService"
                 android:enabled="true"
                 android:exported="true">
         </service>

@@ -27,7 +27,8 @@ fun EmojiProperty.createFileName(): String{
 }
 
 suspend fun EmojiProperty.saveImage(outputStream: FileOutputStream){
-    val connection = URL(url).openConnection() as HttpsURLConnection
+    Log.d("EmojiUtil", "saveImageを呼び出しました: $url")
+    val connection = URL(this.url).openConnection() as HttpsURLConnection
     connection.connect()
     val inputStream  = BufferedInputStream(connection.inputStream)
     val bitmap = BitmapFactory.decodeStream(inputStream)
@@ -37,7 +38,8 @@ suspend fun EmojiProperty.saveImage(outputStream: FileOutputStream){
 }
 
 suspend fun EmojiProperty.saveSVG(outputStream: FileOutputStream){
-    val connection = URL(url).openConnection() as HttpsURLConnection
+    Log.d("EmojiUtil", "saveSVGを呼び出しました: $url")
+    val connection = URL(this.url).openConnection() as HttpsURLConnection
     connection.connect()
     val inputStream = BufferedInputStream(connection.inputStream)
 
@@ -56,6 +58,7 @@ suspend fun EmojiProperty.save(context: Context){
     val meta = this.getExtension()
     val ops = context.openFileOutput(this.createFileName(), Context.MODE_PRIVATE)
 
+    Log.d("EmojiUtil", "fileName ${this.createFileName()}")
     if(meta == "svg"){
         this.saveSVG(ops)
     }else{
