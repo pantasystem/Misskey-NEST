@@ -42,61 +42,6 @@ class ReactionHolder(itemView: View, private val  customEmoji: CustomEmoji) : Re
         "pudding" to R.drawable.reaction_icon_pudding)
 
 
-    /*fun showReaction(count: String, emoji: String, isHasMyReaction: Boolean = false){
-        val resourceId= reactionImageMapping[emoji]
-        if(resourceId == null){
-            reactionIcon.visibility = View.GONE
-            reactionStringIcon.visibility = View.VISIBLE
-            if(emoji.startsWith(":") && emoji.endsWith(":")){
-                val customEmoji = emoji.replace(":","")
-                Log.d("ReactionHolder", "カスタム絵文字のご登場だ $customEmoji")
-                val customEmojiFile = customReactionFileList?.firstOrNull{
-                    it.name.contains(customEmoji)
-                }
-                if(customEmojiFile != null){
-                    Picasso
-                        .get()
-                        .load(customEmojiFile)
-                        .fit()
-                        .into(reactionIcon)
-
-
-                    reactionIcon.visibility = View.VISIBLE
-                    reactionStringIcon.visibility = View.GONE
-                }else{
-                    Log.d("ReactionHolder", "カスタム絵文字がNull")
-                    Log.d("ReactionHolder", customReactionFileList.toString())
-                    reactionStringIcon.text = emoji
-                }
-            }else{
-                reactionStringIcon.text = emoji
-            }
-        }else{
-            reactionIcon.visibility = View.VISIBLE
-            reactionStringIcon.visibility = View.GONE
-            Picasso
-                .get()
-                .load(resourceId)
-                .into(reactionIcon)
-        }
-        reactionCount.text = count
-        if(isHasMyReaction){
-            reactionCountItem.setBackgroundResource(R.drawable.shape_selected_reaction_background)
-        }else{
-            reactionCountItem.setBackgroundResource(R.drawable.shape_normal_reaction_background)
-
-        }
-
-        val listener = View.OnClickListener {
-            itemClickListener?.onClick(emoji)
-        }
-        reactionIcon.setOnClickListener(listener)
-        reactionStringIcon.setOnClickListener(listener)
-        reactionCount.setOnClickListener(listener)
-        reactionCountItem.setOnClickListener(listener)
-        reactionViewItem.setOnClickListener(listener)
-
-    }*/
 
     fun onBind(emoji: String, count: Int, isMyReaction: Boolean){
         val resourceId = reactionImageMapping[emoji]
