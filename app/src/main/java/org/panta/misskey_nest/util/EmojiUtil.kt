@@ -5,9 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import org.panta.misskey_nest.entity.EmojiProperty
-import java.io.BufferedInputStream
-import java.io.FileOutputStream
-import java.io.OutputStream
+import java.io.*
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
@@ -26,7 +24,7 @@ fun EmojiProperty.createFileName(): String{
     return "$name.${getExtension()}"
 }
 
-suspend fun EmojiProperty.saveImage(outputStream: FileOutputStream){
+suspend fun EmojiProperty.saveImage(outputStream: FileOutputStream): Bitmap{
     Log.d("EmojiUtil", "saveImageを呼び出しました: $url")
     val connection = URL(this.url).openConnection() as HttpsURLConnection
     connection.connect()
@@ -35,23 +33,30 @@ suspend fun EmojiProperty.saveImage(outputStream: FileOutputStream){
 
     bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
 
+    return bitmap
 }
 
-suspend fun EmojiProperty.saveSVG(outputStream: FileOutputStream){
+suspend fun EmojiProperty.saveSVG(outputStream: FileOutputStream): String{
     Log.d("EmojiUtil", "saveSVGを呼び出しました: $url")
     val connection = URL(this.url).openConnection() as HttpsURLConnection
     connection.connect()
-    val inputStream = BufferedInputStream(connection.inputStream)
+    //val inputStream = BufferedInputStream(connection.inputStream)
+    val writer = BufferedWriter(OutputStreamWriter(outputStream))
+    val reader = BufferedReader(InputStreamReader(connection.inputStream))
 
 
-    var next = inputStream.read()
-    while(next != -1){
-        outputStream.write(next)
-        next = inputStream.read()
+    val builder = StringBuilder()
+    var next = reader.readLine()
+    while(next != null){
+        writer.write(next)
+        builder.append(next)
+        next = reader.readLine()
     }
-    outputStream.flush()
-    outputStream.close()
 
+    writer.flush()
+    writer.close()
+    reader.close()
+    return builder.toString()
 }
 
 suspend fun EmojiProperty.save(context: Context){

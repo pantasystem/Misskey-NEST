@@ -1,6 +1,5 @@
 package org.panta.misskey_nest.util
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import com.caverock.androidsvg.SVG
@@ -37,11 +36,15 @@ class SVGParser(private val  bitmapCache: BitmapCache?){
             }
         }
 
-        val svg = SVG.getFromString(builder.toString())
+        return getBitmapFromString(builder.toString(), width, height)
+    }
+
+    fun getBitmapFromString(svg: String, width: Int, height: Int): Bitmap{
+        val vectorSvg = SVG.getFromString(svg)
 
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-        svg.renderToCanvas(canvas)
+        vectorSvg.renderToCanvas(canvas)
 
         return bitmap
     }
