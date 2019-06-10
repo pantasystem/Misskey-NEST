@@ -138,6 +138,7 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
         simple_send_button.setOnClickListener{
             val text = simple_edit_box.text.toString()
             mPresenter?.sendNote(text)
+            simple_edit_box.text.clear()
         }
 
 
