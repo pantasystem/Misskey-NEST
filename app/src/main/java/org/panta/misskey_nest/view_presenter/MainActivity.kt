@@ -291,7 +291,6 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
         super.onStart()
 
         Log.d("MainActivity", "あああああああああああああああああああああああああああonStartが呼び出された")
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         mPresenter?.getPersonalMiniProfile()
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             startForegroundService(Intent(applicationContext, EmojiDownloadService::class.java))
