@@ -43,7 +43,7 @@
                 android:id="@+id/simple_edit_box" android:layout_weight="1"/>
         <ImageButton
                 android:layout_width="50dp"
-                android:layout_height="50dp" app:srcCompat="@drawable/send_icon" android:id="@+id/simple_send_button"
+                android:layout_height="50dp" app:srcCompat="@drawable/ic_send" android:id="@+id/simple_send_button"
                 android:scaleType="centerInside"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,5 @@
 package org.panta.misskey_nest.view_presenter
 
-import android.app.Service
 import android.app.UiModeManager
 import android.content.Context
 import android.content.Intent
@@ -8,24 +7,18 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
-import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
-import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDelegate
-import android.support.v7.widget.SwitchCompat
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Switch
 import android.widget.Toast
-import android.widget.ToggleButton
 import com.squareup.picasso.Picasso
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider
@@ -35,10 +28,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import org.panta.misskey_nest.R
-import org.panta.misskey_nest.constant.ApplicationConstant
 import org.panta.misskey_nest.constant.FollowFollowerType
-import org.panta.misskey_nest.constant.ThemeType
-import org.panta.misskey_nest.constant.TimelineTypeEnum
 import org.panta.misskey_nest.entity.ConnectionProperty
 import org.panta.misskey_nest.entity.User
 import org.panta.misskey_nest.interfaces.ISharedPreferenceOperator
@@ -46,13 +36,10 @@ import org.panta.misskey_nest.interfaces.MainContract
 import org.panta.misskey_nest.service.EmojiDownloadService
 import org.panta.misskey_nest.service.NotificationService
 import org.panta.misskey_nest.storage.SharedPreferenceOperator
-import org.panta.misskey_nest.util.setThemeFromType
 import org.panta.misskey_nest.view_presenter.follow_follower.FollowFollowerActivity
 import org.panta.misskey_nest.view_presenter.mixed_timeline.PagerAdapter
 import org.panta.misskey_nest.view_presenter.note_editor.EditNoteActivity
-import org.panta.misskey_nest.view_presenter.notification.NotificationFragment
 import org.panta.misskey_nest.view_presenter.test_ui.TestActivity
-import org.panta.misskey_nest.view_presenter.timeline.TimelineFragment
 import org.panta.misskey_nest.view_presenter.user.UserActivity
 import org.panta.misskey_nest.view_presenter.user_auth.AuthActivity
 
@@ -190,8 +177,8 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
             val tab = timeline_tab_layout.getTabAt(n)
 
             when(n){
-                0 -> tab?.setIcon(R.drawable.home_icon)
-                1 -> tab?.setIcon(R.drawable.local_icon)
+                0 -> tab?.setIcon(R.drawable.ic_home)
+                1 -> tab?.setIcon(R.drawable.ic_local)
                 2 -> tab?.setIcon(R.drawable.social_icon)
                 3 -> tab?.setIcon(R.drawable.global_icon)
 
