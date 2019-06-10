@@ -12,7 +12,7 @@
             android:title="炊き込みご飯"/>
     <item
             android:id="@+id/notification_item"
-            android:icon="@drawable/bell_icon"
+            android:icon="@drawable/ic_bell"
             android:title="通知"/>
 
     <item

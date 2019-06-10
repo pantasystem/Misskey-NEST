@@ -20,7 +20,7 @@ class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
         picasso(userIcon, property.user.avatarUrl!!)
         when(NotificationType.getEnumFromString(property.type)){
             NotificationType.FOLLOW ->{
-                typeIcon.setImageResource(R.drawable.human_icon)
+                typeIcon.setImageResource(R.drawable.ic_human)
                 content.visibility = View.INVISIBLE
             }
             NotificationType.RENOTE ->{

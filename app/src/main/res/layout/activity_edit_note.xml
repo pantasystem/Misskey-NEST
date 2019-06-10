@@ -27,12 +27,12 @@
     >
         <ImageButton
                 android:layout_width="50dp"
-                android:layout_height="50dp" app:srcCompat="@drawable/ic_menu_gallery"
+                android:layout_height="50dp" app:srcCompat="@drawable/ic_image"
                 style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/select_image_button" android:layout_weight="1"/>
         <ImageButton
                 android:layout_width="50dp"
-                android:layout_height="50dp" app:srcCompat="@drawable/cloud_icon" android:id="@+id/online_strage_button"
+                android:layout_height="50dp" app:srcCompat="@drawable/ic_cloud_storage" android:id="@+id/online_strage_button"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_weight="1" android:scaleType="centerInside"/>
         <ImageButton

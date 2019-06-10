@@ -16,7 +16,7 @@
             android:id="@+id/user_icon"
             android:layout_width="50dp" android:layout_height="50dp"
             android:layout_marginRight="8dp" android:layout_marginLeft="8dp" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
-            app:srcCompat="@drawable/human_icon"
+            app:srcCompat="@drawable/ic_human"
             android:layout_below="@+id/who_reaction_user_link" android:contentDescription="@string/humanicon"/>
     <com.vanniktech.emoji.EmojiTextView
             android:id="@+id/user_name"
@@ -64,7 +64,7 @@
 
             android:layout_width="20dp" android:layout_height="20dp"
             android:layout_marginStart="15dp"  android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
-            app:srcCompat="@drawable/human_icon"
+            app:srcCompat="@drawable/ic_human"
             android:layout_below="@+id/note_text"
             android:visibility="gone"/>
 

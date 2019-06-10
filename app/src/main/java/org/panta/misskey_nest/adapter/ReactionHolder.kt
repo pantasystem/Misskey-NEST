@@ -52,11 +52,7 @@ class ReactionHolder(itemView: View, private val  customEmoji: CustomEmoji) : Re
         }else if(resourceId != null){
             reactionStringIcon.visibility = View.GONE
             reactionIcon.visibility = View.VISIBLE
-            Picasso
-                .get()
-                .load(resourceId)
-                .fit()
-                .into(reactionIcon)
+            reactionIcon.setImageResource(resourceId)
         }else if(emojiFile != null && emojiFile.name.endsWith(".svg")){
             reactionIcon.visibility = View.INVISIBLE
             reactionStringIcon.visibility = View.GONE

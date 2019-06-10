@@ -59,7 +59,7 @@ import org.panta.misskey_nest.entity.ReactionCountPair
         if(icon != null){
             holder.reactionIconView.setImageResource(icon)
         }else{
-            holder.reactionIconView.setImageResource(R.drawable.human_icon)
+            holder.reactionIconView.setImageResource(R.drawable.ic_human)
         }
         holder.reactionCount.text = reactionCountPairList[position].reactionCount.toString()
 
