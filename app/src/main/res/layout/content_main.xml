@@ -35,9 +35,11 @@
             android:id="@+id/linearLayout2">
         <EditText
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:inputType="textPersonName"
                 android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                android:background="@drawable/shape_overview"
+                android:layout_margin="8dp"
                 android:ems="10"
                 android:hint="@string/what_are_you_doing"
                 android:id="@+id/simple_edit_box" android:layout_weight="1"/>
