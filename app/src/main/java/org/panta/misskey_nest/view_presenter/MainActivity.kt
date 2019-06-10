@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import android.support.v4.content.ContextCompat
@@ -153,6 +154,8 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
         }
 
 
+
+
     }
 
 
@@ -166,6 +169,35 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
 
         timeline_tab_layout.setupWithViewPager(timeline_pager)
 
+        timeline_tab_layout.addOnTabSelectedListener(
+            object : TabLayout.OnTabSelectedListener{
+                override fun onTabReselected(p0: TabLayout.Tab?) {
+                    if(p0 != null){
+                        val fragment = adapter.getFragment(p0.position)
+                        fragment.mPresenter?.initTimeline()
+                    }
+                }
+                override fun onTabSelected(p0: TabLayout.Tab?) {
+                }
+                override fun onTabUnselected(p0: TabLayout.Tab?) {
+                }
+            }
+        )
+        Log.d("", "tabCount: ${timeline_tab_layout.tabCount}!!!!!!!!!!!!!!!!!!!!!!!")
+
+        //tab_layoutのアイコンを設定
+        for(n in 0.until(timeline_tab_layout.tabCount)){
+            val tab = timeline_tab_layout.getTabAt(n)
+
+            when(n){
+                0 -> tab?.setIcon(R.drawable.home_icon)
+                1 -> tab?.setIcon(R.drawable.local_icon)
+                2 -> tab?.setIcon(R.drawable.social_icon)
+                3 -> tab?.setIcon(R.drawable.global_icon)
+
+            }
+            //timeline_tab_layout.addTab(tab!!)
+        }
 
     }
 
@@ -277,12 +309,12 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
             drawer_layout.closeDrawer(GravityCompat.START)
             return
         }
-        //val selectedItemId = bottom_navigation?.selectedItemId
-        /*if(R.id.home_timeline != selectedItemId){
-        //    bottom_navigation.selectedItemId = R.id.home_timeline
-        }else{
+
+        if(timeline_tab_layout.selectedTabPosition == 0){
             super.onBackPressed()
-        }*/
+        }else{
+            timeline_tab_layout.getTabAt(0)?.select()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -329,5 +361,6 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
         drawer_layout.closeDrawer(GravityCompat.START)
         return false
     }
+
 
 }

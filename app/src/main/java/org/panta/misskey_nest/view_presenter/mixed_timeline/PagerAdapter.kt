@@ -4,12 +4,15 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.util.Log
+import android.util.SparseArray
 import org.panta.misskey_nest.constant.TimelineTypeEnum
 import org.panta.misskey_nest.entity.ConnectionProperty
 import org.panta.misskey_nest.util.PopularTimelineRepositoryFactory
 import org.panta.misskey_nest.view_presenter.timeline.TimelineFragment
 
 class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo: ConnectionProperty) : FragmentPagerAdapter(fragmentManager){
+
+    private val fragmentList = SparseArray<TimelineFragment>()
 
     private val tabTitles = arrayOf<CharSequence>("Home", "Local", "Social","Global")
     override fun getCount(): Int {
@@ -19,7 +22,9 @@ class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo:
     override fun getPageTitle(position: Int): CharSequence? {
         Log.d("PagerAdapter", "getPageTitle index:$position")
 
-        return tabTitles[position]
+        //return tabTitles[position]
+        //タブのタイトルは表示しないのでNULLを返す
+        return null
     }
 
     override fun getItem(p0: Int): Fragment? {
@@ -56,7 +61,13 @@ class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo:
         }!!
         val fragment = TimelineFragment.getInstance(connectionInfo)
         fragment.mNoteRepository= repository
+        fragmentList.put(p0, fragment)
+
         return fragment
+    }
+
+    fun getFragment(position: Int): TimelineFragment{
+        return fragmentList.get(position)
     }
 
 
