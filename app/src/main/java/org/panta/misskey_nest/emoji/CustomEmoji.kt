@@ -130,7 +130,7 @@ class CustomEmoji(private val context: Context){
             val textSvg = emojiProperty.saveSVG(context.openFileOutput(emojiProperty.createFileName(), Context.MODE_PRIVATE))
             svgParser.getBitmapFromString(textSvg, size, size)
         }else{
-            emojiProperty.saveImage(context.openFileOutput(emojiProperty.createFileName(), Context.MODE_PRIVATE))
+            resizeBitmap(emojiProperty.saveImage(context.openFileOutput(emojiProperty.createFileName(), Context.MODE_PRIVATE)), size)
         }
         updateEmojiMap()
         return bitmap
