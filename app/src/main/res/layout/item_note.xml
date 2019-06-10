@@ -245,7 +245,7 @@
     <ImageButton
             android:layout_toEndOf="@id/re_note_count"
             android:layout_width="42dp"
-            android:layout_height="42dp" app:srcCompat="@drawable/reaction_icon" android:id="@+id/reaction_button"
+            android:layout_height="42dp" app:srcCompat="@drawable/ic_plus" android:id="@+id/reaction_button"
             android:layout_below="@+id/reaction_view"
             style="?android:attr/borderlessButtonStyle"
             android:scaleType="centerCrop"/>

@@ -15,7 +15,7 @@
             android:layout_height="wrap_content" android:id="@+id/reaction_counter_view">
         <ImageButton
                 android:layout_width="21dp"
-                android:layout_height="21dp" app:srcCompat="@drawable/reaction_icon_hmm"
+                android:layout_height="21dp" app:srcCompat="@drawable/ic_reaction_hmm"
                 android:id="@+id/reaction_image_button" android:scaleType="centerCrop"
                 android:padding="1dp"
                 style="?android:attr/borderlessButtonStyle"/>

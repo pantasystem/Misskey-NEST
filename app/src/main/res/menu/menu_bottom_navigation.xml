@@ -17,7 +17,7 @@
 
     <item
             android:id="@+id/message_item"
-            android:icon="@drawable/mail_icon"
+            android:icon="@drawable/ic_mail"
             android:title="メッセージ"/>
 
 

@@ -37,7 +37,7 @@
                 android:layout_weight="1" android:scaleType="centerInside"/>
         <ImageButton
                 android:layout_width="50dp"
-                android:layout_height="50dp" app:srcCompat="@drawable/global_icon"
+                android:layout_height="50dp" app:srcCompat="@drawable/ic_global"
                 style="?android:attr/borderlessButtonStyle"
                 app:backgroundTint="@color/cast_expanded_controller_progress_text_color"
                 android:id="@+id/visibility_button" android:layout_weight="1" android:scaleType="centerInside"/>

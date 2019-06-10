@@ -16,18 +16,18 @@ class ReactionDialogGridViewAdapter(private val context: Context, private val la
 
 
     private val reactionImageMapping = hashMapOf(
-        ReactionConstData.LIKE to R.drawable.reaction_icon_like,
-        ReactionConstData.LOVE to R.drawable.reaction_icon_love,
-        ReactionConstData.HMM to R.drawable.reaction_icon_hmm,
-        ReactionConstData.SURPRISE to R.drawable.reaction_icon_surprise,
-        ReactionConstData.CONGRATS to R.drawable.reaction_icon_congrats,
-        ReactionConstData.LAUGH to R.drawable.reaction_icon_laugh,
+        ReactionConstData.LIKE to R.drawable.ic_reaction_like,
+        ReactionConstData.LOVE to R.drawable.ic_reaction_love,
+        ReactionConstData.HMM to R.drawable.ic_reaction_hmm,
+        ReactionConstData.SURPRISE to R.drawable.ic_reaction_surprise,
+        ReactionConstData.CONGRATS to R.drawable.ic_reaction_congrats,
+        ReactionConstData.LAUGH to R.drawable.ic_reaction_laugh,
 
 
-        ReactionConstData.ANGRY to R.drawable.reaction_icon_angry,
-        ReactionConstData.CONFUSED to R.drawable.reaction_icon_confused,
-        ReactionConstData.RIP to R.drawable.reaction_icon_rip,
-        ReactionConstData.PUDDING to R.drawable.reaction_icon_pudding
+        ReactionConstData.ANGRY to R.drawable.ic_reaction_angry,
+        ReactionConstData.CONFUSED to R.drawable.ic_reaction_confused,
+        ReactionConstData.RIP to R.drawable.ic_reaction_rip,
+        ReactionConstData.PUDDING to R.drawable.ic_reaction_pudding
     )
 
     private val inflater = LayoutInflater.from(context)

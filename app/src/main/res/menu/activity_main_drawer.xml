@@ -19,7 +19,7 @@
 
         <item
                 android:id="@+id/nav_open_web_misskey"
-                android:icon="@drawable/global_icon"
+                android:icon="@drawable/ic_global"
                 android:title="Webで開く"/>
         <item
             android:id="@+id/nav_open_test"

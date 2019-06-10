@@ -12,7 +12,7 @@
             android:title="ファイル"/>
     <item
             android:id="@+id/notification_item"
-            android:icon="@drawable/global_icon"
+            android:icon="@drawable/ic_global"
             android:title="可視性"/>
 
 

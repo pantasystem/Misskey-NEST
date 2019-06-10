@@ -39,16 +39,16 @@ class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private fun setReactionTypeIcon(type: String?){
         when(type){
-            ReactionConstData.RIP -> typeIcon.setImageResource(R.drawable.reaction_icon_rip)
-            ReactionConstData.PUDDING -> typeIcon.setImageResource(R.drawable.reaction_icon_pudding)
-            ReactionConstData.LOVE -> typeIcon.setImageResource(R.drawable.reaction_icon_love)
-            ReactionConstData.LAUGH -> typeIcon.setImageResource(R.drawable.reaction_icon_laugh)
-            ReactionConstData.ANGRY -> typeIcon.setImageResource(R.drawable.reaction_icon_angry)
-            ReactionConstData.CONFUSED -> typeIcon.setImageResource(R.drawable.reaction_icon_confused)
-            ReactionConstData.CONGRATS -> typeIcon.setImageResource(R.drawable.reaction_icon_congrats)
-            ReactionConstData.HMM -> typeIcon.setImageResource(R.drawable.reaction_icon_hmm)
-            ReactionConstData.LIKE -> typeIcon.setImageResource(R.drawable.reaction_icon_like)
-            ReactionConstData.SURPRISE -> typeIcon.setImageResource(R.drawable.reaction_icon_surprise)
+            ReactionConstData.RIP -> typeIcon.setImageResource(R.drawable.ic_reaction_rip)
+            ReactionConstData.PUDDING -> typeIcon.setImageResource(R.drawable.ic_reaction_pudding)
+            ReactionConstData.LOVE -> typeIcon.setImageResource(R.drawable.ic_reaction_love)
+            ReactionConstData.LAUGH -> typeIcon.setImageResource(R.drawable.ic_reaction_laugh)
+            ReactionConstData.ANGRY -> typeIcon.setImageResource(R.drawable.ic_reaction_angry)
+            ReactionConstData.CONFUSED -> typeIcon.setImageResource(R.drawable.ic_reaction_confused)
+            ReactionConstData.CONGRATS -> typeIcon.setImageResource(R.drawable.ic_reaction_congrats)
+            ReactionConstData.HMM -> typeIcon.setImageResource(R.drawable.ic_reaction_hmm)
+            ReactionConstData.LIKE -> typeIcon.setImageResource(R.drawable.ic_reaction_like)
+            ReactionConstData.SURPRISE -> typeIcon.setImageResource(R.drawable.ic_reaction_surprise)
         }
     }
 

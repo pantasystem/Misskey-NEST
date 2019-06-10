@@ -18,16 +18,16 @@ import org.panta.misskey_nest.entity.ReactionCountPair
     private data class ViewHolder(val reactionIconView: ImageButton, val reactionCount: TextView)
     private val inflater = LayoutInflater.from(context)
 
-    private val reactionImageMapping = hashMapOf("like" to R.drawable.reaction_icon_like ,
-        "love" to R.drawable.reaction_icon_love ,
-        "laugh" to R.drawable.reaction_icon_laugh,
-        "hmm" to R.drawable.reaction_icon_hmm,
-        "surprise" to R.drawable.reaction_icon_surprise ,
-        "congrats" to R.drawable.reaction_icon_congrats,
-        "angry" to R.drawable.reaction_icon_angry,
-        "confused" to R.drawable.reaction_icon_confused,
-        "rip" to R.drawable.reaction_icon_rip,
-        "pudding" to R.drawable.reaction_icon_pudding)
+    private val reactionImageMapping = hashMapOf("like" to R.drawable.ic_reaction_like ,
+        "love" to R.drawable.ic_reaction_love ,
+        "laugh" to R.drawable.ic_reaction_laugh,
+        "hmm" to R.drawable.ic_reaction_hmm,
+        "surprise" to R.drawable.ic_reaction_surprise ,
+        "congrats" to R.drawable.ic_reaction_congrats,
+        "angry" to R.drawable.ic_reaction_angry,
+        "confused" to R.drawable.ic_reaction_confused,
+        "rip" to R.drawable.ic_reaction_rip,
+        "pudding" to R.drawable.ic_reaction_pudding)
 
     override fun getCount(): Int {
         return reactionCountPairList.size

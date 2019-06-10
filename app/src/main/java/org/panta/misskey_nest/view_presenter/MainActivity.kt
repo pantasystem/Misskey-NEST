@@ -179,8 +179,8 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
             when(n){
                 0 -> tab?.setIcon(R.drawable.ic_home)
                 1 -> tab?.setIcon(R.drawable.ic_local)
-                2 -> tab?.setIcon(R.drawable.social_icon)
-                3 -> tab?.setIcon(R.drawable.global_icon)
+                2 -> tab?.setIcon(R.drawable.ic_social)
+                3 -> tab?.setIcon(R.drawable.ic_global)
 
             }
             //timeline_tab_layout.addTab(tab!!)
