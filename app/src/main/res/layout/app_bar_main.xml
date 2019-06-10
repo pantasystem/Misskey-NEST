@@ -58,7 +58,7 @@
 
             android:layout_marginBottom="60dp"
             android:layout_marginEnd="15dp"
-            app:srcCompat="@drawable/ic_send" app:backgroundTint="?attr/colorPrimary"
-            android:tint="@android:color/background_light"/>
+            app:srcCompat="@drawable/ic_send" app:backgroundTint="?attr/colorButtonNormal"
+            />
 
 </android.support.design.widget.CoordinatorLayout>

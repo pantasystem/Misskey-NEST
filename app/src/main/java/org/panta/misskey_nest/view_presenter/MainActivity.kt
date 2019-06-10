@@ -177,10 +177,22 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
             val tab = timeline_tab_layout.getTabAt(n)
 
             when(n){
-                0 -> tab?.setIcon(R.drawable.ic_home)
-                1 -> tab?.setIcon(R.drawable.ic_local)
-                2 -> tab?.setIcon(R.drawable.ic_social)
-                3 -> tab?.setIcon(R.drawable.ic_global)
+                0 ->{
+                    tab?.setIcon(R.drawable.ic_home)
+                    tab?.contentDescription = "Home"
+                }
+                1 ->{
+                    tab?.setIcon(R.drawable.ic_local)
+                    tab?.contentDescription = "Local"
+                }
+                2 ->{
+                    tab?.setIcon(R.drawable.ic_social)
+                    tab?.contentDescription = "Social"
+                }
+                3 ->{
+                    tab?.setIcon(R.drawable.ic_global)
+                    tab?.contentDescription = "Global"
+                }
 
             }
             //timeline_tab_layout.addTab(tab!!)
