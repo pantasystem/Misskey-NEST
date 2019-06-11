@@ -1,7 +1,5 @@
 package org.panta.misskey_nest.view_presenter
 
-import android.app.UiModeManager
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -16,7 +14,6 @@ import android.support.v7.app.AppCompatDelegate
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.WindowManager
 import android.widget.Switch
 import android.widget.Toast
 import com.squareup.picasso.Picasso
@@ -63,17 +60,18 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
     override var mPresenter: MainContract.Presenter? = null
     //private var i: String? = null
     //private var domain: String? = null
-    private lateinit var sharedOperator: ISharedPreferenceOperator
+    private val mSharedOperator: ISharedPreferenceOperator by lazy{
+        SharedPreferenceOperator(this)
+    }
 
     private lateinit var mNotificationEnabledSwitch: Switch
 
-    private lateinit var mUiModeManager: UiModeManager
+    //private lateinit var mUiModeManager: UiModeManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        sharedOperator = SharedPreferenceOperator(this)
-        mPresenter = MainPresenter(this, sharedOperator)
+        mPresenter = MainPresenter(this, mSharedOperator)
         //setThemeFromType(this)
         if(super.isNightMode()){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -131,7 +129,7 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
         }
         mPresenter?.isEnabledNotification()
 
-        mUiModeManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
+        //mUiModeManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
 
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 

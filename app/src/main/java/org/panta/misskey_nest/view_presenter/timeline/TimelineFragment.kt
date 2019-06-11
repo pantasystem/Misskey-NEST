@@ -66,7 +66,9 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     private var connectionInfo: ConnectionProperty? = null
 
     private var mTimelineType: TimelineTypeEnum = TimelineTypeEnum.HOME
-    private var mLayoutManager: LinearLayoutManager? = null
+    private val mLayoutManager: LinearLayoutManager by lazy{
+        LinearLayoutManager(context)
+    }
     private var mAdapter: TimelineAdapter? = null
 
     //private var isMediaOnly: Boolean? = null
@@ -112,7 +114,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         super.onViewCreated(view, savedInstanceState)
         timelineView.addOnScrollListener(listener)
         mPresenter?.initTimeline()
-        mLayoutManager = LinearLayoutManager(context)
+        //mLayoutManager = LinearLayoutManager(context)
 
         refresh?.setOnRefreshListener(this)
 
@@ -210,11 +212,11 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     }
 
     override fun bindFirstVisibleItemPosition(): Int? {
-        return mLayoutManager?.findFirstVisibleItemPosition()
+        return mLayoutManager.findFirstVisibleItemPosition()
     }
 
     override fun bindTotalItemCount(): Int? {
-        return mLayoutManager?.itemCount
+        return mLayoutManager.itemCount
     }
 
     override fun pickViewData(index: Int): NoteViewData? {
