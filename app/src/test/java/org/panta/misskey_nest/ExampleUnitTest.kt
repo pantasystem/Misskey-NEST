@@ -1,4 +1,4 @@
-package org.panta.misskey_nest
+package org.panta.misskeynest
 
 import android.util.Log
 import org.junit.Test

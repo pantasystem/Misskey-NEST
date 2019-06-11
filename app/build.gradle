@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "org.panta.misskey_nest"
+        applicationId "org.panta.misskeynest"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 9

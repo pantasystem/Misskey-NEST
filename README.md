@@ -10,17 +10,11 @@ TimelineとReply Renote　Reactionと投稿はできる
 使えたもんじ
 
 ## Requirement
-###普通に使う場合
-野良APKを公開しているので、ダウンロードする。
-https://drive.google.com/drive/folders/1_VJjwzp5VDf09O7gZENhLVpoWalDVHWE
-アプリを起動して、接続するインスタンスをタップして認証ボタンを押す。
-権限の許可をすると勝手にリダイレクトしてタイムラインが表示される。
 
-###自分でビルドする場合
 まず
 https://misskey.io/dev/apps　で自分のappSecretを作成する
 ※権限は全て選択すること。
-次にpackage org.panta.misskey_nest.constant;パッケージに
+次にpackage org.panta.misskeynest.constant;パッケージに
 abstractなApplicationConstantクラスを作成しそこにstaticなgetAppSecretKey()メソッドを作成する。
 getAppSecretKey()の中に取得したappSecretをreturnするようにすればOK
 ※他人に配布する場合は必ずデコンパイルされたときにこのappSecretが盗まれないように難読化すること。

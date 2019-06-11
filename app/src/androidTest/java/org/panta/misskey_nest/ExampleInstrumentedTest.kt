@@ -1,4 +1,4 @@
-package org.panta.misskey_nest
+package org.panta.misskeynest
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
