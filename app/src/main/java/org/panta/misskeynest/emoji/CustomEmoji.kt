@@ -25,7 +25,7 @@ class CustomEmoji(private val context: Context){
         private val spannableCache = SpannableStringBuilderCache()
     }
 
-    private val svgParser = SVGParser(bitmapCache)
+    private val svgParser = SVGParser()
     private val emojiFileList = context.fileList().map{
         File(context.filesDir, it)
     }
@@ -69,17 +69,31 @@ class CustomEmoji(private val context: Context){
                         val midwayText = charTmp.toString()
                         val emojiFile = getEmojisFile(midwayText)
                         val notesEmoji = notesEmojiList?.firstOrNull{ it.name == midwayText }
-                        if(emojiFile != null){
-                            //ローカルストレージに存在する場合
-                            appendImageSpanFromFile(spannable, midwayText, emojiFile, textView.textSize.toInt())
-                        }else if(notesEmoji != null){
-                            //ローカルストレージに存在しない場合
-                            appendImageSpanFromEmojiProperty(spannable, midwayText, notesEmoji, textView.textSize.toInt())
+
+                        Log.d("midwayText", "中間テキストは: $midwayText")
+                        if(emojiFile == null && notesEmoji == null){
+                            //絵文字ではない場合
+                            spannable
+                                .append(midwayText)
+                                .append(c)
                         }else{
-                            //通常の文字列だった場合
-                            spannable.append(midwayText)
-                            spannable.append(c)
+                            val size = textView.textSize.toInt()
+                            val bitmap = when {
+                                emojiFile != null -> getBitmapFromEmojiName(midwayText, size)
+                                notesEmoji != null -> getBitmapFromEmojiProperty(notesEmoji, size)
+                                else -> null
+                            }
+
+                            if(bitmap == null){
+                                spannable
+                                    .append(midwayText)
+                                    .append(c)
+                            }else{
+                                appendImageSpanFromBitmap(spannable, midwayText, bitmap)
+
+                            }
                         }
+
 
                         charTmp = StringBuilder()
 
@@ -93,7 +107,8 @@ class CustomEmoji(private val context: Context){
                 val last = charTmp.toString()
                 val emojiFile = emojiMap[last.replace(":", "")]
                 if(emojiFile != null){
-                    appendImageSpanFromFile(spannable, last, emojiFile, textView.textSize.toInt())
+                    //appendImageSpanFromFile(spannable, last, emojiFile, textView.textSize.toInt())
+                    //TODO 最後に残ったテキストを追加するようにする
                 }else{
                     spannable.append(last)
                 }
@@ -116,52 +131,7 @@ class CustomEmoji(private val context: Context){
         return emojiMap[emoji.replace(":", "")]
     }
 
-    private suspend fun getEmojisBitmap(emojiProperty: EmojiProperty, size: Int): Bitmap{
 
-        val meta = emojiProperty.getExtension()
-        val bitmap = if(meta == "svg"){
-            val textSvg = emojiProperty.saveSVG(context.openFileOutput(emojiProperty.createFileName(), Context.MODE_PRIVATE))
-            svgParser.getBitmapFromString(textSvg, size, size)
-        }else{
-            resizeBitmap(emojiProperty.saveImage(context.openFileOutput(emojiProperty.createFileName(), Context.MODE_PRIVATE)), size)
-        }
-        updateEmojiMap()
-        return bitmap
-    }
-
-    private fun getEmojisBitmap(emojiFile: File, size: Int): Bitmap{
-
-        return if(emojiFile.path.endsWith(".svg")){
-            svgParser.getBitmapFromFile(emojiFile, size, size)
-        }else{
-            resizeBitmap(BitmapFactory.decodeFile(emojiFile.path), size)
-        }
-    }
-
-
-
-    private fun appendImageSpanFromFile(spannable: SpannableStringBuilder, text: String, emojiFile: File, size: Int){
-        try{
-            val finalSize = (size.toDouble() * 1.2).toInt()
-            val bitmap = getEmojisBitmap(emojiFile, finalSize)
-
-            appendImageSpanFromBitmap(spannable, text, bitmap)
-        }catch(e: Exception){
-            Log.d("CustomEmoji", "appendImageSpan method. エラー発生 text:$text, emojiFile: ${emojiFile.path}")
-        }
-    }
-
-
-    private suspend fun appendImageSpanFromEmojiProperty(spannable: SpannableStringBuilder, text: String, emoji: EmojiProperty, size: Int){
-        try{
-            val finalSize = (size.toDouble() * 1.2).toInt()
-            val bitmap = getEmojisBitmap(emoji, finalSize)
-
-            appendImageSpanFromBitmap(spannable, text, bitmap)
-        }catch(e: Exception){
-            Log.d("CustomEmoji", "appendImageSpan method. エラー発生 text:$text, emoji$emoji}")
-        }
-    }
 
     private fun appendImageSpanFromBitmap(spannable: SpannableStringBuilder, text: String, bitmap: Bitmap){
         try{
@@ -175,19 +145,64 @@ class CustomEmoji(private val context: Context){
         }
     }
 
+    suspend fun getBitmapFromEmojiName(name: String, size: Int): Bitmap?{
+        val cacheBitmap = getBitmapFromCache(name)
+        if(cacheBitmap != null) return cacheBitmap
 
-    private fun resizeBitmap(bitmap: Bitmap, size: Int?): Bitmap{
-        val tmpSize = if(bitmap.width < 50){
-            size ?: 80
+        //ファイル内にないかを調べる
+        val fileBitmap = getBitmapFromFile(name, size)
+        if(fileBitmap != null) return fileBitmap
+
+        return null
+    }
+
+    suspend fun getBitmapFromEmojiProperty(property: EmojiProperty, size: Int): Bitmap?{
+
+        val cacheBitmap = getBitmapFromCache(property.name)
+        if(cacheBitmap != null) return cacheBitmap
+
+        //ファイル内にないかを調べる
+        val fileBitmap = getBitmapFromFile(property.name, size)
+        if(fileBitmap != null) return fileBitmap
+
+        //それでもない場合
+        val meta = property.getExtension()
+        val bitmap = if(meta == "svg"){
+            val textSvg = property.saveSVG(context.openFileOutput(property.createFileName(), Context.MODE_PRIVATE))
+            svgParser.getBitmapFromString(textSvg, size, size)
         }else{
-            size
+            resizeBitmap(property.saveImage(context.openFileOutput(property.createFileName(), Context.MODE_PRIVATE)), size)
         }
+        updateEmojiMap()
+        bitmapCache.put(property.name, bitmap)
+        return bitmap
+    }
 
-        return if(tmpSize == null){
+    private fun getBitmapFromCache(name: String): Bitmap?{
+        //LRUキャッシュに画像がないかを調べる
+        return bitmapCache.get(name)
+    }
+
+    private fun getBitmapFromFile(name: String, size: Int): Bitmap?{
+        val bitmapFile = emojiMap[name]
+        return if(bitmapFile?.exists() == true){
+            val bitmap = if(bitmapFile.path.endsWith(".svg")){
+                svgParser.getBitmapFromFile(bitmapFile, size, size)
+            }else{
+                resizeBitmap(BitmapFactory.decodeFile(bitmapFile.path), size)
+            }
+            //キャッシュに保存
+            bitmapCache.put(name, bitmap)
             bitmap
         }else{
-            val scale = tmpSize / bitmap.width.toDouble()
-            Bitmap.createScaledBitmap(bitmap, (bitmap.width * scale).toInt(), (bitmap.height * scale).toInt(), true)
+            null
         }
     }
+    private fun resizeBitmap(bitmap: Bitmap, size: Int): Bitmap{
+        val scale = size / bitmap.width.toDouble()
+        return Bitmap.createScaledBitmap(bitmap, (bitmap.width * scale).toInt(), (bitmap.height * scale).toInt(), true)
+    }
+
+
+
 }

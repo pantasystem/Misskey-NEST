@@ -8,20 +8,11 @@ import java.io.File
 import java.io.InputStream
 import java.io.InputStreamReader
 
-class SVGParser(private val  bitmapCache: BitmapCache?){
+class SVGParser{
     fun getBitmapFromFile(file: File, width: Int, height: Int): Bitmap {
         if( ! file.path.endsWith(".svg") ) throw IllegalAccessException("This file is not svg file. You must use svg file")
 
-        val cache = bitmapCache?.get(file.path)
-        if(cache != null){
-            return cache
-        }
-
-        val bitmap = getBitmapFromInputStream(file.inputStream(), width, height)
-        bitmapCache?.put(file.path, bitmap)
-
-        return bitmap
-
+        return getBitmapFromInputStream(file.inputStream(), width, height)
     }
 
     fun getBitmapFromInputStream(inputStream: InputStream, width: Int, height: Int): Bitmap{

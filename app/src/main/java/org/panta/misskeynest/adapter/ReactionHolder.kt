@@ -58,7 +58,8 @@ class ReactionHolder(itemView: View, private val  customEmoji: CustomEmoji) : Re
             reactionStringIcon.visibility = View.GONE
             GlobalScope.launch {
                 try{
-                    val bitmap = SVGParser(null).getBitmapFromFile(emojiFile, 50, 50)
+                    //TODO キャッシュの対象にならないので修正する
+                    val bitmap = SVGParser().getBitmapFromFile(emojiFile, 50, 50)
 
                     Handler(Looper.getMainLooper()).post{
                         try{
