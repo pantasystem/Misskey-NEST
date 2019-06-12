@@ -25,7 +25,7 @@ class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
             }
             NotificationType.RENOTE ->{
                 typeIcon.setImageResource(R.drawable.ic_re_note)
-                content.text = property.note?.text
+                content.text = property.note?.renote?.text
             }
             NotificationType.REACTION ->{
                 setReactionTypeIcon(property.reaction)

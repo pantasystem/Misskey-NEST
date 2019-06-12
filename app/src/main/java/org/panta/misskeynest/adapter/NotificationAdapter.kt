@@ -28,12 +28,12 @@ class NotificationAdapter(private val notificationList: List<NotificationViewDat
         val isNotification = viewType == NotificationType.FOLLOW.ordinal|| viewType ==  NotificationType.RENOTE.ordinal || viewType == NotificationType.REACTION.ordinal
         return if(isNotification){
             val view = LayoutInflater.from(p0.context).inflate(R.layout.item_notification, p0,false)
-            org.panta.misskeynest.adapter.NotificationViewHolder(view)
+            NotificationViewHolder(view)
         }else{
             //Log.d("NotificationAdapter", "onCreateViewHolder params:$notificationType")
             val view = LayoutInflater.from(p0.context).inflate(R.layout.item_note, p0, false)
 
-            org.panta.misskeynest.adapter.NoteViewHolder(view, null, CustomEmoji(p0.context))
+            NoteViewHolder(view, null, CustomEmoji(p0.context))
         }
 
 
@@ -41,9 +41,9 @@ class NotificationAdapter(private val notificationList: List<NotificationViewDat
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, p1: Int) {
         val data = notificationList[p1]
-        if(viewHolder is org.panta.misskeynest.adapter.NotificationViewHolder){
+        if(viewHolder is NotificationViewHolder){
             viewHolder.setNotification(data.notificationProperty)
-        }else if(viewHolder is org.panta.misskeynest.adapter.NoteViewHolder){
+        }else if(viewHolder is NoteViewHolder){
             val viewData = data.noteViewData
             viewHolder.invisibleReactionCount()
             when{
