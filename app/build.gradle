@@ -51,5 +51,7 @@ dependencies {
     implementation 'com.vanniktech:emoji-twitter:0.6.0'
     implementation 'com.caverock:androidsvg:1.2.1'
 
+    debugApi 'com.squareup.leakcanary:leakcanary-android:1.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
 
 }

@@ -22,6 +22,7 @@ class CustomEmoji(private val context: Context){
     companion object{
         private val bitmapCache = BitmapCache()
 
+        private val spannableCache = SpannableStringBuilderCache()
     }
 
     private val svgParser = SVGParser(bitmapCache)
@@ -32,7 +33,6 @@ class CustomEmoji(private val context: Context){
         it.name.replace(":", "").split(".")[0] to it
     }.toMap()
 
-    private val spannableCache = SpannableStringBuilderCache()
 
     fun updateEmojiMap(){
         val emojiFileList = context.fileList().map{
