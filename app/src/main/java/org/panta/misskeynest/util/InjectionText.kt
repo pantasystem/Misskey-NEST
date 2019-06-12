@@ -36,9 +36,6 @@ class InjectionText{
                 view.visibility = View.VISIBLE
             }
         }
-        Handler(Looper.getMainLooper()).post{
-            view.visibility = View.INVISIBLE
-        }
 
         if(text == null){
             return
@@ -57,10 +54,15 @@ class InjectionText{
 
         val tmpTextBuilder = StringBuilder()
         (0 until count).forEach{ _ ->
-            tmpTextBuilder.append(' ')
+            tmpTextBuilder.append("あ")
         }
-        view.text = tmpTextBuilder.toString()
-        view.visibility = View.VISIBLE
+
+        Handler(Looper.getMainLooper()).post{
+            Log.d("InjectionText", "擬似テキスト表示")
+            view.text = tmpTextBuilder.toString()
+            view.visibility = View.VISIBLE
+        }
+
 
         GlobalScope.launch{
             try{
@@ -83,11 +85,11 @@ class InjectionText{
 
     private fun countEmoji(text: String, emojis: List<EmojiProperty>): Int{
         val splitText = text.split(':')
-        return splitText.count{k ->
+        return (splitText.count{k ->
             emojis.any{l ->
                 l.name == k
             }
-        }
+        }.toDouble() * 0.9).toInt()
 
     }
 

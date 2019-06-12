@@ -22,7 +22,7 @@ class CustomEmoji(private val context: Context){
     companion object{
         private val bitmapCache = BitmapCache()
 
-        private val spannableCache = SpannableStringBuilderCache()
+        private val spannableCache = SpannableStringCache()
     }
 
     private val svgParser = SVGParser()
@@ -113,7 +113,7 @@ class CustomEmoji(private val context: Context){
                     spannable.append(last)
                 }
 
-                spannableCache.put(text, spannable)
+                //spannableCache.put(text, spannable)
                 Handler(Looper.getMainLooper()).post{
                     textView.text = spannable
                     textView.visibility = View.VISIBLE

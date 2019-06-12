@@ -1,20 +1,17 @@
 package org.panta.misskeynest.util
 
-import android.graphics.drawable.BitmapDrawable
-import android.text.SpannableStringBuilder
-import android.text.style.ImageSpan
-import android.util.Log
+import android.text.SpannableString
 import android.util.LruCache
 
-class SpannableStringBuilderCache : LruCache<String, SpannableStringBuilder>(16) {
+class SpannableStringCache : LruCache<String, SpannableString>(20 ) {
 
-    override fun sizeOf(key: String?, value: SpannableStringBuilder?): Int {
+    override fun sizeOf(key: String?, value: SpannableString?): Int {
 
         if(value == null){
             return 0
         }
 
-        var totalSize: Int = 0
+        /*var totalSize: Int = 0
         val imageSpans = value.getSpans(0, value.length, ImageSpan::class.java)
         imageSpans.forEach{
             val drawable = it.drawable
@@ -26,7 +23,8 @@ class SpannableStringBuilderCache : LruCache<String, SpannableStringBuilder>(16)
             }
         }
         Log.d("SpannableCache", "トータルサイズは: $totalSize")
-        return totalSize
+        return totalSize*/
+        return value.length
     }
 
 

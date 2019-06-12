@@ -17,7 +17,7 @@ class CustomEmojiTextBuilder(private val context: Context, private val size: Int
     companion object{
         private val bitmapCache = BitmapCache()
 
-        private val spannableCache = SpannableStringBuilderCache()
+        private val spannableCache = SpannableStringCache()
     }
 
     private val svgParser = SVGParser()
@@ -48,8 +48,11 @@ class CustomEmojiTextBuilder(private val context: Context, private val size: Int
         mSpannable = SpannableStringBuilder()
         val cache = spannableCache.get(text)
         if(cache != null){
-            return SpannableString(cache)
+            Log.d("CustomEmojiTextBuilder", "キャッシュから見つかったので終了 $text")
+            return cache
         }
+
+        Log.d("CustomEmojiTextBuilder", "キャッシュから見つからなかったので続行 $text")
 
 
         try{
@@ -80,8 +83,9 @@ class CustomEmojiTextBuilder(private val context: Context, private val size: Int
                 mSpannable.append(last)
             }
 
-            spannableCache.put(text, mSpannable)
-            return SpannableString(mSpannable)
+            val spannableString = SpannableString(mSpannable)
+            spannableCache.put(text, spannableString)
+            return spannableString
 
         }catch(e: Exception){
             Log.d("CustomEmoji", "error", e)
@@ -94,7 +98,7 @@ class CustomEmojiTextBuilder(private val context: Context, private val size: Int
         val emojiFile = getEmojisFile(midwayText)
         val notesEmoji = emojiList?.firstOrNull{ it.name == midwayText }
 
-        Log.d("midwayText", "中間テキストは: $midwayText")
+        //Log.d("midwayText", "中間テキストは: $midwayText")
         if(emojiFile == null && notesEmoji == null){
             //絵文字ではない場合
             appendNormalText(midwayText, c)
