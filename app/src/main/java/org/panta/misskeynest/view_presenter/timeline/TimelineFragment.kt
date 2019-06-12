@@ -1,8 +1,5 @@
 package org.panta.misskeynest.view_presenter.timeline
 
-import android.app.AlertDialog
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -12,25 +9,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import org.panta.misskeynest.R
 import org.panta.misskeynest.adapter.TimelineAdapter
-import org.panta.misskeynest.constant.NoteType
 import org.panta.misskeynest.constant.TimelineTypeEnum
-import org.panta.misskeynest.dialog.ReactionDialog
 import org.panta.misskeynest.entity.ConnectionProperty
-import org.panta.misskeynest.entity.FileProperty
-import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.User
-import org.panta.misskeynest.interfaces.*
-import org.panta.misskeynest.util.copyToClipboad
-import org.panta.misskeynest.view_data.NoteViewData
-import org.panta.misskeynest.view_presenter.image_viewer.ImageViewerActivity
-import org.panta.misskeynest.view_presenter.note_description.NoteDescriptionActivity
-import org.panta.misskeynest.view_presenter.note_editor.EditNoteActivity
-import org.panta.misskeynest.view_presenter.user.UserActivity
+import org.panta.misskeynest.interfaces.IBindScrollPosition
+import org.panta.misskeynest.interfaces.IItemRepository
+import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.listener.NoteClickListener
+import org.panta.misskeynest.view_data.NoteViewData
+import org.panta.misskeynest.view_presenter.user.UserActivity
 
 class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, TimelineContract.View,
     /*NoteClickListener,*/ /*UserClickListener,*/ IBindScrollPosition{
@@ -54,10 +44,6 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
     override var mPresenter: TimelineContract.Presenter? = null
 
-    private val reactionRequestCode = 23457
-
-    //private var instanceDomain: String? = null
-    //private var i: String? = null
     private var connectionInfo: ConnectionProperty? = null
 
     private var mTimelineType: TimelineTypeEnum = TimelineTypeEnum.HOME
@@ -67,9 +53,6 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     private var mAdapter: TimelineAdapter? = null
 
     private lateinit var mNoteClickListener: NoteClickListener
-
-    //private var isMediaOnly: Boolean? = null
-    //private var userId: String? = null
 
     var mNoteRepository: IItemRepository<NoteViewData>? = null
         set(value) {
@@ -81,8 +64,6 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
                 Log.d(tag, if(value == null) "NULLだなんでだ！！！" else "重要な情報が来ない")
             }
         }
-
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
