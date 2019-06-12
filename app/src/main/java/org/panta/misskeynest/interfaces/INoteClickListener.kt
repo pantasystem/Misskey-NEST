@@ -5,7 +5,7 @@ import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.view_data.NoteViewData
 import java.util.*
 
-interface NoteClickListener {
+interface INoteClickListener {
     fun onNoteClicked(targetId: String?, note: Note?)
     fun onReplyButtonClicked(targetId: String?, note: Note?)
     fun onReNoteButtonClicked(targetId: String?, note: Note?)

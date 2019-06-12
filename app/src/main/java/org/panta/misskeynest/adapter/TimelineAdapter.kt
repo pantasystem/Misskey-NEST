@@ -11,8 +11,8 @@ import android.view.ViewGroup
 import org.panta.misskeynest.R
 import org.panta.misskeynest.emoji.CustomEmoji
 import org.panta.misskeynest.interfaces.IOperationAdapter
-import org.panta.misskeynest.interfaces.NoteClickListener
-import org.panta.misskeynest.interfaces.UserClickListener
+import org.panta.misskeynest.interfaces.INoteClickListener
+import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.usecase.NoteAdjustment
 import org.panta.misskeynest.view_data.NoteViewData
 import java.io.File
@@ -20,8 +20,8 @@ import java.io.File
 class TimelineAdapter(private val context: Context, notesList: List<NoteViewData>) : RecyclerView.Adapter<org.panta.misskeynest.adapter.NoteViewHolder>(), IOperationAdapter<NoteViewData>{
 
     private val mArrayList = ArrayList<NoteViewData>(notesList)
-    private var noteClickListener: NoteClickListener? = null
-    private var userClickListener: UserClickListener? = null
+    private var noteClickListener: INoteClickListener? = null
+    private var userClickListener: IUserClickListener? = null
 
     //var reactionIconFileList: List<File>? = null
 
@@ -144,11 +144,11 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
         }
     }
 
-    fun addNoteClickListener(listener: NoteClickListener){
+    fun addNoteClickListener(listener: INoteClickListener){
         this.noteClickListener = listener
     }
 
-    fun addUserClickListener(listener: UserClickListener){
+    fun addUserClickListener(listener: IUserClickListener){
         this.userClickListener = listener
     }
 

@@ -23,19 +23,13 @@ import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.User
-import org.panta.misskeynest.interfaces.IBindScrollPosition
-import org.panta.misskeynest.interfaces.IItemRepository
-import org.panta.misskeynest.interfaces.NoteClickListener
-import org.panta.misskeynest.interfaces.UserClickListener
-import org.panta.misskeynest.repository.*
+import org.panta.misskeynest.interfaces.*
 import org.panta.misskeynest.util.copyToClipboad
 import org.panta.misskeynest.view_data.NoteViewData
 import org.panta.misskeynest.view_presenter.image_viewer.ImageViewerActivity
 import org.panta.misskeynest.view_presenter.note_description.NoteDescriptionActivity
 import org.panta.misskeynest.view_presenter.note_editor.EditNoteActivity
 import org.panta.misskeynest.view_presenter.user.UserActivity
-import java.io.File
-import java.net.URL
 
 class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, TimelineContract.View,
     /*NoteClickListener,*/ /*UserClickListener,*/ IBindScrollPosition{
@@ -228,13 +222,13 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     }
 
 
-    private val userClickListener = object: UserClickListener{
+    private val userClickListener = object: IUserClickListener{
         override fun onClickedUser(user: User) {
             UserActivity.startActivity(context!!, user)
         }
     }
 
-    private val noteClickListener = object: NoteClickListener{
+    private val noteClickListener = object: INoteClickListener {
         override fun onNoteClicked(targetId: String?, note: Note?) {
             Log.d("TimelineFragment", "Noteをクリックした")
             val intent = Intent(context, NoteDescriptionActivity::class.java)

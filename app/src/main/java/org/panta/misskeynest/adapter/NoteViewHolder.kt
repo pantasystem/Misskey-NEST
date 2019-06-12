@@ -13,8 +13,8 @@ import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.ItemClickListener
-import org.panta.misskeynest.interfaces.NoteClickListener
-import org.panta.misskeynest.interfaces.UserClickListener
+import org.panta.misskeynest.interfaces.INoteClickListener
+import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.util.InjectionText
 import org.panta.misskeynest.util.RoundedTransformation
 import org.panta.misskeynest.view_data.NoteViewData
@@ -22,8 +22,8 @@ import java.io.File
 
 open class NoteViewHolder(itemView: View, private val linearLayoutManager: LinearLayoutManager?, private val customEmoji: CustomEmoji) : RecyclerView.ViewHolder(itemView){
 
-    private var contentClickListener: NoteClickListener? = null
-    private var userClickListener: UserClickListener? = null
+    private var contentClickListener: INoteClickListener? = null
+    private var userClickListener: IUserClickListener? = null
 
     private val timelineItem = itemView.base_layout
     private val whoReactionUserLink: Button = itemView.who_reaction_user_link
@@ -145,10 +145,10 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         reactionView.visibility = View.GONE
     }
 
-    fun addOnItemClickListener(listener: NoteClickListener?){
+    fun addOnItemClickListener(listener: INoteClickListener?){
         contentClickListener = listener
     }
-    fun addOnUserClickListener(listener: UserClickListener?){
+    fun addOnUserClickListener(listener: IUserClickListener?){
         this.userClickListener = listener
     }
 

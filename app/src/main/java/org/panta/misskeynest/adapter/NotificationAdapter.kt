@@ -8,16 +8,16 @@ import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.NotificationType
 import org.panta.misskeynest.emoji.CustomEmoji
 import org.panta.misskeynest.interfaces.IOperationAdapter
-import org.panta.misskeynest.interfaces.NoteClickListener
-import org.panta.misskeynest.interfaces.UserClickListener
+import org.panta.misskeynest.interfaces.INoteClickListener
+import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.usecase.NoteAdjustment
 import org.panta.misskeynest.view_data.NotificationViewData
 import java.io.File
 
 class NotificationAdapter(private val notificationList: List<NotificationViewData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), IOperationAdapter<NotificationViewData>{
 
-    var noteClickListener: NoteClickListener? = null
-    var userClickListener: UserClickListener? = null
+    var noteClickListener: INoteClickListener? = null
+    var userClickListener: IUserClickListener? = null
 
     override fun getItemCount(): Int {
         return notificationList.size
