@@ -24,6 +24,7 @@ import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.IUserClickListener
+import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.util.copyToClipboad
 import org.panta.misskeynest.view_data.NoteViewData
 import org.panta.misskeynest.view_data.NotificationViewData
@@ -51,6 +52,8 @@ class NotificationFragment : Fragment(), NotificationContract.View{
     }
     private var connectionInfo: ConnectionProperty? = null
 
+    private lateinit var mNoteClickListener: NoteClickListener
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
@@ -68,6 +71,14 @@ class NotificationFragment : Fragment(), NotificationContract.View{
         mPresenter?.initNotification()
         refresh.setOnRefreshListener{
             mPresenter?.getNewNotification()
+        }
+
+        if(context != null && activity != null && connectionInfo != null){
+            mNoteClickListener = NoteClickListener(context!!, activity!!, connectionInfo!!)
+            mNoteClickListener.onShowReactionDialog = {
+                it.show(activity?.supportFragmentManager, "dialog")
+            }
+
         }
 
     }
@@ -98,7 +109,8 @@ class NotificationFragment : Fragment(), NotificationContract.View{
 
             notification_view?.layoutManager = mLayoutManager
             val adapter = NotificationAdapter(list)
-            adapter.noteClickListener = noteClickListener
+
+            adapter.noteClickListener = mNoteClickListener
             adapter.userClickListener = userClickListener
 
             notification_view?.adapter = adapter
@@ -132,69 +144,12 @@ class NotificationFragment : Fragment(), NotificationContract.View{
     }
 
 
-    //TODO TimelineFragmentからコピーしてきた必ず共通化する
     private val userClickListener = object: IUserClickListener {
         override fun onClickedUser(user: User) {
             UserActivity.startActivity(context!!, user)
         }
     }
 
-    private val noteClickListener = object: INoteClickListener {
-        override fun onNoteClicked(targetId: String?, note: Note?) {
-            Log.d("TimelineFragment", "Noteをクリックした")
-            val intent = Intent(context, NoteDescriptionActivity::class.java)
-            intent.putExtra(NoteDescriptionActivity.NOTE_DESCRIPTION_NOTE_PROPERTY, note)
-            startActivity(intent)
-        }
-        override fun onReplyButtonClicked(targetId: String?, note: Note?) {
-            EditNoteActivity.startActivity(context!!, targetId, NoteType.REPLY)
-        }
-
-        override fun onReactionClicked(targetId: String?, note: Note?, viewData: NoteViewData,reactionType: String?) {
-            //mPresenter?.setReactionSelectedState(targetId, note, viewData, reactionType)
-        }
-
-        override fun onReNoteButtonClicked(targetId: String?, note: Note?) {
-            EditNoteActivity.startActivity(context!!, targetId, NoteType.RE_NOTE)
-        }
-
-        override fun onDescriptionButtonClicked(targetId: String?, note: Note?) {
-            val item = arrayOf<CharSequence>("内容をコピー", "リンクをコピー", "お気に入り", "ウォッチ", "デバッグ（開発者向け）")
-
-            AlertDialog.Builder(activity).apply{
-                setTitle("詳細")
-                setItems(item){ dialog, which->
-                    when(which){
-                        0 -> copyToClipboad(context, note?.text.toString())
-                        1 -> copyToClipboad(context, note?.url.toString())
-                        2,3 -> Toast.makeText(context, "未実装ですごめんなさい", Toast.LENGTH_SHORT)
-                        4 ->{
-                            AlertDialog.Builder(activity).apply{
-                                if(note is Note){
-                                    val noteString = note.toString().replace(",","\n")
-                                    setMessage(noteString)
-                                }
-                                setPositiveButton(android.R.string.ok){i ,b->
-                                }
-                            }.show()
-                        }
-                    }
-
-                }
-            }.show()
-
-
-        }
-        override fun onImageClicked(clickedIndex: Int, clickedImageUrlCollection: Array<String>) {
-            ImageViewerActivity.startActivity(context, clickedImageUrlCollection, clickedIndex)
-        }
-
-        override fun onMediaPlayClicked(fileProperty: FileProperty) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(fileProperty.url)))
-        }
-
-
-    }
 
 
 

@@ -50,7 +50,7 @@ class TimelinePresenter(private val mView: TimelineContract.View,
         mView.stopRefreshing()
     }
 
-    override fun sendReaction(noteId: String, viewData: NoteViewData, reactionType: String) {
+    /*override fun sendReaction(noteId: String, viewData: NoteViewData, reactionType: String) {
         mReaction.sendReaction(noteId, reactionType){
             if(it){
                 Log.d("TimelinePresenter", "sendReaction成功したようだ")
@@ -64,9 +64,9 @@ class TimelinePresenter(private val mView: TimelineContract.View,
         //mView.showUpdatedNote(viewData)
 
 
-    }
+    }*/
 
-    override fun setReactionSelectedState(targetId: String?, note: Note?, viewData: NoteViewData, reactionType: String?) {
+    /*override fun setReactionSelectedState(targetId: String?, note: Note?, viewData: NoteViewData, reactionType: String?) {
         if(targetId != null && note != null){
             when {
                 viewData.toShowNote.myReaction != null -> deleteReaction(viewData.toShowNote.id)
@@ -75,7 +75,7 @@ class TimelinePresenter(private val mView: TimelineContract.View,
             }
 
         }
-    }
+    }*/
 
     override fun captureNote(noteId: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

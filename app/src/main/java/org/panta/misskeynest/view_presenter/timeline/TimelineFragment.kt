@@ -30,6 +30,7 @@ import org.panta.misskeynest.view_presenter.image_viewer.ImageViewerActivity
 import org.panta.misskeynest.view_presenter.note_description.NoteDescriptionActivity
 import org.panta.misskeynest.view_presenter.note_editor.EditNoteActivity
 import org.panta.misskeynest.view_presenter.user.UserActivity
+import org.panta.misskeynest.listener.NoteClickListener
 
 class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, TimelineContract.View,
     /*NoteClickListener,*/ /*UserClickListener,*/ IBindScrollPosition{
@@ -63,7 +64,9 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     private val mLayoutManager: LinearLayoutManager by lazy{
         LinearLayoutManager(context)
     }
-    private var mAdapter: org.panta.misskeynest.adapter.TimelineAdapter? = null
+    private var mAdapter: TimelineAdapter? = null
+
+    private lateinit var mNoteClickListener: NoteClickListener
 
     //private var isMediaOnly: Boolean? = null
     //private var userId: String? = null
@@ -112,6 +115,13 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
         refresh?.setOnRefreshListener(this)
 
+        if(context != null && activity != null && connectionInfo != null){
+            mNoteClickListener = NoteClickListener(context!!, activity!!, connectionInfo!!)
+            mNoteClickListener.onShowReactionDialog = {
+                it.show(activity?.supportFragmentManager, "reaction_tag")
+            }
+        }
+
     }
 
 
@@ -134,9 +144,9 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             Log.d("TimelineFragment", "データの取得が完了した")
 
 
-            mAdapter = org.panta.misskeynest.adapter.TimelineAdapter(context!!, list)
+            mAdapter = TimelineAdapter(context!!, list)
 
-            mAdapter?.addNoteClickListener(noteClickListener)
+            mAdapter?.addNoteClickListener(mNoteClickListener)
             mAdapter?.addUserClickListener(userClickListener)
 
 
@@ -183,24 +193,6 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     }
 
 
-
-    override fun showReactionSelectorView(targetId: String, viewData: NoteViewData) {
-        val reactionDialog = ReactionDialog.getInstance(targetId, object : ReactionDialog.CallBackListener{
-            override fun callBack(noteId: String?, reactionParameter: String) {
-                if(noteId != null){
-                    Log.d("TimelineFragment", "成功した")
-                    mPresenter?.sendReaction(noteId = noteId, reactionType = reactionParameter, viewData = viewData)
-                }
-            }
-        })
-
-        activity?.runOnUiThread{
-            reactionDialog.setTargetFragment(parentFragment, reactionRequestCode)
-            reactionDialog.show(activity?.supportFragmentManager, "reaction_tag")
-        }
-
-    }
-
     override fun bindFindItemCount(): Int? {
         return timelineView?.childCount
     }
@@ -228,62 +220,6 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         }
     }
 
-    private val noteClickListener = object: INoteClickListener {
-        override fun onNoteClicked(targetId: String?, note: Note?) {
-            Log.d("TimelineFragment", "Noteをクリックした")
-            val intent = Intent(context, NoteDescriptionActivity::class.java)
-            intent.putExtra(NoteDescriptionActivity.NOTE_DESCRIPTION_NOTE_PROPERTY, note)
-            startActivity(intent)
-        }
-        override fun onReplyButtonClicked(targetId: String?, note: Note?) {
-            EditNoteActivity.startActivity(context!!, targetId, NoteType.REPLY)
-        }
-
-        override fun onReactionClicked(targetId: String?, note: Note?, viewData: NoteViewData,reactionType: String?) {
-            mPresenter?.setReactionSelectedState(targetId, note, viewData, reactionType)
-        }
-
-        override fun onReNoteButtonClicked(targetId: String?, note: Note?) {
-            EditNoteActivity.startActivity(context!!, targetId, NoteType.RE_NOTE)
-        }
-
-        override fun onDescriptionButtonClicked(targetId: String?, note: Note?) {
-            val item = arrayOf<CharSequence>("内容をコピー", "リンクをコピー", "お気に入り", "ウォッチ", "デバッグ（開発者向け）")
-
-            AlertDialog.Builder(activity).apply{
-                setTitle("詳細")
-                setItems(item){ dialog, which->
-                    when(which){
-                        0 -> copyToClipboad(context, note?.text.toString())
-                        1 -> copyToClipboad(context, note?.url.toString())
-                        2,3 -> Toast.makeText(context, "未実装ですごめんなさい", Toast.LENGTH_SHORT)
-                        4 ->{
-                            AlertDialog.Builder(activity).apply{
-                                if(note is Note){
-                                    val noteString = note.toString().replace(",","\n")
-                                    setMessage(noteString)
-                                }
-                                setPositiveButton(android.R.string.ok){i ,b->
-                                }
-                            }.show()
-                        }
-                    }
-
-                }
-            }.show()
-
-
-        }
-        override fun onImageClicked(clickedIndex: Int, clickedImageUrlCollection: Array<String>) {
-            ImageViewerActivity.startActivity(context, clickedImageUrlCollection, clickedIndex)
-        }
-
-        override fun onMediaPlayClicked(fileProperty: FileProperty) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(fileProperty.url)))
-        }
-
-
-    }
 
 
     private val listener = object : RecyclerView.OnScrollListener(){

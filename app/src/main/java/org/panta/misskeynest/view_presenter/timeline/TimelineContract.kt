@@ -14,7 +14,7 @@ interface TimelineContract{
         fun stopRefreshing()
         fun onError(errorMsg: String)
         fun showUpdatedNote(noteViewData: NoteViewData)
-        fun showReactionSelectorView(targetId: String, viewData: NoteViewData)
+        //fun showReactionSelectorView(targetId: String, viewData: NoteViewData)
     }
 
     interface Presenter : BasePresenter {
@@ -22,8 +22,8 @@ interface TimelineContract{
         fun getOldTimeline()
         fun initTimeline()
         fun captureNote(noteId: String)
-        fun sendReaction(noteId: String, viewData: NoteViewData, reactionType: String)
-        fun setReactionSelectedState(targetId: String?, note: Note?, viewData: NoteViewData, reactionType: String?)
+        //fun sendReaction(noteId: String, viewData: NoteViewData, reactionType: String)
+        //fun setReactionSelectedState(targetId: String?, note: Note?, viewData: NoteViewData, reactionType: String?)
         fun onRefresh()
     }
 }
