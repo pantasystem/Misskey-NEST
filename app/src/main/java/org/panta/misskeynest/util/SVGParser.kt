@@ -12,13 +12,13 @@ class SVGParser(private val  bitmapCache: BitmapCache?){
     fun getBitmapFromFile(file: File, width: Int, height: Int): Bitmap {
         if( ! file.path.endsWith(".svg") ) throw IllegalAccessException("This file is not svg file. You must use svg file")
 
-        val cache = bitmapCache?.getBitmap(file.path)
+        val cache = bitmapCache?.get(file.path)
         if(cache != null){
             return cache
         }
 
         val bitmap = getBitmapFromInputStream(file.inputStream(), width, height)
-        bitmapCache?.pushCache(file.path, bitmap)
+        bitmapCache?.put(file.path, bitmap)
 
         return bitmap
 

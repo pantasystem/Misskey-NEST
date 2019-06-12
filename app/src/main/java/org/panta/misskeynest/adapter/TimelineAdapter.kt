@@ -10,14 +10,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.panta.misskeynest.R
 import org.panta.misskeynest.emoji.CustomEmoji
-import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.INoteClickListener
+import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.usecase.NoteAdjustment
 import org.panta.misskeynest.view_data.NoteViewData
-import java.io.File
 
-class TimelineAdapter(private val context: Context, notesList: List<NoteViewData>) : RecyclerView.Adapter<org.panta.misskeynest.adapter.NoteViewHolder>(), IOperationAdapter<NoteViewData>{
+class TimelineAdapter(private val context: Context, notesList: List<NoteViewData>) : RecyclerView.Adapter<NoteViewHolder>(), IOperationAdapter<NoteViewData>{
 
     private val mArrayList = ArrayList<NoteViewData>(notesList)
     private var noteClickListener: INoteClickListener? = null
@@ -29,14 +28,14 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
         return mArrayList.size
     }
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): org.panta.misskeynest.adapter.NoteViewHolder {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): NoteViewHolder {
         val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_note, p0, false)
         val lm = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        return org.panta.misskeynest.adapter.NoteViewHolder(inflater, lm, CustomEmoji(p0.context))
+        return NoteViewHolder(inflater, lm, CustomEmoji(p0.context))
 
     }
 
-    override fun onBindViewHolder(viewHolder: org.panta.misskeynest.adapter.NoteViewHolder, p1: Int) {
+    override fun onBindViewHolder(viewHolder: NoteViewHolder, p1: Int) {
         val viewData = mArrayList[p1]
         //viewHolder.reactionIconFileList = emojiFileList
 

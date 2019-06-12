@@ -3,7 +3,6 @@ package org.panta.misskeynest.emoji
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Canvas
 import android.os.Handler
 import android.os.Looper
 import android.text.SpannableStringBuilder
@@ -12,22 +11,16 @@ import android.text.style.ImageSpan
 import android.util.Log
 import android.view.View
 import android.widget.TextView
-import com.caverock.androidsvg.SVG
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.EmojiProperty
 import org.panta.misskeynest.util.*
-import java.io.BufferedReader
 import java.io.File
-import java.io.InputStreamReader
-import java.net.URL
 
 class CustomEmoji(private val context: Context){
 
     companion object{
-
-        private val bitmapCache = BitmapCache(10)
-
+        private val bitmapCache = BitmapCache()
 
     }
 
