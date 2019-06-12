@@ -4,21 +4,24 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_note.view.*
 import org.panta.misskeynest.R
 import org.panta.misskeynest.emoji.CustomEmoji
+import org.panta.misskeynest.entity.EmojiProperty
 import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.User
-import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.IUserClickListener
+import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.util.InjectionText
 import org.panta.misskeynest.util.RoundedTransformation
 import org.panta.misskeynest.view_data.NoteViewData
-import java.io.File
 
 open class NoteViewHolder(itemView: View, private val linearLayoutManager: LinearLayoutManager?, private val customEmoji: CustomEmoji) : RecyclerView.ViewHolder(itemView){
 
@@ -57,7 +60,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
 
     private val mediaPlayButton: Button = itemView.media_play_button
 
-    private val injectionText = InjectionText(customEmoji)
+    private val injectionText = InjectionText()
 
     fun setNote(content: NoteViewData){
         val toShowNote = content.toShowNote
@@ -199,7 +202,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
 
 
     private fun setNoteContent(note: Note){
-        injectionName(note.user?.name, note.user?.userName, userName)
+        injectionName(note.user?.name, note.user?.userName, userName, note.user?.emojis)
         injectionId(note.user?.userName, note.user?.host, userId)
         roundInjectionImage(note.user?.avatarUrl?:"non", userIcon, 180)
         injectionText.injectionTextGoneWhenNull(note.text, noteText, note.emojis)
@@ -213,7 +216,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
     }
 
     private fun setSubContent(note: Note){
-        injectionName(note.user?.name, note.user?.userName, subUserName)
+        injectionName(note.user?.name, note.user?.userName, subUserName, note.user?.emojis)
         injectionId(note.user?.userName, note.user?.host, subUserId)
         roundInjectionImage(note.user?.avatarUrl?:"non", subUserIcon, 180)
         injectionText.injectionTextGoneWhenNull(note.text, subNoteText)
@@ -277,9 +280,9 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
 
 
 
-    private fun injectionName(name: String?, id: String?, view: TextView){
+    private fun injectionName(name: String?, id: String?, view: TextView, emojis: List<EmojiProperty>?){
         val tmpName = name?: id.toString()
-        injectionText.injection(tmpName, view)
+        injectionText.injection(tmpName, view, emojis)
     }
 
     private fun injectionId(id: String?, host: String?, view: TextView){

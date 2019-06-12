@@ -3,7 +3,7 @@ package org.panta.misskeynest.util
 import android.graphics.Bitmap
 import android.util.LruCache
 
-class BitmapCache: LruCache<String, Bitmap>(10){
+class BitmapCache: LruCache<String, Bitmap>(30){
     //private val cache = ArrayDeque<Pair<String, Bitmap>>()
 
     override fun sizeOf(key: String?, value: Bitmap?): Int {

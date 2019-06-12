@@ -7,11 +7,10 @@ import android.view.View
 import android.widget.TextView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.panta.misskeynest.emoji.CustomEmoji
 import org.panta.misskeynest.emoji.CustomEmojiTextBuilder
 import org.panta.misskeynest.entity.EmojiProperty
 
-class InjectionText(private val customEmoji: CustomEmoji){
+class InjectionText{
     fun injectionTextGoneWhenNull(text: String?, view: TextView, emojis: List<EmojiProperty>? = null){
         if(text == null){
             view.visibility = View.GONE
@@ -30,31 +29,65 @@ class InjectionText(private val customEmoji: CustomEmoji){
         injection(text, view, emojis)
     }
 
-    fun injection(text: String?, view: TextView, emojis: List<EmojiProperty>? = null){
-        if(text?.contains(":") == true){
-            val builder = CustomEmojiTextBuilder(view.context, view.textSize.toInt())
+    fun injection(text: String?, view: TextView, emojis: List<EmojiProperty>?){
+        fun setAndVisibleView(){
             Handler(Looper.getMainLooper()).post{
-                view.visibility = View.INVISIBLE
+                view.text = text
+                view.visibility = View.VISIBLE
             }
-            GlobalScope.launch{
-                try{
-                    val span = builder.createSpannableString(text, emojis)
-
-                    Handler(Looper.getMainLooper()).post{
-                        view.text = span
-                        view.visibility = View.VISIBLE
-                    }
-                }catch(e: Exception){
-                    Log.e("InjectionText", "error $text", e)
-                }
-
-
-            }
-        }else{
-            view.text= text
-
         }
+        Handler(Looper.getMainLooper()).post{
+            view.visibility = View.INVISIBLE
+        }
+
+        if(text == null){
+            return
+        }
+
+        if(emojis == null){
+            setAndVisibleView()
+            return
+        }
+        if( ! text.contains(":")){
+            setAndVisibleView()
+            return
+        }
+
+        val count = countEmoji(text, emojis)
+
+        val tmpTextBuilder = StringBuilder()
+        (0 until count).forEach{ _ ->
+            tmpTextBuilder.append(' ')
+        }
+        view.text = tmpTextBuilder.toString()
         view.visibility = View.VISIBLE
+
+        GlobalScope.launch{
+            try{
+                val builder = CustomEmojiTextBuilder(view.context, view.textSize.toInt())
+
+                val span = builder.createSpannableString(text, emojis)
+
+                Handler(Looper.getMainLooper()).post {
+                    view.text = span
+                    view.visibility = View.VISIBLE
+                }
+            }catch (e: Exception){
+                Log.e("InjectionText", "error $text", e)
+
+            }
+        }
+
+
+    }
+
+    private fun countEmoji(text: String, emojis: List<EmojiProperty>): Int{
+        val splitText = text.split(':')
+        return splitText.count{k ->
+            emojis.any{l ->
+                l.name == k
+            }
+        }
 
     }
 
