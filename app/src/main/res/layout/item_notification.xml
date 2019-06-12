@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@id/notification_user_icon"
-            android:layout_below="@+id/notification_status_icon" android:layout_marginTop="8dp"
+            android:layout_below="@+id/notification_user_name" android:layout_marginTop="8dp"
             android:layout_marginBottom="10dp"/>
     <View
             android:id="@+id/horizon-line"
