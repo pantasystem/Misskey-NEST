@@ -19,13 +19,15 @@ import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.ITimeFormat
 import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.interfaces.ItemClickListener
-import org.panta.misskeynest.util.ElapasedTimeFormatter
+import org.panta.misskeynest.util.ElapsedTimeFormatter
 import org.panta.misskeynest.util.InjectionText
 import org.panta.misskeynest.util.RoundedTransformation
 import org.panta.misskeynest.view_data.NoteViewData
+import java.util.*
+import kotlin.collections.ArrayList
 
-open class NoteViewHolder(itemView: View, private val linearLayoutManager: LinearLayoutManager?,
-                          private val timeFormatter: ITimeFormat = ElapasedTimeFormatter()) : RecyclerView.ViewHolder(itemView){
+open class NoteViewHolder(itemView: View, private val mLinearLayoutManager: LinearLayoutManager?,
+                          private val mTimeFormatter: ITimeFormat = ElapsedTimeFormatter()) : RecyclerView.ViewHolder(itemView){
 
     private var contentClickListener: INoteClickListener? = null
     private var userClickListener: IUserClickListener? = null
@@ -36,6 +38,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
     private val userName: TextView = itemView.user_name
     private val userId: TextView = itemView.user_id
     private val noteText: TextView = itemView.note_text
+    private val elapsedTime: TextView = itemView.elapsed_time
 
     private val imageView1: ImageView = itemView.image_1
     private val imageView2: ImageView = itemView.image_2
@@ -77,6 +80,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         showThreadButton.visibility = View.GONE
         subNote.visibility = View.GONE
         setReactionCount(content)
+        setElapsedTime(content.note.createdAt)
     }
 
     fun setReNote(content: NoteViewData){
@@ -98,6 +102,8 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         }else{
             subNote.visibility = View.GONE
         }
+        setElapsedTime(content.note.createdAt)
+
     }
     fun setQuoteReNote(content: NoteViewData){
         val toShowNote = content.toShowNote
@@ -113,6 +119,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         showThreadButton.visibility = View.GONE
         subNote.visibility = View.VISIBLE
         setReactionCount(content)
+        setElapsedTime(content.note.createdAt)
     }
 
     fun setReply(content: NoteViewData){
@@ -128,10 +135,11 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         showThreadButton.visibility = View.VISIBLE
         subNote.visibility = View.GONE
         setReactionCount(content)
+        setElapsedTime(content.note.createdAt)
 
     }
 
-    @Deprecated("返信先は表示しない予定なので廃止する") fun setReplyTo(content: NoteViewData){
+    /*@Deprecated("返信先は表示しない予定なので廃止する") fun setReplyTo(content: NoteViewData){
         whoReactionUserLink.visibility = View.GONE
         invisibleSubContents()
         setNoteContent(content.note)
@@ -142,7 +150,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         setFourControlButtonListener(content.note, content)
         showThreadButton.visibility = View.GONE
         setReactionCount(content)
-    }
+    }*/
 
 
 
@@ -158,7 +166,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
     }
 
     private fun setReactionCount(viewData: NoteViewData){
-        if(linearLayoutManager == null ){
+        if(mLinearLayoutManager == null ){
             reactionView.visibility = View.GONE
         }else{
             val adapter = ReactionRecyclerAdapter(
@@ -172,7 +180,7 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
                 }
             }
             reactionView.adapter = adapter
-            reactionView.layoutManager = linearLayoutManager
+            reactionView.layoutManager = mLinearLayoutManager
             reactionView.visibility = View.VISIBLE
         }
         if(viewData.toShowNote.myReaction == null){
@@ -251,6 +259,10 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
             injectionImage(fileList[n].url!!, imageViewList[n], fileList[n].isSensitive)
         }
 
+    }
+
+    private fun setElapsedTime(date: Date){
+        elapsedTime.text =  mTimeFormatter.formatTime(date)
     }
 
     //NP

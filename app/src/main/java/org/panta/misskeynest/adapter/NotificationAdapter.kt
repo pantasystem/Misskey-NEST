@@ -6,13 +6,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.NotificationType
-import org.panta.misskeynest.emoji.CustomEmoji
-import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.INoteClickListener
+import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.usecase.NoteAdjustment
 import org.panta.misskeynest.view_data.NotificationViewData
-import java.io.File
 
 class NotificationAdapter(private val notificationList: List<NotificationViewData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), IOperationAdapter<NotificationViewData>{
 
@@ -39,7 +37,7 @@ class NotificationAdapter(private val notificationList: List<NotificationViewDat
             //Log.d("NotificationAdapter", "onCreateViewHolder params:$notificationType")
             val view = LayoutInflater.from(p0.context).inflate(R.layout.item_note, p0, false)
 
-            val holder = NoteViewHolder(view, null, CustomEmoji(p0.context))
+            val holder = NoteViewHolder(view, null)
             holder.addOnItemClickListener(noteClickListener)
             holder.addOnUserClickListener(userClickListener)
             return holder
@@ -60,7 +58,7 @@ class NotificationAdapter(private val notificationList: List<NotificationViewDat
                     viewHolder.setReply(viewData)
                 }
                 viewData.type == NoteAdjustment.NoteType.REPLY_TO ->{
-                    viewHolder.setReplyTo(viewData)
+                    //viewHolder.setReplyTo(viewData)
                 }
                 viewData.type == NoteAdjustment.NoteType.NOTE -> {
                     //これはNote

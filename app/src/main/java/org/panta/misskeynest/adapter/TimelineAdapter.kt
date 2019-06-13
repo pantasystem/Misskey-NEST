@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.panta.misskeynest.R
-import org.panta.misskeynest.emoji.CustomEmoji
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.IUserClickListener
@@ -31,7 +30,7 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): NoteViewHolder {
         val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_note, p0, false)
         val lm = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        return NoteViewHolder(inflater, lm, CustomEmoji(p0.context))
+        return NoteViewHolder(inflater, lm)
 
     }
 
@@ -50,7 +49,7 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
                 viewHolder.setReply(viewData)
             }
             viewData.type == NoteAdjustment.NoteType.REPLY_TO ->{
-                viewHolder.setReplyTo(viewData)
+                //viewHolder.setReplyTo(viewData)
             }
             viewData.type == NoteAdjustment.NoteType.NOTE -> {
                 //これはNote
