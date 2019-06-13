@@ -13,12 +13,11 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.panta.misskeynest.R
-import org.panta.misskeynest.emoji.CustomEmoji
 import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.util.SVGParser
 import org.panta.misskeynest.util.getEmojiPathFromName
 
-class ReactionHolder(itemView: View, private val  customEmoji: CustomEmoji) : RecyclerView.ViewHolder(itemView){
+class ReactionHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
     private val reactionIcon = itemView.findViewById<ImageButton>(R.id.reaction_image_button)
     private val reactionStringIcon = itemView.findViewById<TextView>(R.id.reaction_type_string_view)

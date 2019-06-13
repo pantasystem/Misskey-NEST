@@ -11,19 +11,21 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_note.view.*
 import org.panta.misskeynest.R
-import org.panta.misskeynest.emoji.CustomEmoji
 import org.panta.misskeynest.entity.EmojiProperty
 import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.INoteClickListener
+import org.panta.misskeynest.interfaces.ITimeFormat
 import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.interfaces.ItemClickListener
+import org.panta.misskeynest.util.ElapasedTimeFormatter
 import org.panta.misskeynest.util.InjectionText
 import org.panta.misskeynest.util.RoundedTransformation
 import org.panta.misskeynest.view_data.NoteViewData
 
-open class NoteViewHolder(itemView: View, private val linearLayoutManager: LinearLayoutManager?, private val customEmoji: CustomEmoji) : RecyclerView.ViewHolder(itemView){
+open class NoteViewHolder(itemView: View, private val linearLayoutManager: LinearLayoutManager?,
+                          private val timeFormatter: ITimeFormat = ElapasedTimeFormatter()) : RecyclerView.ViewHolder(itemView){
 
     private var contentClickListener: INoteClickListener? = null
     private var userClickListener: IUserClickListener? = null
@@ -159,10 +161,9 @@ open class NoteViewHolder(itemView: View, private val linearLayoutManager: Linea
         if(linearLayoutManager == null ){
             reactionView.visibility = View.GONE
         }else{
-            val adapter = org.panta.misskeynest.adapter.ReactionRecyclerAdapter(
+            val adapter = ReactionRecyclerAdapter(
                 viewData.reactionCountPairList,
-                viewData.toShowNote.myReaction,
-                customEmoji
+                viewData.toShowNote.myReaction
             )
             adapter.reactionItemClickListener = object : ItemClickListener<String>{
                 override fun onClick(e: String) {
