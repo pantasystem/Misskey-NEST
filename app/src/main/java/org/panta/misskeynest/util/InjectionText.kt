@@ -41,7 +41,7 @@ class InjectionText{
             return
         }
 
-        if(emojis == null){
+        if(emojis == null || emojis.isEmpty()){
             setAndVisibleView()
             return
         }
