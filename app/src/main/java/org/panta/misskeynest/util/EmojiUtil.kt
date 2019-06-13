@@ -9,6 +9,19 @@ import java.io.*
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
+fun getEmojiPathFromName(context: Context, name: String): File?{
+    for(fileName in context.fileList()){
+        if(fileName.split(".")[0] == name){
+            return File(context.filesDir, fileName)
+        }
+    }
+    return null
+}
+
+fun getEmojiPathFromProperty(context: Context, property: EmojiProperty){
+    getEmojiPathFromName(context, property.name)
+}
+
 fun EmojiProperty.getExtension(): String?{
     val meta = this.type
     return when {

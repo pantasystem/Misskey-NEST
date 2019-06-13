@@ -16,6 +16,7 @@ import org.panta.misskeynest.R
 import org.panta.misskeynest.emoji.CustomEmoji
 import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.util.SVGParser
+import org.panta.misskeynest.util.getEmojiPathFromName
 
 class ReactionHolder(itemView: View, private val  customEmoji: CustomEmoji) : RecyclerView.ViewHolder(itemView){
 
@@ -24,6 +25,7 @@ class ReactionHolder(itemView: View, private val  customEmoji: CustomEmoji) : Re
     private val reactionCount = itemView.findViewById<TextView>(R.id.reaction_count)
     private val reactionCountItem = itemView.findViewById<LinearLayout>(R.id.reaction_counter_view)
     private val reactionViewItem = itemView.findViewById<FrameLayout>(R.id.reaction_frame_item)
+    private val view = itemView
 
     var itemClickListener: ItemClickListener<String>? = null
 
@@ -43,7 +45,7 @@ class ReactionHolder(itemView: View, private val  customEmoji: CustomEmoji) : Re
     fun onBind(emoji: String, count: Int, isMyReaction: Boolean){
         val resourceId = reactionImageMapping[emoji]
         //val emojiFile = customReactionFileList?.firstOrNull{ it -> it.name.contains(emoji.replace(":", "")) }
-        val emojiFile = customEmoji.getEmojisFile(emoji)
+        val emojiFile = getEmojiPathFromName(itemView.context, emoji.replace(":", ""))
 
         if(resourceId == null && emojiFile == null){
             reactionStringIcon.visibility = View.VISIBLE

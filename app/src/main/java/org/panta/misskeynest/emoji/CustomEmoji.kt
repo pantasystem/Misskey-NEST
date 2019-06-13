@@ -1,25 +1,10 @@
 package org.panta.misskeynest.emoji
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.os.Handler
-import android.os.Looper
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.ImageSpan
-import android.util.Log
-import android.view.View
-import android.widget.TextView
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.panta.misskeynest.entity.EmojiProperty
-import org.panta.misskeynest.util.*
-import java.io.File
 
-class CustomEmoji(private val context: Context){
+@Deprecated("CustomEmojiTextBuilderを使用すること") class CustomEmoji(private val context: Context){
 
-    companion object{
+    /*companion object{
         private val bitmapCache = BitmapCache()
 
         private val spannableCache = SpannableStringCache()
@@ -67,7 +52,8 @@ class CustomEmoji(private val context: Context){
                     if(c == ':'){
 
                         val midwayText = charTmp.toString()
-                        val emojiFile = getEmojisFile(midwayText)
+                        //val emojiFile = getEmojisFile(midwayText)
+                        val emojiFile: File? = null
                         val notesEmoji = notesEmojiList?.firstOrNull{ it.name == midwayText }
 
                         Log.d("midwayText", "中間テキストは: $midwayText")
@@ -127,9 +113,9 @@ class CustomEmoji(private val context: Context){
 
     }
 
-    fun getEmojisFile(emoji: String): File?{
+    /*fun getEmojisFile(emoji: String): File?{
         return emojiMap[emoji.replace(":", "")]
-    }
+    }*/
 
 
 
@@ -202,7 +188,7 @@ class CustomEmoji(private val context: Context){
         val scale = size / bitmap.width.toDouble()
         return Bitmap.createScaledBitmap(bitmap, (bitmap.width * scale).toInt(), (bitmap.height * scale).toInt(), true)
     }
-
+*/
 
 
 }
