@@ -30,23 +30,19 @@ class InjectionText{
     }
 
     fun injection(text: String?, view: TextView, emojis: List<EmojiProperty>?){
-        fun setAndVisibleView(){
-            Handler(Looper.getMainLooper()).post{
-                view.text = text
-                view.visibility = View.VISIBLE
-            }
-        }
 
         if(text == null){
             return
         }
 
         if(emojis == null || emojis.isEmpty()){
-            setAndVisibleView()
+            //setAndVisibleView()
+            view.text = text
             return
         }
         if( ! text.contains(":")){
-            setAndVisibleView()
+            //setAndVisibleView()
+            view.text = text
             return
         }
 
