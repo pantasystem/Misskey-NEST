@@ -39,11 +39,11 @@ open class NoteViewHolder(itemView: View, private val mLinearLayoutManager: Line
     private val noteText: TextView = itemView.note_text
     private val elapsedTime: TextView = itemView.elapsed_time
 
-    private val imageView1: ImageView = itemView.image_1
+    /*private val imageView1: ImageView = itemView.image_1
     private val imageView2: ImageView = itemView.image_2
     private val imageView3: ImageView = itemView.image_3
-    private val imageView4: ImageView = itemView.image_4
-    private val imageViewList: List<ImageView> = listOf(imageView1, imageView2, imageView3, imageView4)
+    private val imageView4: ImageView = itemView.image_4*/
+    private val imageViewList: List<ImageView> = listOf(itemView.image_1, itemView.image_2, itemView.image_3, itemView.image_4)
 
     private val subNote = itemView.sub_note
     private val subUserIcon = itemView.sub_user_icon
@@ -217,12 +217,13 @@ open class NoteViewHolder(itemView: View, private val mLinearLayoutManager: Line
     private fun setImage(fileList: List<FileProperty>){
 
         val imageClickListener = View.OnClickListener { p0 ->
-            val clickedImageIndex = when(p0){
-                imageView1 -> 0
-                imageView2 -> 1
-                imageView3 -> 2
-                imageView4 -> 3
-                else -> 0
+            var clickedImageIndex = 0
+
+            for(n in 0 until imageViewList.size){
+                if(imageViewList[n] == p0){
+                    clickedImageIndex = n
+                    break
+                }
             }
 
             val urlList: List<String> = fileList.map{it.url}.filter{it != null && it.isNotBlank()}.map{it.toString()}
