@@ -69,73 +69,59 @@ open class NoteViewHolder(itemView: View, private val mLinearLayoutManager: Line
 
     fun setNote(content: NoteViewData){
         val toShowNote = content.toShowNote
-        whoReactionUserLink.visibility = View.GONE
+        setNoteContent(content)
+
         invisibleSubContents()
-        setNoteContent(toShowNote)
+        showThreadButton.visibility = View.GONE //共通６
+        subNote.visibility = View.GONE
+        whoReactionUserLink.visibility = View.GONE  //非共通
         setRelationNoteListener(toShowNote.id, toShowNote, timelineItem, noteText)
 
-        setReplyCount(toShowNote.replyCount)
-        setReNoteCount(toShowNote.reNoteCount)
-        setFourControlButtonListener(toShowNote, content)
-        showThreadButton.visibility = View.GONE
-        subNote.visibility = View.GONE
-        setReactionCount(content)
-        setElapsedTime(content.note.createdAt)
     }
 
     fun setReNote(content: NoteViewData){
         val toShowNote = content.toShowNote
+        setNoteContent(content)  //共通２
+
         invisibleSubContents()
         setWhoReactionUserLink(content.note.user, "リノート")
-        setNoteContent(content.toShowNote)
-        setRelationNoteListener(content.toShowNote.id, toShowNote, timelineItem, noteText)
-
-        setReplyCount(content.toShowNote.replyCount)
-        setReNoteCount(toShowNote.reNoteCount)
-        setFourControlButtonListener(toShowNote, content)
         showThreadButton.visibility = View.GONE
+        setRelationNoteListener(toShowNote.id, toShowNote, timelineItem, noteText)
 
-        setReactionCount(content)
+
+    }
+    fun setQuoteReNote(content: NoteViewData){
+        val toShowNote = content.toShowNote
+        setNoteContent(content)
+
+        showThreadButton.visibility = View.GONE
+        setSubContent(toShowNote.renote!!)
+        subNote.visibility = View.VISIBLE
+        setWhoReactionUserLink(toShowNote.user, "引用リノート")
+
+        //引用先とノートは別なので別でクリックリスナーを設定している
+        setRelationNoteListener(toShowNote.id, toShowNote, timelineItem)
+        setRelationNoteListener(toShowNote.renote.id, toShowNote.renote, subNoteText)
+
+    }
+
+    fun setReply(content: NoteViewData){
+        val toShowNote = content.toShowNote //共通０
+        setNoteContent(content)
+
+
         if(content.toShowNote.renote != null){
             setSubContent(content.toShowNote.renote)
             subNote.visibility = View.VISIBLE
         }else{
             subNote.visibility = View.GONE
         }
-        setElapsedTime(content.note.createdAt)
 
-    }
-    fun setQuoteReNote(content: NoteViewData){
-        val toShowNote = content.toShowNote
-        setWhoReactionUserLink(toShowNote.user, "引用リノート")
-        setNoteContent(toShowNote)
-        setSubContent(toShowNote.renote!!)
-        setRelationNoteListener(toShowNote.id, toShowNote, timelineItem)
-        setRelationNoteListener(toShowNote.renote.id, toShowNote.renote, subNoteText)
-
-        setReplyCount(toShowNote.replyCount)
-        setReNoteCount(toShowNote.reNoteCount)
-        setFourControlButtonListener(toShowNote, content)
-        showThreadButton.visibility = View.GONE
-        subNote.visibility = View.VISIBLE
-        setReactionCount(content)
-        setElapsedTime(content.note.createdAt)
-    }
-
-    fun setReply(content: NoteViewData){
-        val toShowNote = content.toShowNote
-        invisibleSubContents()
-        setNoteContent(toShowNote)
-        setWhoReactionUserLink(toShowNote.user, "クソリプ")
-        setRelationNoteListener(toShowNote.id, toShowNote, timelineItem, noteText, showThreadButton)
-
-        setReplyCount(toShowNote.replyCount)
-        setReNoteCount(toShowNote.reNoteCount)
-        setFourControlButtonListener(toShowNote, content)
         showThreadButton.visibility = View.VISIBLE
         subNote.visibility = View.GONE
-        setReactionCount(content)
-        setElapsedTime(content.note.createdAt)
+        setWhoReactionUserLink(toShowNote.user, "クソリプ")
+        setRelationNoteListener(toShowNote.id, toShowNote, timelineItem, noteText, showThreadButton)    //非共通
+
 
     }
 
@@ -196,7 +182,8 @@ open class NoteViewHolder(itemView: View, private val mLinearLayoutManager: Line
     }
 
 
-    private fun setNoteContent(note: Note){
+    private fun setNoteContent(content: NoteViewData){
+        val note = content.toShowNote
         injectionName(note.user?.name, note.user?.userName, userName, note.user?.emojis)
         injectionId(note.user?.userName, note.user?.host, userId)
         injectionImage.roundInjectionImage(note.user?.avatarUrl?:"non", userIcon, 180)
@@ -207,6 +194,13 @@ open class NoteViewHolder(itemView: View, private val mLinearLayoutManager: Line
         if(note.renote != null){
             setSubContent(note.renote)
         }
+
+        setReplyCount(note.replyCount)
+        setReNoteCount(note.reNoteCount)
+        setFourControlButtonListener(note, content)
+        setReactionCount(content)
+        setElapsedTime(content.note.createdAt)
+
 
     }
 

@@ -25,7 +25,6 @@ class InjectionText{
             view.visibility = View.INVISIBLE
             return
         }
-
         injection(text, view, emojis)
     }
 
@@ -38,11 +37,13 @@ class InjectionText{
         if(emojis == null || emojis.isEmpty()){
             //setAndVisibleView()
             view.text = text
+            view.visibility = View.VISIBLE
             return
         }
         if( ! text.contains(":")){
             //setAndVisibleView()
             view.text = text
+            view.visibility = View.VISIBLE
             return
         }
 
