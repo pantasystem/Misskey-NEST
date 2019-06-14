@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view_presenter.mixed_timeline
+package org.panta.misskeynest.pager
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager

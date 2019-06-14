@@ -1,17 +1,18 @@
 package org.panta.misskeynest.view_presenter.note_description
 
-import android.support.v7.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_note_description.*
 import org.panta.misskeynest.R
-import org.panta.misskeynest.adapter.TimelineAdapter
 import org.panta.misskeynest.entity.Note
-import org.panta.misskeynest.repository.Description
+import org.panta.misskeynest.repository.NoteDetail
+import org.panta.misskeynest.repository.PersonalRepository
+import org.panta.misskeynest.storage.SharedPreferenceOperator
 import org.panta.misskeynest.view_data.NoteViewData
-import java.io.File
+import org.panta.misskeynest.view_presenter.user_auth.AuthActivity
 
 class NoteDescriptionActivity : AppCompatActivity() {
 
@@ -25,6 +26,14 @@ class NoteDescriptionActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val connectionProperty = PersonalRepository(SharedPreferenceOperator(this))
+            .getConnectionInfo()
+        if(connectionProperty == null){
+            startActivity(Intent(this, AuthActivity::class.java))
+            finish()
+            return
+        }
+
         val intent = intent
         val note: Note? = intent.getSerializableExtra(NOTE_DESCRIPTION_NOTE_PROPERTY) as Note
 
@@ -33,7 +42,7 @@ class NoteDescriptionActivity : AppCompatActivity() {
             return
         }
 
-        val testDescription = Description()
+        val testDescription = NoteDetail(connectionProperty)
         testDescription.getOriginNotes(note){
             if(it == null){
 

@@ -1,25 +1,45 @@
 package org.panta.misskeynest.repository
 
 import android.util.Log
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.ReactionCountPair
+import org.panta.misskeynest.network.OkHttpConnection
 import org.panta.misskeynest.usecase.NoteAdjustment
 import org.panta.misskeynest.view_data.NoteViewData
+import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
 
 //FIXME そもそもDESCRIPTIONは別のActivity、別のFragmentで定義する可能性があるのでITimelineという型に
 // こだわる必要性がない可能性
 //TimelineAdapterのみ再利用する
-class Description(){
+class NoteDetail(private val connectionProperty: ConnectionProperty){
 
     //過去ほど上になり現在に近いほど下になる通常のタイムラインとは真逆
 
+    private val i = connectionProperty.i
+    private val childEndpoint = URL("${connectionProperty.domain}/api/notes/children")
+    private val conversationEndpoint = URL("${connectionProperty.domain}/api/notes/conversation")
 
-    fun getNotesReply(noteViewData: NoteViewData, callBack: (timeline: List<NoteViewData>?) -> Unit) = GlobalScope.launch{
+    private val mConnection = OkHttpConnection()
 
+    fun getChild(noteId: String): List<Note>?{
+        val valueMap = mapOf("i" to i, "noteId" to noteId, "limit" to 30)
+        val json = jacksonObjectMapper().writeValueAsString(valueMap)
+        val response = mConnection.postString(childEndpoint, json)?: return null
+        return jacksonObjectMapper().readValue(response)
+    }
+
+    fun getConversation(noteId: String): List<Note>?{
+        val valueMap = mapOf("i" to i, "noteId" to noteId, "limit" to 30)
+        val json = jacksonObjectMapper().writeValueAsString(valueMap)
+        val response = mConnection.postString(conversationEndpoint, json)?: return null
+        return jacksonObjectMapper().readValue(response)
     }
 
     //FIXME 色々いい加減なので修正する
@@ -54,4 +74,5 @@ class Description(){
         }
         return reversedList
     }
+
 }

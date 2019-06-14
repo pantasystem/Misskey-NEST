@@ -12,7 +12,6 @@ import org.panta.misskeynest.R
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.IUserClickListener
-import org.panta.misskeynest.usecase.NoteAdjustment
 import org.panta.misskeynest.view_data.NoteViewData
 
 class TimelineAdapter(private val context: Context, notesList: List<NoteViewData>) : RecyclerView.Adapter<NoteViewHolder>(), IOperationAdapter<NoteViewData>{
@@ -39,30 +38,7 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
         //viewHolder.reactionIconFileList = emojiFileList
 
        //リアクションをセットしている
-        if(viewData.reactionCountPairList.isNotEmpty()){
-
-        }else{
-            viewHolder.invisibleReactionCount()
-        }
-        when{
-            viewData.type == NoteAdjustment.NoteType.REPLY -> {
-                viewHolder.setReply(viewData)
-            }
-            viewData.type == NoteAdjustment.NoteType.REPLY_TO ->{
-                //viewHolder.setReplyTo(viewData)
-            }
-            viewData.type == NoteAdjustment.NoteType.NOTE -> {
-                //これはNote
-                viewHolder.setNote(viewData)
-            }
-            viewData.type == NoteAdjustment.NoteType.RE_NOTE -> {
-                //これはリノート
-                viewHolder.setReNote(viewData)
-            }
-            viewData.type == NoteAdjustment.NoteType.QUOTE_RE_NOTE -> {
-                viewHolder.setQuoteReNote(viewData)
-            }
-        }
+        viewHolder.onBind(viewData)
 
         viewHolder.addOnItemClickListener(noteClickListener)
         viewHolder.addOnUserClickListener(userClickListener)

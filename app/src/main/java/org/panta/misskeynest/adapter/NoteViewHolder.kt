@@ -18,6 +18,7 @@ import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.ITimeFormat
 import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.interfaces.ItemClickListener
+import org.panta.misskeynest.usecase.NoteAdjustment
 import org.panta.misskeynest.util.ElapsedTimeFormatter
 import org.panta.misskeynest.util.InjectionImage
 import org.panta.misskeynest.util.InjectionText
@@ -66,6 +67,31 @@ open class NoteViewHolder(itemView: View, private val mLinearLayoutManager: Line
 
     private val injectionText = InjectionText()
     private val injectionImage = InjectionImage()
+
+    fun onBind(content: NoteViewData){
+        if(content.reactionCountPairList.isNotEmpty()){
+
+        }else{
+            invisibleReactionCount()
+        }
+        when(content.type){
+            NoteAdjustment.NoteType.REPLY -> {
+                setReply(content)
+            }
+            NoteAdjustment.NoteType.NOTE -> {
+                //これはNote
+                setNote(content)
+            }
+            NoteAdjustment.NoteType.RE_NOTE -> {
+                //これはリノート
+                setReNote(content)
+            }
+            NoteAdjustment.NoteType.QUOTE_RE_NOTE -> {
+                setQuoteReNote(content)
+            }
+            else -> throw IllegalAccessException("利用が許されていない値です $${content.type}")
+        }
+    }
 
     fun setNote(content: NoteViewData){
         val toShowNote = content.toShowNote

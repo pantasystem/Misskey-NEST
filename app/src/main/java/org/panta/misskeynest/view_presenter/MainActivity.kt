@@ -35,7 +35,7 @@ import org.panta.misskeynest.service.EmojiDownloadService
 import org.panta.misskeynest.service.NotificationService
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 import org.panta.misskeynest.view_presenter.follow_follower.FollowFollowerActivity
-import org.panta.misskeynest.view_presenter.mixed_timeline.PagerAdapter
+import org.panta.misskeynest.pager.PagerAdapter
 import org.panta.misskeynest.view_presenter.note_editor.EditNoteActivity
 import org.panta.misskeynest.view_presenter.test_ui.TestActivity
 import org.panta.misskeynest.view_presenter.user.UserActivity
