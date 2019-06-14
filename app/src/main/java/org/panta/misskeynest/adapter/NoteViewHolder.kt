@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_note.view.*
 import org.panta.misskeynest.R
 import org.panta.misskeynest.entity.EmojiProperty
@@ -20,8 +19,8 @@ import org.panta.misskeynest.interfaces.ITimeFormat
 import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.util.ElapsedTimeFormatter
+import org.panta.misskeynest.util.InjectionImage
 import org.panta.misskeynest.util.InjectionText
-import org.panta.misskeynest.util.RoundedTransformation
 import org.panta.misskeynest.view_data.NoteViewData
 import java.util.*
 import kotlin.collections.ArrayList
@@ -66,6 +65,7 @@ open class NoteViewHolder(itemView: View, private val mLinearLayoutManager: Line
     private val mediaPlayButton: Button = itemView.media_play_button
 
     private val injectionText = InjectionText()
+    private val injectionImage = InjectionImage()
 
     fun setNote(content: NoteViewData){
         val toShowNote = content.toShowNote
@@ -139,20 +139,6 @@ open class NoteViewHolder(itemView: View, private val mLinearLayoutManager: Line
 
     }
 
-    /*@Deprecated("返信先は表示しない予定なので廃止する") fun setReplyTo(content: NoteViewData){
-        whoReactionUserLink.visibility = View.GONE
-        invisibleSubContents()
-        setNoteContent(content.note)
-        setRelationNoteListener(content.note.id, content.note, timelineItem, noteText)
-
-        setReplyCount(content.note.replyCount)
-        setReNoteCount(content.note.reNoteCount)
-        setFourControlButtonListener(content.note, content)
-        showThreadButton.visibility = View.GONE
-        setReactionCount(content)
-    }*/
-
-
 
     fun invisibleReactionCount(){
         reactionView.visibility = View.GONE
@@ -213,7 +199,7 @@ open class NoteViewHolder(itemView: View, private val mLinearLayoutManager: Line
     private fun setNoteContent(note: Note){
         injectionName(note.user?.name, note.user?.userName, userName, note.user?.emojis)
         injectionId(note.user?.userName, note.user?.host, userId)
-        roundInjectionImage(note.user?.avatarUrl?:"non", userIcon, 180)
+        injectionImage.roundInjectionImage(note.user?.avatarUrl?:"non", userIcon, 180)
         injectionText.injectionTextGoneWhenNull(note.text, noteText, note.emojis)
         setRelationUserListener(note.user!!, userName, userId, userIcon)
         setImage(filterImageData(note))
@@ -227,7 +213,7 @@ open class NoteViewHolder(itemView: View, private val mLinearLayoutManager: Line
     private fun setSubContent(note: Note){
         injectionName(note.user?.name, note.user?.userName, subUserName, note.user?.emojis)
         injectionId(note.user?.userName, note.user?.host, subUserId)
-        roundInjectionImage(note.user?.avatarUrl?:"non", subUserIcon, 180)
+        injectionImage.roundInjectionImage(note.user?.avatarUrl?:"non", subUserIcon, 180)
         injectionText.injectionTextGoneWhenNull(note.text, subNoteText)
         setRelationUserListener(note.user!!, subUserName, subUserId, subUserIcon)
 
@@ -256,7 +242,7 @@ open class NoteViewHolder(itemView: View, private val mLinearLayoutManager: Line
 
 
         for(n in 0.until(fileList.size)){
-            injectionImage(fileList[n].url!!, imageViewList[n], fileList[n].isSensitive)
+            injectionImage.injectionImage(fileList[n].url!!, imageViewList[n], fileList[n].isSensitive)
         }
 
     }
@@ -332,20 +318,6 @@ open class NoteViewHolder(itemView: View, private val mLinearLayoutManager: Line
         return nonNullUrlList
     }
 
-    //FIXME picassoに依存してしまているので修正
-    private fun injectionImage(imageUrl: String, imageView: ImageView, isSensitive: Boolean?){
-        imageView.visibility = View.VISIBLE
-
-        if(isSensitive != null && isSensitive){
-            imageView.setImageResource(R.drawable.sensitive_image)
-        }else{
-            Picasso
-                .get()
-                .load(imageUrl)
-                .into(imageView)
-        }
-
-    }
 
     private fun injectionMediaPlayButton(fileProperty: FileProperty?, view: Button){
         val type = fileProperty?.type
@@ -370,16 +342,6 @@ open class NoteViewHolder(itemView: View, private val mLinearLayoutManager: Line
         view.setOnClickListener {
             contentClickListener?.onMediaPlayClicked(fileProperty)
         }
-    }
-
-    private fun roundInjectionImage(imageUrl: String, imageView: ImageView, radius:Int = 30){
-        imageView.visibility = View.VISIBLE
-        val trfm = RoundedTransformation(radius, 0)
-        Picasso
-            .get()
-            .load(imageUrl)
-            .transform(trfm)
-            .into(imageView)
     }
 
 }
