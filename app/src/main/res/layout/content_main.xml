@@ -28,7 +28,7 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:background="?attr/colorPrimary"
@@ -37,15 +37,20 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:inputType="textPersonName"
-                android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-                android:background="@drawable/shape_overview"
-                android:layout_margin="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/shape_edit_text"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:ems="10"
                 android:hint="@string/what_are_you_doing"
                 android:id="@+id/simple_edit_box" android:layout_weight="1"/>
         <ImageButton
                 android:layout_width="50dp"
-                android:layout_height="50dp" app:srcCompat="@drawable/ic_send" android:id="@+id/simple_send_button"
-                android:scaleType="centerInside"/>
+                android:layout_height="match_parent" app:srcCompat="@drawable/ic_send" android:id="@+id/simple_send_button"
+                android:scaleType="centerInside"
+                style="?android:attr/borderlessButtonStyle"
+        />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
