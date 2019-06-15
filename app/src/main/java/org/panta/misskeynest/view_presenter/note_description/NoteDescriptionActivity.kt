@@ -12,6 +12,7 @@ import org.panta.misskeynest.adapter.NoteDetailAdapter
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.listener.NoteClickListener
+import org.panta.misskeynest.listener.UserClickListener
 import org.panta.misskeynest.repository.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 import org.panta.misskeynest.usecase.GetNoteDetail
@@ -73,6 +74,8 @@ class NoteDescriptionActivity : AppCompatActivity() {
                     it.show(supportFragmentManager, "reaction")
                 }
             }
+            adapter.userClickListener = UserClickListener(applicationContext)
+
             note_description_view.adapter = adapter
         }catch(e: Exception){
             Log.d("NoteDescriptionActivity", "error", e)

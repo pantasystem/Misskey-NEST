@@ -14,13 +14,11 @@ import org.panta.misskeynest.R
 import org.panta.misskeynest.adapter.TimelineAdapter
 import org.panta.misskeynest.constant.TimelineTypeEnum
 import org.panta.misskeynest.entity.ConnectionProperty
-import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.IBindScrollPosition
 import org.panta.misskeynest.interfaces.IItemRepository
-import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.listener.NoteClickListener
+import org.panta.misskeynest.listener.UserClickListener
 import org.panta.misskeynest.view_data.NoteViewData
-import org.panta.misskeynest.view_presenter.user.UserActivity
 
 class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, TimelineContract.View,
     /*NoteClickListener,*/ /*UserClickListener,*/ IBindScrollPosition{
@@ -53,6 +51,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     private var mAdapter: TimelineAdapter? = null
 
     private lateinit var mNoteClickListener: NoteClickListener
+    private lateinit var mUserClickListener: UserClickListener
 
     var mNoteRepository: IItemRepository<NoteViewData>? = null
         set(value) {
@@ -101,6 +100,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             mNoteClickListener.onShowReactionDialog = {
                 it.show(activity?.supportFragmentManager, "reaction_tag")
             }
+            mUserClickListener = UserClickListener(context!!)
         }
 
     }
@@ -128,7 +128,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             mAdapter = TimelineAdapter(context!!, list)
 
             mAdapter?.addNoteClickListener(mNoteClickListener)
-            mAdapter?.addUserClickListener(userClickListener)
+            mAdapter?.addUserClickListener(mUserClickListener)
 
 
             timelineView?.layoutManager = mLayoutManager
@@ -193,14 +193,6 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     override fun pickViewData(viewData: NoteViewData): NoteViewData? {
         return mAdapter?.getItem(viewData)
     }
-
-
-    private val userClickListener = object: IUserClickListener{
-        override fun onClickedUser(user: User) {
-            UserActivity.startActivity(context!!, user)
-        }
-    }
-
 
 
     private val listener = object : RecyclerView.OnScrollListener(){
