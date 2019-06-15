@@ -28,7 +28,7 @@
     </FrameLayout>
     <Toolbar
             android:id="@+id/simple_edit_view"
-            android:layout_width="match_parent" android:layout_height="45dp"
+            android:layout_width="match_parent" android:layout_height="47dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:contentInsetStart="0dp"
