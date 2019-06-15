@@ -76,7 +76,10 @@ class NoteDescriptionActivity : AppCompatActivity() {
             }
             adapter.userClickListener = UserClickListener(applicationContext)
 
+            val index = notes.indexOf(notes.firstOrNull { it.id == currentNoteId })
+
             note_description_view.adapter = adapter
+            note_description_view.scrollToPosition(index)
         }catch(e: Exception){
             Log.d("NoteDescriptionActivity", "error", e)
         }
