@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
@@ -20,7 +21,6 @@ import org.panta.misskeynest.view_data.NoteViewData
 import org.panta.misskeynest.view_presenter.image_viewer.ImageViewerActivity
 import org.panta.misskeynest.view_presenter.note_description.NoteDescriptionActivity
 import org.panta.misskeynest.view_presenter.note_editor.EditNoteActivity
-import android.os.Handler
 
 class NoteClickListener(private val context: Context, private val activity: Activity, connectionProperty: ConnectionProperty) :INoteClickListener {
 
@@ -28,8 +28,8 @@ class NoteClickListener(private val context: Context, private val activity: Acti
         Log.d("NoteClickListener", "onShowReactionDialog is not init")
     }
     private val reactionRepository = Reaction(domain = connectionProperty.domain, authKey = connectionProperty.i)
-    override fun onNoteClicked(targetId: String?, note: Note?) {
-        Log.d("TimelineFragment", "Noteをクリックした")
+    override fun onNoteClicked(note: Note) {
+        Log.d("TimelineFragment", "Noteをクリックした :$note")
         val intent = Intent(context, NoteDescriptionActivity::class.java)
         intent.putExtra(NoteDescriptionActivity.NOTE_DESCRIPTION_NOTE_PROPERTY, note)
         context.startActivity(intent)

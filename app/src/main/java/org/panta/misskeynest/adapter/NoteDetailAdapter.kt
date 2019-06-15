@@ -20,10 +20,10 @@ class NoteDetailAdapter(private val list: List<NoteViewData>, private val curren
     }
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): AbsNoteViewHolder {
         return if( p1 == ITEM_TYPE_NORMAL ){
-            val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_note, p0)
+            val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_note, p0,false)
             NoteViewHolder(inflater, LinearLayoutManager(p0.context))
         }else{
-            val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_detailed_note, p0)
+            val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_detailed_note, p0, false)
             DetailNoteViewHolder(inflater)
         }
     }

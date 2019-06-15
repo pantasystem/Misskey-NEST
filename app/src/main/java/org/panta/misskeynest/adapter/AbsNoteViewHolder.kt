@@ -98,7 +98,7 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         showThreadButton.visibility = View.GONE //共通６
         subNote.visibility = View.GONE
         whoReactionUserLink.visibility = View.GONE  //非共通
-        setRelationNoteListener(toShowNote.id, toShowNote, timelineItem, noteText)
+        setRelationNoteListener(toShowNote, timelineItem, noteText)
 
     }
 
@@ -109,7 +109,7 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         invisibleSubContents()
         setWhoReactionUserLink(content.note.user, "リノート")
         showThreadButton.visibility = View.GONE
-        setRelationNoteListener(toShowNote.id, toShowNote, timelineItem, noteText)
+        setRelationNoteListener(toShowNote, timelineItem, noteText)
 
 
     }
@@ -123,8 +123,8 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         setWhoReactionUserLink(toShowNote.user, "引用リノート")
 
         //引用先とノートは別なので別でクリックリスナーを設定している
-        setRelationNoteListener(toShowNote.id, toShowNote, timelineItem)
-        setRelationNoteListener(toShowNote.renote.id, toShowNote.renote, subNoteText)
+        setRelationNoteListener(toShowNote, timelineItem)
+        setRelationNoteListener(toShowNote.renote, subNoteText)
 
     }
 
@@ -143,7 +143,7 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         showThreadButton.visibility = View.VISIBLE
         subNote.visibility = View.GONE
         setWhoReactionUserLink(toShowNote.user, "クソリプ")
-        setRelationNoteListener(toShowNote.id, toShowNote, timelineItem, noteText, showThreadButton)    //非共通
+        setRelationNoteListener(toShowNote, timelineItem, noteText, showThreadButton)    //非共通
 
 
     }
@@ -311,10 +311,10 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         }
     }
 
-    private fun setRelationNoteListener(noteId: String, note: Note, vararg  view: View){
+    private fun setRelationNoteListener(note: Note, vararg  view: View){
         view.forEach {
             it.setOnClickListener{
-                contentClickListener?.onNoteClicked(noteId, note)
+                contentClickListener?.onNoteClicked(note)
             }
         }
     }
