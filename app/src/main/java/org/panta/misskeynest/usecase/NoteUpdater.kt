@@ -1,7 +1,7 @@
 package org.panta.misskeynest.usecase
 
 import org.panta.misskeynest.entity.ReactionCountPair
-import org.panta.misskeynest.view_data.NoteViewData
+import org.panta.misskeynest.viewdata.NoteViewData
 
 class NoteUpdater{
 

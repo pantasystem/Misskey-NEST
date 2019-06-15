@@ -8,7 +8,7 @@ import android.util.SparseArray
 import org.panta.misskeynest.constant.TimelineTypeEnum
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.util.PopularTimelineRepositoryFactory
-import org.panta.misskeynest.view_presenter.timeline.TimelineFragment
+import org.panta.misskeynest.view.timeline.TimelineFragment
 
 class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo: ConnectionProperty) : FragmentPagerAdapter(fragmentManager){
 

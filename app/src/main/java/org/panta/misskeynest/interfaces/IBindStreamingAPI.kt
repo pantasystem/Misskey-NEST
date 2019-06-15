@@ -1,6 +1,6 @@
 package org.panta.misskeynest.interfaces
 
-import org.panta.misskeynest.view_data.NoteViewData
+import org.panta.misskeynest.viewdata.NoteViewData
 
 //TimelineとStreamingAPIを橋渡しするPresenter、Viewに実装する。
 interface IBindStreamingAPI {

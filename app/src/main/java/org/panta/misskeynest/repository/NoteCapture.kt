@@ -1,6 +1,5 @@
 package org.panta.misskeynest.repository
 
-import android.net.Uri
 import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -12,10 +11,9 @@ import org.panta.misskeynest.entity.StreamingProperty
 import org.panta.misskeynest.interfaces.IBindScrollPosition
 import org.panta.misskeynest.interfaces.IBindStreamingAPI
 import org.panta.misskeynest.usecase.NoteUpdater
-import org.panta.misskeynest.view_data.NoteViewData
+import org.panta.misskeynest.viewdata.NoteViewData
 import java.lang.Exception
 import java.net.URI
-import java.net.URL
 
 class NoteCapture(private val connectionInfo: ConnectionProperty,  private val bindStreamingProperty: IBindStreamingAPI, private val bindScrollPosition: IBindScrollPosition){
 

@@ -17,10 +17,10 @@ import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.repository.Reaction
 import org.panta.misskeynest.util.copyToClipboad
-import org.panta.misskeynest.view_data.NoteViewData
-import org.panta.misskeynest.view_presenter.image_viewer.ImageViewerActivity
-import org.panta.misskeynest.view_presenter.note_description.NoteDescriptionActivity
-import org.panta.misskeynest.view_presenter.note_editor.EditNoteActivity
+import org.panta.misskeynest.viewdata.NoteViewData
+import org.panta.misskeynest.view.image_viewer.ImageViewerActivity
+import org.panta.misskeynest.view.note_description.NoteDescriptionActivity
+import org.panta.misskeynest.view.note_editor.EditNoteActivity
 
 class NoteClickListener(private val context: Context, private val activity: Activity, connectionProperty: ConnectionProperty) :INoteClickListener {
 

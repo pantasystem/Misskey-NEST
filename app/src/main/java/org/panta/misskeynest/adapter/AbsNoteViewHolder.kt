@@ -17,7 +17,7 @@ import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.usecase.NoteAdjustment
 import org.panta.misskeynest.util.InjectionImage
 import org.panta.misskeynest.util.InjectionText
-import org.panta.misskeynest.view_data.NoteViewData
+import org.panta.misskeynest.viewdata.NoteViewData
 import java.util.*
 import kotlin.collections.ArrayList
 

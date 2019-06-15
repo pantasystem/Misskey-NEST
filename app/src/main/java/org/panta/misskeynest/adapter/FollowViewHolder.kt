@@ -9,9 +9,8 @@ import com.squareup.picasso.Picasso
 import com.vanniktech.emoji.EmojiTextView
 import kotlinx.android.synthetic.main.item_follow_follower.view.*
 import org.panta.misskeynest.constant.FollowFollowerType
-import org.panta.misskeynest.entity.FollowProperty
 import org.panta.misskeynest.entity.User
-import org.panta.misskeynest.view_data.FollowViewData
+import org.panta.misskeynest.viewdata.FollowViewData
 
 class FollowViewHolder(itemView: View, var clickListener: org.panta.misskeynest.adapter.FollowsAdapter.FollowAdapterListener?) : RecyclerView.ViewHolder(itemView){
 

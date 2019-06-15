@@ -3,7 +3,7 @@ package org.panta.misskeynest.usecase
 import android.util.Log
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.ReactionCountPair
-import org.panta.misskeynest.view_data.NoteViewData
+import org.panta.misskeynest.viewdata.NoteViewData
 import java.util.*
 
 class NoteAdjustment(private val isDeployReplyTo: Boolean = true){

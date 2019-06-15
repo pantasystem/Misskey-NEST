@@ -9,9 +9,7 @@ import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.interfaces.IBindScrollPosition
 import org.panta.misskeynest.interfaces.IBindStreamingAPI
 import org.panta.misskeynest.repository.NoteCapture
-import org.panta.misskeynest.repository.NoteRepository
-import org.panta.misskeynest.view_data.NoteViewData
-import java.util.*
+import org.panta.misskeynest.viewdata.NoteViewData
 import kotlin.collections.HashMap
 
 class ObservationNote(private val bindStreamingAPI: IBindStreamingAPI, private val bindScrollPosition: IBindScrollPosition, private val info: ConnectionProperty) {

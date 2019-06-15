@@ -1,6 +1,6 @@
 package org.panta.misskeynest.interfaces
 
-import org.panta.misskeynest.view_data.FollowViewData
+import org.panta.misskeynest.viewdata.FollowViewData
 
 interface FollowFollowerContract{
     interface Presenter : BasePresenter{

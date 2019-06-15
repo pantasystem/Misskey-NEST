@@ -1,11 +1,10 @@
 package org.panta.misskeynest.util
 
-import com.google.android.gms.nearby.connection.ConnectionInfo
 import org.panta.misskeynest.constant.TimelineTypeEnum
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.repository.*
-import org.panta.misskeynest.view_data.NoteViewData
+import org.panta.misskeynest.viewdata.NoteViewData
 
 class PopularTimelineRepositoryFactory(private val connectionInfo: ConnectionProperty){
     fun create(mTimelineType: TimelineTypeEnum): IItemRepository<NoteViewData>?{

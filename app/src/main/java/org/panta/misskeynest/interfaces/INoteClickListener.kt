@@ -2,7 +2,7 @@ package org.panta.misskeynest.interfaces
 
 import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.entity.Note
-import org.panta.misskeynest.view_data.NoteViewData
+import org.panta.misskeynest.viewdata.NoteViewData
 
 interface INoteClickListener {
     fun onNoteClicked(note: Note)

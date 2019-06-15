@@ -7,7 +7,7 @@
         tools:showIn="@layout/activity_user"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view_presenter.user.UserActivity">
+        tools:context=".view.user.UserActivity">
 
 
 </android.support.v4.widget.NestedScrollView>

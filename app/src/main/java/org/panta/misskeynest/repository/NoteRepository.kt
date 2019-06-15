@@ -5,14 +5,12 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.panta.misskeynest.constant.DomainAndAppSecret
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.CreateNoteProperty
 import org.panta.misskeynest.entity.Note
-import org.panta.misskeynest.network.HttpsConnection
 import org.panta.misskeynest.network.OkHttpConnection
 import org.panta.misskeynest.usecase.NoteAdjustment
-import org.panta.misskeynest.view_data.NoteViewData
+import org.panta.misskeynest.viewdata.NoteViewData
 import java.net.URL
 
 class NoteRepository(private val connectionInfo: ConnectionProperty){

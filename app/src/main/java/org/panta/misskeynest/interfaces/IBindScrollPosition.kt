@@ -1,6 +1,6 @@
 package org.panta.misskeynest.interfaces
 
-import org.panta.misskeynest.view_data.NoteViewData
+import org.panta.misskeynest.viewdata.NoteViewData
 
 //主にスクロールポジションをバインドするViewに実装しスクロールの位置を返す
 interface IBindScrollPosition {

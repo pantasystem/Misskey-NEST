@@ -13,7 +13,7 @@ import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.network.OkHttpConnection
 import org.panta.misskeynest.repository.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.view_presenter.user_auth.AuthActivity
+import org.panta.misskeynest.view.user_auth.AuthActivity
 import java.io.File
 import java.net.URL
 

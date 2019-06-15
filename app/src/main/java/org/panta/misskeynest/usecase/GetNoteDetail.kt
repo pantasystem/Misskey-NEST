@@ -6,7 +6,7 @@ import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.repository.NoteDetail
-import org.panta.misskeynest.view_data.NoteViewData
+import org.panta.misskeynest.viewdata.NoteViewData
 
 class GetNoteDetail(conProperty: ConnectionProperty) {
 

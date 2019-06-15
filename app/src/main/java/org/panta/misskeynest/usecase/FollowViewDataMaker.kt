@@ -4,7 +4,7 @@ import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.FollowProperty
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.AbsFollowViewDataMaker
-import org.panta.misskeynest.view_data.FollowViewData
+import org.panta.misskeynest.viewdata.FollowViewData
 
 class FollowViewDataMaker : AbsFollowViewDataMaker(){
     override fun createList(baseList: List<FollowProperty>, addList: List<User?>, type: FollowFollowerType): List<FollowViewData> {

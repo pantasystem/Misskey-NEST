@@ -1,11 +1,8 @@
 package org.panta.misskeynest.repository
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import kotlinx.coroutines.Job
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.RequestTimelineProperty
-import org.panta.misskeynest.interfaces.IItemRepository
-import org.panta.misskeynest.view_data.NoteViewData
 import java.net.URL
 
 class SearchRepository(private val connectionProperty: ConnectionProperty,private val  keyword: String) : AbsTimeline(URL("${connectionProperty.domain}/api/notes/search")){

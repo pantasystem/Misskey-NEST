@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import org.panta.misskeynest.R
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.IUserClickListener
-import org.panta.misskeynest.view_data.NoteViewData
+import org.panta.misskeynest.viewdata.NoteViewData
 
 const val ITEM_TYPE_NORMAL = 0
 const val ITEM_TYPE_DETAIL = 1

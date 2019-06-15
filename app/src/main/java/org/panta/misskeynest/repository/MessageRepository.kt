@@ -2,7 +2,7 @@ package org.panta.misskeynest.repository
 
 import kotlinx.coroutines.Job
 import org.panta.misskeynest.interfaces.IItemRepository
-import org.panta.misskeynest.view_data.NoteViewData
+import org.panta.misskeynest.viewdata.NoteViewData
 
 class MessageRepository : IItemRepository<NoteViewData>{
     fun create(){

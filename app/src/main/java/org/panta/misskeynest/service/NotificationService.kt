@@ -16,8 +16,8 @@ import org.panta.misskeynest.repository.NotificationRepository
 import org.panta.misskeynest.repository.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 import org.panta.misskeynest.usecase.PagingController
-import org.panta.misskeynest.view_data.NotificationViewData
-import org.panta.misskeynest.view_presenter.MainActivity
+import org.panta.misskeynest.viewdata.NotificationViewData
+import org.panta.misskeynest.view.MainActivity
 import java.lang.IllegalArgumentException
 import android.app.PendingIntent
 

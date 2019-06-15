@@ -8,12 +8,10 @@ import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.NotificationProperty
 import org.panta.misskeynest.entity.RequestNotificationProperty
 import org.panta.misskeynest.interfaces.IItemRepository
-import org.panta.misskeynest.network.HttpsConnection
 import org.panta.misskeynest.network.OkHttpConnection
-import org.panta.misskeynest.network.StreamConverter
 import org.panta.misskeynest.usecase.NoteAdjustment
-import org.panta.misskeynest.view_data.NoteViewData
-import org.panta.misskeynest.view_data.NotificationViewData
+import org.panta.misskeynest.viewdata.NoteViewData
+import org.panta.misskeynest.viewdata.NotificationViewData
 import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList

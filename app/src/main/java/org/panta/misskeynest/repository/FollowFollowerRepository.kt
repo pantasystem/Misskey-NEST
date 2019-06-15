@@ -1,6 +1,5 @@
 package org.panta.misskeynest.repository
 
-import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.GlobalScope
@@ -9,11 +8,9 @@ import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.FollowProperty
 import org.panta.misskeynest.interfaces.IItemRepository
-import org.panta.misskeynest.network.HttpsConnection
 import org.panta.misskeynest.network.OkHttpConnection
-import org.panta.misskeynest.network.StreamConverter
 import org.panta.misskeynest.usecase.FollowViewDataMaker
-import org.panta.misskeynest.view_data.FollowViewData
+import org.panta.misskeynest.viewdata.FollowViewData
 import java.net.URL
 
 class FollowFollowerRepository(private val userId: String, private val type: FollowFollowerType, private val connectionInfo: ConnectionProperty) : IItemRepository<FollowViewData>{

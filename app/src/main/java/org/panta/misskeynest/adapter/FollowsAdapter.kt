@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.FollowFollowerType
-import org.panta.misskeynest.entity.FollowProperty
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.IOperationAdapter
-import org.panta.misskeynest.view_data.FollowViewData
+import org.panta.misskeynest.viewdata.FollowViewData
 import java.util.*
 
 class FollowsAdapter(list: List<FollowViewData>, private val type: FollowFollowerType, private var followAdapterListener: org.panta.misskeynest.adapter.FollowsAdapter.FollowAdapterListener? = null)

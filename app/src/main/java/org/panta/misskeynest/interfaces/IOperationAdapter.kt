@@ -1,8 +1,5 @@
 package org.panta.misskeynest.interfaces
 
-import android.os.Handler
-import org.panta.misskeynest.view_data.NoteViewData
-
 interface IOperationAdapter<E> {
     fun addAllFirst(list: List<E>)
 
