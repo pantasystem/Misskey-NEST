@@ -9,7 +9,7 @@ import org.panta.misskeynest.view_data.NoteViewData
 
 const val ITEM_TYPE_NORMAL = 0
 const val ITEM_TYPE_DETAIL = 1
-class NoteDetailAdapter(private val list: List<NoteViewData>, private val currentId: String) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class NoteDetailAdapter(private val list: List<NoteViewData>, private val currentId: String) : RecyclerView.Adapter<AbsNoteViewHolder>(){
 
     override fun getItemCount(): Int {
         return list.size
@@ -18,7 +18,7 @@ class NoteDetailAdapter(private val list: List<NoteViewData>, private val curren
     override fun getItemViewType(position: Int): Int {
         return if( list[position].id == currentId ) ITEM_TYPE_DETAIL else ITEM_TYPE_NORMAL
     }
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): AbsNoteViewHolder {
         return if( p1 == ITEM_TYPE_NORMAL ){
             val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_note, p0)
             NoteViewHolder(inflater, LinearLayoutManager(p0.context))
@@ -28,16 +28,8 @@ class NoteDetailAdapter(private val list: List<NoteViewData>, private val curren
         }
     }
 
-    override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
-        when(p0){
-            is NoteViewHolder ->{
-
-            }
-            is DetailNoteViewHolder ->{
-
-            }
-            else -> throw IllegalAccessException("NoteViewHolder、DetailNoteViewHolder以外を使用することはできない")
-        }
+    override fun onBindViewHolder(p0: AbsNoteViewHolder, p1: Int) {
+        p0.onBind(list[p1])
     }
 
 }

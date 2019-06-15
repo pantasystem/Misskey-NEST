@@ -68,60 +68,60 @@
             android:autoLink="web"/>
 
     <TableLayout
-            android:id="@+id/image_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/note_text"
-            android:layout_toEndOf="@+id/user_icon"
-            android:background="@drawable/shape_image_views_background"
-            android:layout_marginEnd="10dp" android:visibility="visible">
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/note_text"
+        android:layout_toEndOf="@+id/user_icon"
+        android:background="@drawable/shape_image_views_background"
+        android:layout_marginEnd="10dp" android:visibility="visible">
 
-        <TableRow
-                android:layout_width="wrap_content" android:layout_height="wrap_content">
-            <ImageView
-                    android:id="@+id/image_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="120dp"
+    <TableRow
+            android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <ImageView
+                android:id="@+id/image_1"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
 
-                    android:layout_weight="1"
-                    android:layout_margin="2dp"
-                    android:visibility="gone"
-                    android:scaleType="centerCrop"
+                android:layout_weight="1"
+                android:layout_margin="2dp"
+                android:visibility="gone"
+                android:scaleType="centerCrop"
 
-                    android:background="@android:color/background_dark"/>
-            <ImageView
-                    android:id="@+id/image_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="120dp"
+                android:background="@android:color/background_dark"/>
+        <ImageView
+                android:id="@+id/image_2"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
 
-                    android:background="@android:color/background_dark"
-                    android:layout_margin="2dp"
-                    android:layout_weight="1"
-                    android:visibility="gone" android:scaleType="centerCrop"/>
-        </TableRow>
-        <TableRow android:layout_width="match_parent" android:layout_height="100dp"
-        >
-            <ImageView
-                    android:id="@+id/image_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="120dp"
+                android:background="@android:color/background_dark"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:visibility="gone" android:scaleType="centerCrop"/>
+    </TableRow>
+    <TableRow android:layout_width="match_parent" android:layout_height="100dp"
+    >
+        <ImageView
+                android:id="@+id/image_3"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
 
-                    android:background="@android:color/background_dark"
-                    android:layout_margin="2dp"
-                    android:layout_weight="1"
-                    android:visibility="gone" android:scaleType="centerCrop"/>
-            <ImageView
-                    android:id="@+id/image_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="120dp"
+                android:background="@android:color/background_dark"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:visibility="gone" android:scaleType="centerCrop"/>
+        <ImageView
+                android:id="@+id/image_4"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
 
-                    android:background="@android:color/background_dark"
-                    android:layout_margin="2dp"
-                    android:layout_weight="1"
-                    android:visibility="gone" android:scaleType="centerCrop"/>
-        </TableRow>
+                android:background="@android:color/background_dark"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:visibility="gone" android:scaleType="centerCrop"/>
+    </TableRow>
 
-    </TableLayout>
+</TableLayout>
 
 
     <Button
