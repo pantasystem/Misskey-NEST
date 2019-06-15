@@ -26,6 +26,7 @@ class NoteDescriptionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_description)
 
+        setSupportActionBar(note_detail_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val connectionProperty = PersonalRepository(SharedPreferenceOperator(this))

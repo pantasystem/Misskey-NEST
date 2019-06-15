@@ -3,6 +3,7 @@
                 android:id="@+id/item_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <Button
             android:id="@+id/who_reaction_user_link"
             android:text="@string/sample_text_xxx_renoted"
@@ -25,6 +26,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginEnd="14dp"
             android:textStyle="bold"
+            android:textColor="?android:textColorPrimary"
             android:layout_marginTop="8dp"
             android:textSize="16sp"
             android:ellipsize="end"
@@ -50,7 +52,8 @@
 
             android:textSize="18sp"
             android:autoLink="web"
-            android:layout_below="@id/user_icon"/>
+            android:layout_below="@id/user_icon"
+            android:textColor="?android:textColorPrimary"/>
 
 
     <TableLayout
@@ -189,14 +192,14 @@
 
     <LinearLayout
             android:id="@+id/note_detail_control_panel"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_width="match_parent" android:layout_height="40dp"
             android:layout_below="@+id/reaction_view"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
     >
         <ImageButton
                 android:id="@+id/reply_button"
-                android:layout_width="0dp" android:layout_height="50dp"
+                android:layout_width="0dp" android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 app:srcCompat="@drawable/ic_reply"
                 android:scaleType="centerCrop"
@@ -209,13 +212,13 @@
                 android:text="@string/number_0"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="20sp" android:layout_marginTop="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_weight="2"
                 />
         <ImageButton
                 android:id="@+id/re_note_button"
                 android:layout_width="0dp"
-                android:layout_height="50dp" app:srcCompat="@drawable/ic_re_note"
+                android:layout_height="match_parent" app:srcCompat="@drawable/ic_re_note"
                 android:scaleType="centerCrop"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_weight="1"
@@ -224,19 +227,18 @@
 
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" android:id="@+id/re_note_count"
-                android:textSize="20sp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="2"/>
         <ImageButton
                 android:layout_width="0dp"
-                android:layout_height="50dp" app:srcCompat="@drawable/ic_plus" android:id="@+id/reaction_button"
+                android:layout_height="match_parent" app:srcCompat="@drawable/ic_plus" android:id="@+id/reaction_button"
                 style="?android:attr/borderlessButtonStyle"
                 android:scaleType="centerCrop"
                 android:layout_weight="1"/>
         <ImageButton
                 android:id="@+id/description_button"
                 android:layout_width="0dp"
-                android:layout_height="50dp" app:srcCompat="@drawable/ic_three_point"
+                android:layout_height="match_parent" app:srcCompat="@drawable/ic_three_point"
                 android:scaleType="centerCrop"
                 android:layout_marginStart="50dp"
                 android:layout_weight="1"
