@@ -10,11 +10,11 @@
     <color name="light_secondary_text_color">#3F3F3F</color>
     <color name="light_window_background_color">#FFFFFF</color>
 
-    <color name="darkColorPrimary">#212121</color>
+    <color name="darkColorPrimary">#2B2B2B</color>
     <color name="darkColorPrimaryDark">#000000</color>
     <color name="darkColorAccent">#ffeb6101</color>
     <color name="dark_primary_text_color">#DBDBDB</color>
     <color name="dark_secondary_text_color">#979797</color>
-    <color name="dark_window_background_color">#1F1F1F</color>
+    <color name="dark_window_background_color">#303030</color>
 
 </resources>
