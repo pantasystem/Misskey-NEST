@@ -9,6 +9,7 @@
         <item name="android:textColorPrimary">@color/light_primary_text_color</item>
         <item name="android:textColorSecondary">@color/light_secondary_text_color</item>
         <item name="android:windowBackground">@color/light_window_background_color</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
