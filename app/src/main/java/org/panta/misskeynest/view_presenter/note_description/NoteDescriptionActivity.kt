@@ -9,7 +9,9 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_note_description.*
 import org.panta.misskeynest.R
 import org.panta.misskeynest.adapter.NoteDetailAdapter
+import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
+import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.repository.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 import org.panta.misskeynest.usecase.GetNoteDetail
@@ -22,6 +24,11 @@ class NoteDescriptionActivity : AppCompatActivity() {
         const val NOTE_DESCRIPTION_NOTE_PROPERTY = "NOTE_DESCRIPTION_ACTIVITY_NOTE_PROPERTY"
     }
 
+    private val mConnectionProperty: ConnectionProperty? by lazy {
+        PersonalRepository(SharedPreferenceOperator(this))
+            .getConnectionInfo()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_description)
@@ -29,9 +36,7 @@ class NoteDescriptionActivity : AppCompatActivity() {
         setSupportActionBar(note_detail_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val connectionProperty = PersonalRepository(SharedPreferenceOperator(this))
-            .getConnectionInfo()
-        if(connectionProperty == null){
+        if(mConnectionProperty == null){
             startActivity(Intent(this, AuthActivity::class.java))
             finish()
             return
@@ -48,7 +53,7 @@ class NoteDescriptionActivity : AppCompatActivity() {
         }
 
 
-        GetNoteDetail(connectionProperty).get(note){
+        GetNoteDetail(mConnectionProperty!!).get(note){
             runOnUiThread {
                 Log.d("NoteDescriptionActivity", "返ってきた $it")
                 showNotes(it, note.id)
@@ -62,7 +67,13 @@ class NoteDescriptionActivity : AppCompatActivity() {
             val layoutManager = LinearLayoutManager(applicationContext)
             note_description_view.layoutManager = layoutManager
 
-            note_description_view.adapter = NoteDetailAdapter(notes, currentNoteId)
+            val adapter = NoteDetailAdapter(notes, currentNoteId)
+            adapter.noteClickListener = NoteClickListener(this, this, mConnectionProperty!!).apply{
+                this.onShowReactionDialog = {
+                    it.show(supportFragmentManager, "reaction")
+                }
+            }
+            note_description_view.adapter = adapter
         }catch(e: Exception){
             Log.d("NoteDescriptionActivity", "error", e)
         }

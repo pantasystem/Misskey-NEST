@@ -5,11 +5,16 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.panta.misskeynest.R
+import org.panta.misskeynest.interfaces.INoteClickListener
+import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.view_data.NoteViewData
 
 const val ITEM_TYPE_NORMAL = 0
 const val ITEM_TYPE_DETAIL = 1
 class NoteDetailAdapter(private val list: List<NoteViewData>, private val currentId: String) : RecyclerView.Adapter<AbsNoteViewHolder>(){
+
+    var noteClickListener: INoteClickListener? = null
+    var userClickListener: IUserClickListener? = null
 
     override fun getItemCount(): Int {
         return list.size
@@ -30,6 +35,10 @@ class NoteDetailAdapter(private val list: List<NoteViewData>, private val curren
 
     override fun onBindViewHolder(p0: AbsNoteViewHolder, p1: Int) {
         p0.onBind(list[p1])
+        p0.addOnItemClickListener(noteClickListener)
+        p0.addOnUserClickListener(userClickListener)
     }
+
+
 
 }

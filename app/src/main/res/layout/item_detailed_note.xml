@@ -48,7 +48,7 @@
             android:text="@string/testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
 
             android:textSize="18sp"
             android:autoLink="web"
@@ -252,6 +252,12 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_below="@+id/note_detail_control_panel"
             android:layout_marginStart="10dp" />
+    <View
+            android:id="@+id/horizon-line"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/elapsed_time"
+            android:background="?attr/colorPrimary"/>
 
 
 </RelativeLayout>
