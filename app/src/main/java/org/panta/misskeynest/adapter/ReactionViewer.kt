@@ -1,11 +1,15 @@
 package org.panta.misskeynest.adapter
 
+import android.os.Handler
+import android.os.Looper
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_reaction_dialogs_icon.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.ReactionConstData
 import org.panta.misskeynest.interfaces.ItemClickListener
@@ -27,16 +31,35 @@ class ReactionViewerHolder(itemView: View, private val itemClickListener: ItemCl
             val drawableId = ReactionConstData.getDefaultReactionIconMapping()[property.name]
             //InjectionImage().injectionImage(drawableId!!, mReactionIcon, false)
             mReactionIcon.setImageResource(drawableId!!)
-        }else if(property.name.split(".").lastOrNull() == "svg"){
+            mReactionIcon.visibility = View.VISIBLE
+        }else if(property.file.path.endsWith(".svg")){
             val size = convertDp2Px(30F, mReactionIcon.context).toInt()
-            val bitmap = SVGParser().getBitmapFromFile(property.file, size, size)
 
             //TODO Bitmapで扱うとメモリリースる可能性がある
             //TODO 他ライブラリを使うか必ずrecycleする
             //TODO　キャッシュができておらず不効率なのでキャッシュする
-            mReactionIcon.setImageBitmap(bitmap)
+            GlobalScope.launch {
+                try{
+                    //TODO キャッシュの対象にならないので修正する
+                    val bitmap = SVGParser().getBitmapFromFile(property.file, size, size)
+
+                    Handler(Looper.getMainLooper()).post{
+                        try{
+                            mReactionIcon.setImageBitmap(bitmap)
+                            mReactionIcon.visibility = View.VISIBLE
+                        }catch(e: Exception){
+                            Log.d("ReactionHolder", "error", e)
+                        }
+                    }
+                }catch(e: Exception){
+                    Log.d("ReactionHolder", "error", e)
+                }
+
+            }
         }else{
             InjectionImage().injectionImage( property.file, mReactionIcon, false)
+            mReactionIcon.visibility = View.VISIBLE
+
         }
         mReactionName.text = property.name
         view.setOnClickListener {
