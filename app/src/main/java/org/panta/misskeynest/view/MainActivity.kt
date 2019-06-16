@@ -16,7 +16,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Switch
 import android.widget.Toast
-import com.squareup.leakcanary.LeakCanary
 import com.squareup.picasso.Picasso
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider
@@ -72,7 +71,6 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        LeakCanary.install(application)
         mPresenter = MainPresenter(this, mSharedOperator)
         //setThemeFromType(this)
         if(super.isNightMode()){

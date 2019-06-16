@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="20dp">
+    <ImageView
+            android:id="@+id/user_icon"
+            android:layout_width="65dp" android:layout_height="65dp"
+            android:layout_marginEnd="4dp" app:srcCompat="@drawable/ic_human"/>
+    <TextView
+            android:id="@+id/user_id"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_marginStart="8dp"
+            android:text="@string/mr_user_route_category_name"
+            android:textColor="?android:textColorSecondary"
+            android:layout_toEndOf="@+id/user_icon"/>
+    <TextView
+            android:id="@+id/message_text"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/user_icon"
+            android:layout_below="@+id/user_id"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/shape_message_partner"
+            android:textColor="?android:textColorSecondary"
+            android:text="hello Wrold"
+            android:padding="10dp"
+            android:layout_marginStart="8dp"/>
+    <TextView
+            android:id="@+id/elapsed_time"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_below="@+id/message_text"
+            android:layout_toEndOf="@+id/user_icon"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
+            android:text="10秒前"
+    />
+
+</RelativeLayout>

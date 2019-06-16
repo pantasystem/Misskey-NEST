@@ -16,8 +16,8 @@ import org.panta.misskeynest.listener.UserClickListener
 import org.panta.misskeynest.repository.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 import org.panta.misskeynest.usecase.GetNoteDetail
-import org.panta.misskeynest.viewdata.NoteViewData
 import org.panta.misskeynest.view.user_auth.AuthActivity
+import org.panta.misskeynest.viewdata.NoteViewData
 
 class NoteDescriptionActivity : AppCompatActivity() {
 
@@ -56,6 +56,7 @@ class NoteDescriptionActivity : AppCompatActivity() {
 
         GetNoteDetail(mConnectionProperty!!).get(note){
             runOnUiThread {
+                //FIXME QuoteNoteが含む場合不具合を発生する
                 Log.d("NoteDescriptionActivity", "返ってきた $it")
                 showNotes(it, note.id)
             }

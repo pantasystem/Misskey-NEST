@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                >
+    <ImageView
+            android:id="@+id/user_icon"
+            android:layout_width="65dp" android:layout_height="65dp"
+            android:layout_marginStart="4dp"
+            android:layout_alignParentEnd="true" app:srcCompat="@drawable/ic_human"/>
+
+    <TextView
+            android:id="@+id/message_text"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/user_icon"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/shape_message_self"
+            android:textColor="@color/dark_primary_text_color"
+            android:text="hello Wrold"
+            android:padding="10dp"
+            android:layout_marginEnd="8dp"/>
+    <TextView
+            android:id="@+id/elapsed_time"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_below="@+id/message_text"
+            android:layout_toStartOf="@+id/user_icon"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="10秒前"
+    />
+
+</RelativeLayout>
