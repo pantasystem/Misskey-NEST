@@ -69,7 +69,7 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         if(content.reactionCountPairList.isNotEmpty()){
 
         }else{
-            invisibleReactionCount()
+            //invisibleReactionCount()
         }
         when(content.type){
             NoteAdjustment.NoteType.REPLY -> {
@@ -91,26 +91,18 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
     }
 
     fun setNote(content: NoteViewData){
-        val toShowNote = content.toShowNote
         setNoteContent(content)
 
-        invisibleSubContents()
         showThreadButton.visibility = View.GONE //共通６
-        subNote.visibility = View.GONE
         whoReactionUserLink.visibility = View.GONE  //非共通
-        setRelationNoteListener(toShowNote, timelineItem, noteText)
 
     }
 
     fun setReNote(content: NoteViewData){
-        val toShowNote = content.toShowNote
         setNoteContent(content)  //共通２
 
-        invisibleSubContents()
         setWhoReactionUserLink(content.note.user, "リノート")
         showThreadButton.visibility = View.GONE
-        setRelationNoteListener(toShowNote, timelineItem, noteText)
-
 
     }
     fun setQuoteReNote(content: NoteViewData){
@@ -118,13 +110,7 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         setNoteContent(content)
 
         showThreadButton.visibility = View.GONE
-        setSubContent(toShowNote.renote!!)
-        subNote.visibility = View.VISIBLE
         setWhoReactionUserLink(toShowNote.user, "引用リノート")
-
-        //引用先とノートは別なので別でクリックリスナーを設定している
-        setRelationNoteListener(toShowNote, timelineItem)
-        setRelationNoteListener(toShowNote.renote, subNoteText)
 
     }
 
@@ -132,19 +118,9 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         val toShowNote = content.toShowNote //共通０
         setNoteContent(content)
 
-
-        if(content.toShowNote.renote != null){
-            setSubContent(content.toShowNote.renote)
-            subNote.visibility = View.VISIBLE
-        }else{
-            subNote.visibility = View.GONE
-        }
-
         showThreadButton.visibility = View.VISIBLE
-        subNote.visibility = View.GONE
         setWhoReactionUserLink(toShowNote.user, "クソリプ")
-        setRelationNoteListener(toShowNote, timelineItem, noteText, showThreadButton)    //非共通
-
+        setRelationNoteListener(toShowNote,  showThreadButton)    //非共通
 
     }
 
@@ -160,33 +136,43 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         this.userClickListener = listener
     }
 
-    private fun setReactionCount(viewData: NoteViewData){
-        val adapter = ReactionRecyclerAdapter(
-            viewData.reactionCountPairList,
-            viewData.toShowNote.myReaction
-        )
-        adapter.reactionItemClickListener = object : ItemClickListener<String> {
-            override fun onClick(e: String) {
-                Log.d("NoteViewHolder", "setReactionCountがクリックされた")
-                contentClickListener?.onReactionClicked(viewData.toShowNote.id, viewData.toShowNote, viewData, e)
-            }
-        }
-        reactionView.adapter = adapter
-        reactionView.layoutManager = mLinearLayoutManager
-        reactionView.visibility = View.VISIBLE
-        if(viewData.toShowNote.myReaction == null){
-            reactionButton.setImageResource(R.drawable.ic_plus)
-        }else{
-            reactionButton.setImageResource(R.drawable.ic_minus)
-        }
+
+    private fun setNoteContent(content: NoteViewData){
+        val note = content.toShowNote
+        injectionName(note.user?.name, note.user?.userName, userName, note.user?.emojis)
+        injectionId(note.user?.userName, note.user?.host, userId)
+        injectionImage.roundInjectionImage(note.user?.avatarUrl?:"non", userIcon, 180)
+        injectionText.injectionTextGoneWhenNull(note.text, noteText, note.emojis)
+        setRelationUserListener(note.user!!, userName, userId, userIcon)
+        setImage(filterImageData(note))
+        injectionMediaPlayButton(note.files?.firstOrNull(), mediaPlayButton)
+
+        setSubContent(note.renote)
+
+        setReplyCount(note.replyCount)
+        setReNoteCount(note.reNoteCount)
+        setFourControlButtonListener(note, content)
+        setReactionCount(content)
+        setElapsedTime(content.note.createdAt)
+        setRelationNoteListener(note, timelineItem, noteText)
+
 
     }
 
-    private fun invisibleSubContents(){
-        subUserIcon.visibility = View.GONE
-        subUserName.visibility = View.GONE
-        subUserId.visibility = View.GONE
-        subNoteText.visibility =View.GONE
+    private fun setSubContent(note: Note?){
+        if( note == null ){
+            subNote.visibility = View.GONE
+            return
+        }
+        subNote.visibility = View.VISIBLE
+        injectionName(note.user?.name, note.user?.userName, subUserName, note.user?.emojis)
+        injectionId(note.user?.userName, note.user?.host, subUserId)
+        injectionImage.roundInjectionImage(note.user?.avatarUrl?:"non", subUserIcon, 180)
+        injectionText.injectionTextGoneWhenNull(note.text, subNoteText)
+
+        setRelationNoteListener(note, subNote, subNoteText)
+        setRelationUserListener(note.user!!, subUserName, subUserId, subUserIcon)
+
     }
 
     private fun setWhoReactionUserLink(user: User?, status: String){
@@ -200,38 +186,34 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         }
     }
 
+    private fun setReactionCount(viewData: NoteViewData){
 
-    private fun setNoteContent(content: NoteViewData){
-        val note = content.toShowNote
-        injectionName(note.user?.name, note.user?.userName, userName, note.user?.emojis)
-        injectionId(note.user?.userName, note.user?.host, userId)
-        injectionImage.roundInjectionImage(note.user?.avatarUrl?:"non", userIcon, 180)
-        injectionText.injectionTextGoneWhenNull(note.text, noteText, note.emojis)
-        setRelationUserListener(note.user!!, userName, userId, userIcon)
-        setImage(filterImageData(note))
-        injectionMediaPlayButton(note.files?.firstOrNull(), mediaPlayButton)
-        if(note.renote != null){
-            setSubContent(note.renote)
+        if(viewData.toShowNote.myReaction == null){
+            reactionButton.setImageResource(R.drawable.ic_plus)
+        }else{
+            reactionButton.setImageResource(R.drawable.ic_minus)
         }
 
-        setReplyCount(note.replyCount)
-        setReNoteCount(note.reNoteCount)
-        setFourControlButtonListener(note, content)
-        setReactionCount(content)
-        setElapsedTime(content.note.createdAt)
+        if( viewData.reactionCountPairList.isEmpty() ){
+            reactionView.visibility = View.GONE
+            return
+        }
+        reactionView.visibility = View.VISIBLE
 
+        val adapter = ReactionRecyclerAdapter(
+            viewData.reactionCountPairList,
+            viewData.toShowNote.myReaction
+        )
+        adapter.reactionItemClickListener = object : ItemClickListener<String> {
+            override fun onClick(e: String) {
+                Log.d("NoteViewHolder", "setReactionCountがクリックされた")
+                contentClickListener?.onReactionClicked(viewData.toShowNote.id, viewData.toShowNote, viewData, e)
+            }
+        }
+        reactionView.adapter = adapter
+        reactionView.layoutManager = mLinearLayoutManager
 
     }
-
-    private fun setSubContent(note: Note){
-        injectionName(note.user?.name, note.user?.userName, subUserName, note.user?.emojis)
-        injectionId(note.user?.userName, note.user?.host, subUserId)
-        injectionImage.roundInjectionImage(note.user?.avatarUrl?:"non", subUserIcon, 180)
-        injectionText.injectionTextGoneWhenNull(note.text, subNoteText)
-        setRelationUserListener(note.user!!, subUserName, subUserId, subUserIcon)
-
-    }
-
 
     private fun setImage(fileList: List<FileProperty>){
 
