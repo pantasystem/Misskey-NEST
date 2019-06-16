@@ -1,16 +1,19 @@
 package org.panta.misskeynest.dialog
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import android.widget.GridView
+import android.view.LayoutInflater
+import kotlinx.android.synthetic.main.dialog_reaction_viewer.view.*
 import org.panta.misskeynest.R
-import org.panta.misskeynest.adapter.ReactionDialogGridViewAdapter
+import org.panta.misskeynest.adapter.ReactionViewerAdapter
 import org.panta.misskeynest.constant.ReactionConstData
-import org.panta.misskeynest.util.convertDp2Px
+import org.panta.misskeynest.interfaces.ItemClickListener
+import java.io.File
 import java.io.Serializable
 
 class ReactionDialog : DialogFragment(){
@@ -28,8 +31,9 @@ class ReactionDialog : DialogFragment(){
             val reactionDialog = ReactionDialog()
             val args = Bundle()
             args.putString(ReactionDialog.TARGET_NOTE_ID, targetId)
-            args.putSerializable(REACTION_DIALOG_CALL_BACK_ARGS_CODE, callBackListener)
+            //args.putSerializable(REACTION_DIALOG_CALL_BACK_ARGS_CODE, callBackListener)
             reactionDialog.arguments = args
+            reactionDialog.mCallBackListener = callBackListener
 
             //Log.d("TimelineFragment", "Is fm null? ${fm?:"Yes Null"}")
             //FIXME ミックスタイムラインから呼び出されると落ちる
@@ -39,45 +43,55 @@ class ReactionDialog : DialogFragment(){
         }
     }
 
-    private val callBackListener: ReactionDialog.CallBackListener? = null
+    private var mCallBackListener: CallBackListener? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
+        //val dialog = Dialog(context!!)
+        //dialog.setContentView(R.layout.dialog_reaction_viewer)
+
 
         val targetNoteId = arguments?.getString(TARGET_NOTE_ID)
 
-        val callBackListener = arguments?.getSerializable(REACTION_DIALOG_CALL_BACK_ARGS_CODE) as CallBackListener?
+        //val callBackListener = arguments?.getSerializable(REACTION_DIALOG_CALL_BACK_ARGS_CODE) as CallBackListener?
+
+        val listener = object : ItemClickListener<String> {
+            override fun onClick(e: String) {
+                val iconId = ReactionConstData.getAllConstReactionList().firstOrNull {
+                    it == e
+                }
+                val reaction = if( iconId != null ){
+                    e
+                }else{
+                    ":$e:"
+                }
+                Log.d("ReactionDialog", "選択したりアクションは $reaction")
+                mCallBackListener?.callBack(targetNoteId, reaction)
+                dismiss()
+            }
+        }
 
         Log.d("ReactionDialog", "targetNoteIdは${targetNoteId.toString()}")
 
-        val gridView = GridView(activity)
-        gridView.apply {
-            columnWidth = convertDp2Px(50F, context).toInt()
-            numColumns = GridView.AUTO_FIT
 
-        }
-        gridView.adapter =
-            org.panta.misskeynest.adapter.ReactionDialogGridViewAdapter(
-                context!!,
-                R.layout.item_reaction_dialogs_icon,
-                ReactionConstData.getAllConstReactionList()
-            )
-        gridView.setOnItemClickListener { _, _, i, _ ->
-            //val intent = Intent()
-            //intent.putExtra(SELECTED_REACTION_CODE, ReactionConstData.getAllConstReactionList()[i])
-            //intent.putExtra(TARGET_NOTE_ID, targetNoteId)
-            //targetFragment?.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
-            callBackListener?.callBack(targetNoteId, ReactionConstData.getAllConstReactionList()[i])
+        val list = activity?.fileList()?.map{
+            File(activity?.filesDir, it)
+        }!!
+        Log.d("ReactionDialog", "list $list")
+
+        val builder = AlertDialog.Builder(activity)
+        val inflater = activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val content = inflater.inflate(R.layout.dialog_reaction_viewer, null)
+        builder.setView(content)
+        val adapter = ReactionViewerAdapter(list, listener)
+        content.reaction_viewer.adapter = adapter
+        content.reaction_viewer.layoutManager = LinearLayoutManager(context)
+        content.cancel_button.setOnClickListener {
             dismiss()
         }
 
-        val builder = AlertDialog.Builder(activity).apply {
-            setView(gridView)
-            setNegativeButton("やめる") { _, _ ->
 
-            }
 
-        }
         return builder.create()
     }
 }

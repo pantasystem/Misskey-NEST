@@ -1,6 +1,7 @@
 package org.panta.misskeynest.adapter
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,8 @@ class ReactionViewerHolder(itemView: View, private val itemClickListener: ItemCl
     fun onBind(property: ReactionProperty){
         if( property.file == null ){
             val drawableId = ReactionConstData.getDefaultReactionIconMapping()[property.name]
-            InjectionImage().injectionImage(drawableId!!, mReactionIcon, false)
+            //InjectionImage().injectionImage(drawableId!!, mReactionIcon, false)
+            mReactionIcon.setImageResource(drawableId!!)
         }else if(property.name.split(".").lastOrNull() == "svg"){
             val size = convertDp2Px(30F, mReactionIcon.context).toInt()
             val bitmap = SVGParser().getBitmapFromFile(property.file, size, size)
@@ -69,6 +71,7 @@ class ReactionViewerAdapter(reactionFile: List<File>,private val  itemClickListe
 
     override fun onBindViewHolder(p0: ReactionViewerHolder, p1: Int) {
         val property = reactionList[p1]
+        Log.d("ReactionViewer", "property $property")
         p0.onBind(property)
 
     }
