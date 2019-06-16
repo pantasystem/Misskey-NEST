@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.item_reaction_dialogs_icon.view.*
-import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.ReactionConstData
 
 
@@ -15,7 +14,7 @@ import org.panta.misskeynest.constant.ReactionConstData
 class ReactionDialogGridViewAdapter(private val context: Context, private val layoutId: Int, private val list: List<String>) : BaseAdapter(){
 
 
-    private val reactionImageMapping = hashMapOf(
+    /*private val reactionImageMapping = hashMapOf(
         ReactionConstData.LIKE to R.drawable.ic_reaction_like,
         ReactionConstData.LOVE to R.drawable.ic_reaction_love,
         ReactionConstData.HMM to R.drawable.ic_reaction_hmm,
@@ -28,7 +27,7 @@ class ReactionDialogGridViewAdapter(private val context: Context, private val la
         ReactionConstData.CONFUSED to R.drawable.ic_reaction_confused,
         ReactionConstData.RIP to R.drawable.ic_reaction_rip,
         ReactionConstData.PUDDING to R.drawable.ic_reaction_pudding
-    )
+    )*/
 
     private val inflater = LayoutInflater.from(context)
 
@@ -56,7 +55,7 @@ class ReactionDialogGridViewAdapter(private val context: Context, private val la
             imageView = convertView.tag as ImageView
         }
 
-        imageView.setImageResource(reactionImageMapping[list[p0]]!!)
+        imageView.setImageResource(ReactionConstData.getDefaultReactionIconMapping()[list[p0]]!!)
         return convertView
     }
 }
