@@ -18,6 +18,7 @@ import org.panta.misskeynest.interfaces.IBindScrollPosition
 import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.listener.UserClickListener
+import org.panta.misskeynest.usecase.ObservationNote
 import org.panta.misskeynest.viewdata.NoteViewData
 
 class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, TimelineContract.View,
@@ -57,12 +58,14 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         set(value) {
             field = value
             if(value != null && connectionInfo != null){
-                mPresenter = TimelinePresenter(this, this, value, connectionInfo!!)
+                mPresenter = TimelinePresenter(this, mNoteRepository!!, connectionInfo!!)
                 mPresenter?.initTimeline()
             }else{
                 Log.d(tag, if(value == null) "NULLだなんでだ！！！" else "重要な情報が来ない")
             }
         }
+
+    var mObservationNote: ObservationNote? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -79,7 +82,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         }
 
         if(mNoteRepository != null){
-            mPresenter = TimelinePresenter(this, this, mNoteRepository!!, connectionInfo!!)
+            mPresenter = TimelinePresenter(this, mNoteRepository!!, connectionInfo!!)
         }else{
             Log.d(tag, "プレゼンターを作成することができなかった")
         }
@@ -134,6 +137,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             timelineView?.layoutManager = mLayoutManager
             timelineView?.adapter = mAdapter
 
+            mObservationNote = ObservationNote(mAdapter!!, this, connectionInfo!!)
             stopRefreshing()
 
         }
@@ -186,13 +190,13 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         return mLayoutManager.itemCount
     }
 
-    override fun pickViewData(index: Int): NoteViewData? {
+    /*override fun pickViewData(index: Int): NoteViewData? {
         return mAdapter?.getItem(index)
     }
 
     override fun pickViewData(viewData: NoteViewData): NoteViewData? {
         return mAdapter?.getItem(viewData)
-    }
+    }*/
 
 
     private val listener = object : RecyclerView.OnScrollListener(){

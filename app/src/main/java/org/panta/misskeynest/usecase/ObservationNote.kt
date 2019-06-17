@@ -7,14 +7,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.interfaces.IBindScrollPosition
-import org.panta.misskeynest.interfaces.IBindStreamingAPI
+import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.repository.NoteCapture
 import org.panta.misskeynest.viewdata.NoteViewData
-import kotlin.collections.HashMap
 
-class ObservationNote(private val bindStreamingAPI: IBindStreamingAPI, private val bindScrollPosition: IBindScrollPosition, private val info: ConnectionProperty) {
+class ObservationNote(private val mAdapterOperator: IOperationAdapter<NoteViewData>, private val bindScrollPosition: IBindScrollPosition, private val info: ConnectionProperty) {
 
-    private val capture = NoteCapture(info,bindStreamingAPI, bindScrollPosition)
+    private val capture = NoteCapture(info, mAdapterOperator)
 
     var isObserve: Boolean = true
     //このスピードでノートのキャプチャを登録するかを判定する
@@ -67,7 +66,7 @@ class ObservationNote(private val bindStreamingAPI: IBindStreamingAPI, private v
 
         //登録
         for(n in firstVisiblePosition.until(end)){
-            val note = bindScrollPosition.pickViewData(n)
+            val note = mAdapterOperator.getItem(n)
 
             if(note != null){
                 registerNote(n,note)

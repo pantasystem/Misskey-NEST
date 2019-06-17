@@ -2,17 +2,14 @@ package org.panta.misskeynest.view.timeline
 
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
-import org.panta.misskeynest.interfaces.IBindScrollPosition
-import org.panta.misskeynest.interfaces.IBindStreamingAPI
 import org.panta.misskeynest.interfaces.IItemRepository
-import org.panta.misskeynest.repository.*
-import org.panta.misskeynest.usecase.ObservationNote
+import org.panta.misskeynest.repository.Reaction
 import org.panta.misskeynest.usecase.PagingController
 import org.panta.misskeynest.viewdata.NoteViewData
 
 class TimelinePresenter(private val mView: TimelineContract.View,
-                        override var bindScrollPosition: IBindScrollPosition, private val mTimeline: IItemRepository<NoteViewData>, info: ConnectionProperty)
-    : TimelineContract.Presenter, ErrorCallBackListener, IBindStreamingAPI{
+                       mTimeline: IItemRepository<NoteViewData>, info: ConnectionProperty)
+    : TimelineContract.Presenter, ErrorCallBackListener{
 
 
     private val pagingController =
@@ -21,7 +18,7 @@ class TimelinePresenter(private val mView: TimelineContract.View,
 
     private val mReaction = Reaction(domain = info.domain, authKey = info.i)
 
-    private val observationStreaming = ObservationNote(this, bindScrollPosition, info)
+    //private val observationStreaming = ObservationNote(mAdapterOperator, bindScrollPosition, info)
 
 
     override fun getNewTimeline() {
@@ -82,7 +79,7 @@ class TimelinePresenter(private val mView: TimelineContract.View,
     }
 
 
-    override fun addFirstNote(data: NoteViewData) {
+    /*override fun addFirstNote(data: NoteViewData) {
 
     }
 
@@ -92,14 +89,14 @@ class TimelinePresenter(private val mView: TimelineContract.View,
 
     override fun onUpdateNote(data: NoteViewData) {
         mView.showUpdatedNote(data)
-    }
+    }*/
 
     private fun deleteReaction(noteId: String){
         mReaction.deleteReaction(noteId)
     }
 
     override fun onRefresh() {
-        observationStreaming.onRefresh()
+        //observationStreaming.onRefresh()
     }
 
 

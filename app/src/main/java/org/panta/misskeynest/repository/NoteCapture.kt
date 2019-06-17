@@ -1,5 +1,7 @@
 package org.panta.misskeynest.repository
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -8,14 +10,12 @@ import org.java_websocket.handshake.ServerHandshake
 import org.panta.misskeynest.entity.BodyProperty
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.StreamingProperty
-import org.panta.misskeynest.interfaces.IBindScrollPosition
-import org.panta.misskeynest.interfaces.IBindStreamingAPI
+import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.usecase.NoteUpdater
 import org.panta.misskeynest.viewdata.NoteViewData
-import java.lang.Exception
 import java.net.URI
 
-class NoteCapture(private val connectionInfo: ConnectionProperty,  private val bindStreamingProperty: IBindStreamingAPI, private val bindScrollPosition: IBindScrollPosition){
+class NoteCapture(private val connectionInfo: ConnectionProperty,  private val mAdapterOperator: IOperationAdapter<NoteViewData>){
 
 
     private var socket = Socket()
@@ -88,7 +88,7 @@ class NoteCapture(private val connectionInfo: ConnectionProperty,  private val b
                     captureViewData.filter{
                         it.toShowNote.id == id
                     }.forEach {
-                        val viewsData = bindScrollPosition.pickViewData(it)
+                        val viewsData = mAdapterOperator.getItem(it)
 
                         if(viewsData != null){
                             val updatedViewData = if(obj.body.type == "reacted"){
@@ -96,7 +96,10 @@ class NoteCapture(private val connectionInfo: ConnectionProperty,  private val b
                             }else{
                                 noteUpdater.removeReaction(reaction, viewsData, isMyReaction)
                             }
-                            bindStreamingProperty.onUpdateNote(updatedViewData)
+                            //bindStreamingProperty.onUpdateNote(updatedViewData)
+                            Handler(Looper.getMainLooper()).post{
+                                mAdapterOperator.updateItem(updatedViewData)
+                            }
                         }
                     }
 
