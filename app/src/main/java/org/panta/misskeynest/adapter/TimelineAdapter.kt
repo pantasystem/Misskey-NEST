@@ -77,9 +77,13 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
     }
 
     override fun getItem(item: NoteViewData): NoteViewData? {
+        return getItem(item.id)
+    }
+
+    override fun getItem(id: String): NoteViewData? {
         synchronized(mArrayList){
             return try{
-                mArrayList.first { it.id == item.id }
+                mArrayList.first { it.id == id }
 
             }catch(e: Exception){
                 Log.d("TimelineAdapter", "インデックスがオーバーしてる！！", e)

@@ -112,6 +112,12 @@ class NotificationAdapter(private val notificationList: List<NotificationViewDat
         }
     }
 
+    override fun getItem(id: String): NotificationViewData? {
+        synchronized(notificationList){
+            return notificationList.first { it.id == id }
+        }
+    }
+
     override fun removeItem(item: NotificationViewData) {
         synchronized(notificationList){
             val index = notificationList.indexOf(item)

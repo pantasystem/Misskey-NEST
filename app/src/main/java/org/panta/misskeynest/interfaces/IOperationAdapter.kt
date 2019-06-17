@@ -7,6 +7,8 @@ interface IOperationAdapter<E> {
 
     fun getItem(index: Int): E?
     fun getItem(item: E): E?
+    fun getItem(id: String): E?
+
     fun updateItem(item: E)
 
     fun removeItem(item: E)
