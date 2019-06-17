@@ -1,9 +1,9 @@
 package org.panta.misskeynest
 
-import org.junit.Assert.assertEquals
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import org.panta.misskeynest.util.ElapsedTimeFormatter
+import org.panta.misskeynest.util.parseRGBv11
 import java.util.*
 
 /**
@@ -17,13 +17,15 @@ class ExampleUnitTest {
 
     @Before
     fun createTestDateData(){
-        testDate = Date(Date().time -  60000)
+        //testDate = Date(Date().time -  60000)
     }
 
     @Test
     fun addition_isCorrect() {
-        val elapsed = ElapsedTimeFormatter()
-        val a = elapsed.formatTime(testDate!!)
-        assertEquals(a, "1時間前")
+        //val elapsed = ElapsedTimeFormatter()
+        //val a = elapsed.formatTime(testDate!!)
+        //assertEquals(a, "1時間前")
+        val rgbList = parseRGBv11("RGB(255,100,255)")
+        Assert.assertEquals(rgbList, listOf(255, 100, 255))
     }
 }
