@@ -49,18 +49,6 @@ class InjectionText{
 
 
         GlobalScope.launch{
-            //val count = countEmoji(text, emojis)
-
-            /*val tmpTextBuilder = StringBuilder()
-            (0 until count).forEach{ _ ->
-                tmpTextBuilder.append("　")
-            }*/
-
-            /*Handler(Looper.getMainLooper()).post{
-                Log.d("InjectionText", "擬似テキスト表示")
-                view.text = tmpTextBuilder.toString()
-                view.visibility = View.VISIBLE
-            }*/
 
             try{
                 val builder = CustomEmojiTextBuilder(view.context, (view.textSize.toInt() * 1.2).toInt())
@@ -68,8 +56,12 @@ class InjectionText{
                 val span = builder.createSpannableString(text, emojis)
 
                 Handler(Looper.getMainLooper()).post {
-                    view.text = span
                     view.visibility = View.VISIBLE
+                    if( span == null ){
+                        view.text = text
+                    }else{
+                        view.text = span
+                    }
                 }
             }catch (e: Exception){
                 Log.e("InjectionText", "error $text", e)
