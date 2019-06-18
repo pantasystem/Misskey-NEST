@@ -17,11 +17,13 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".view.MessageActivity">
+        </activity>
         <activity android:name=".view.test_ui.TestActivity">
         </activity>
 
         <service
-                android:name="org.panta.misskeynest.service.EmojiDownloadService"
+                android:name=".service.EmojiDownloadService"
                 android:enabled="true"
                 android:exported="true">
         </service>
@@ -42,7 +44,7 @@
                 android:exported="true">
         </service>
 
-        <activity android:name=".view.follow_follower.FollowFollowerActivity">
+        <activity android:name=".view.FollowFollowerActivity">
         </activity>
         <activity android:name=".view.user_auth.AuthActivity">
             <intent-filter tools:ignore="AppLinkUrlError">
@@ -57,7 +59,7 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".view.user.UserActivity"
+                android:name=".view.UserActivity"
                 android:label="@string/title_activity_user">
         </activity>
         <activity android:name=".view.image_viewer.ImageViewerActivity">
@@ -65,14 +67,14 @@
         <activity android:name=".view.note_description.NoteDescriptionActivity">
         </activity>
         <activity
-                android:name=".view.note_editor.EditNoteActivity"
+                android:name=".view.EditNoteActivity"
                 android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
                 android:name=".view.MainActivity"
                 android:configChanges="orientation"
-                android:windowSoftInputMode="stateAlwaysHidden"
-                android:label="@string/app_name">
+                android:label="@string/app_name"
+                android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

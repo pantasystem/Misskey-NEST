@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.note_editor
+package org.panta.misskeynest.view
 
 import android.Manifest
 import android.content.Context
@@ -28,6 +28,8 @@ import org.panta.misskeynest.repository.PersonalRepository
 import org.panta.misskeynest.service.NotePostService
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 import org.panta.misskeynest.view.image_viewer.ImageViewerActivity
+import org.panta.misskeynest.view.note_editor.EditNoteContract
+import org.panta.misskeynest.view.note_editor.EditNotePresenter
 import org.panta.misskeynest.view.user_auth.AuthActivity
 import java.io.File
 
@@ -118,7 +120,8 @@ class EditNoteActivity : AppCompatActivity(), EditNoteContract.View {
             }else{
                 ActivityCompat.requestPermissions(this,
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    , REQUEST_PERMISSION_CODE)
+                    , REQUEST_PERMISSION_CODE
+                )
             }
 
 

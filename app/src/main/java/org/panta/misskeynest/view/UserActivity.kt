@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.user
+package org.panta.misskeynest.view
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -17,7 +17,7 @@ import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.repository.PersonalRepository
 import org.panta.misskeynest.repository.UserRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.view.follow_follower.FollowFollowerActivity
+import org.panta.misskeynest.view.user.UserPagerAdapter
 import org.panta.misskeynest.view.user_auth.AuthActivity
 import java.lang.IllegalArgumentException
 

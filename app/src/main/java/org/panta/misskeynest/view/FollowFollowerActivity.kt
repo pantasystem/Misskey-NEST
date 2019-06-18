@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.follow_follower
+package org.panta.misskeynest.view
 
 import android.content.Context
 import android.content.Intent
@@ -12,6 +12,7 @@ import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.repository.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
+import org.panta.misskeynest.view.follow_follower.FollowPagerAdapter
 import org.panta.misskeynest.view.user_auth.AuthActivity
 
 class FollowFollowerActivity : AppCompatActivity() {
@@ -24,8 +25,8 @@ class FollowFollowerActivity : AppCompatActivity() {
         fun startActivity(context: Context, type: FollowFollowerType, userId: String){
             val intent = Intent(context, FollowFollowerActivity::class.java)
             //intent.putExtra(FollowFollowerActivity.CONNECTION_INFO, info)
-            intent.putExtra(FollowFollowerActivity.FOLLOW_FOLLOWER_TYPE, type.ordinal)
-            intent.putExtra(FollowFollowerActivity.USER_ID_TAG, userId)
+            intent.putExtra(FOLLOW_FOLLOWER_TYPE, type.ordinal)
+            intent.putExtra(USER_ID_TAG, userId)
             context.startActivity(intent)
         }
     }
@@ -48,7 +49,11 @@ class FollowFollowerActivity : AppCompatActivity() {
         }
         val type = FollowFollowerType.getTypeFromOrdinal(tmpType)
 
-        val adapter = FollowPagerAdapter(supportFragmentManager, connectionInfo, userId)
+        val adapter = FollowPagerAdapter(
+            supportFragmentManager,
+            connectionInfo,
+            userId
+        )
         follow_follower_pageer.offscreenPageLimit = 2
         follow_follower_pageer.adapter = adapter
         follow_follower_tab.setupWithViewPager(follow_follower_pageer)

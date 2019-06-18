@@ -30,14 +30,10 @@ import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
 import org.panta.misskeynest.interfaces.MainContract
+import org.panta.misskeynest.pager.PagerAdapter
 import org.panta.misskeynest.service.EmojiDownloadService
 import org.panta.misskeynest.service.NotificationService
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.view.follow_follower.FollowFollowerActivity
-import org.panta.misskeynest.pager.PagerAdapter
-import org.panta.misskeynest.view.note_editor.EditNoteActivity
-import org.panta.misskeynest.view.test_ui.TestActivity
-import org.panta.misskeynest.view.user.UserActivity
 import org.panta.misskeynest.view.user_auth.AuthActivity
 
 private const val FRAGMENT_HOME = "FRAGMENT_HOME"
@@ -335,7 +331,7 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
             R.id.nav_notification -> startActivity(Intent(this, NotificationActivity::class.java))
             R.id.nav_search -> startActivity(Intent(this, SearchActivity::class.java))
             R.id.nav_open_web_misskey -> mPresenter?.openMisskeyOnBrowser()
-            R.id.nav_open_test -> startActivity(Intent(this, TestActivity::class.java))
+            R.id.nav_message -> startActivity(Intent(applicationContext, MessageActivity::class.java))
             R.id.nav_ui_mode -> {
                 //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 

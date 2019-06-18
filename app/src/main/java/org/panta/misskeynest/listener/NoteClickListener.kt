@@ -20,7 +20,7 @@ import org.panta.misskeynest.util.copyToClipboad
 import org.panta.misskeynest.viewdata.NoteViewData
 import org.panta.misskeynest.view.image_viewer.ImageViewerActivity
 import org.panta.misskeynest.view.note_description.NoteDescriptionActivity
-import org.panta.misskeynest.view.note_editor.EditNoteActivity
+import org.panta.misskeynest.view.EditNoteActivity
 
 class NoteClickListener(private val context: Context, private val activity: Activity, connectionProperty: ConnectionProperty) :INoteClickListener {
 

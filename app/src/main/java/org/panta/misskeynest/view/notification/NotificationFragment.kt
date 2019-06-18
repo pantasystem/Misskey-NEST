@@ -18,7 +18,7 @@ import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.viewdata.NotificationViewData
-import org.panta.misskeynest.view.user.UserActivity
+import org.panta.misskeynest.view.UserActivity
 
 class NotificationFragment : Fragment(), NotificationContract.View{
 

@@ -52,5 +52,4 @@ dependencies {
     implementation 'com.caverock:androidsvg:1.2.1'
 
 
-
 }

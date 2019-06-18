@@ -13,6 +13,11 @@
                 android:title="@string/jp_notification"
                 app:actionLayout="@layout/switch_item" android:icon="@drawable/ic_bell"/>
         <item
+                android:id="@+id/nav_message"
+                android:title="@string/text_talk"
+                android:icon="@drawable/ic_message"
+        />
+        <item
             android:id="@+id/nav_search"
             android:title="@string/search"
             android:icon="@drawable/places_ic_search"/>
@@ -21,9 +26,7 @@
                 android:id="@+id/nav_open_web_misskey"
                 android:icon="@drawable/ic_global"
                 android:title="Webで開く"/>
-        <item
-            android:id="@+id/nav_open_test"
-            android:title="test"/>
+
 
     </group>
 
