@@ -10,12 +10,13 @@ import org.java_websocket.handshake.ServerHandshake
 import org.panta.misskeynest.entity.BodyProperty
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.StreamingProperty
+import org.panta.misskeynest.interfaces.ICapture
 import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.usecase.NoteUpdater
 import org.panta.misskeynest.viewdata.NoteViewData
 import java.net.URI
 
-class NoteCapture(private val connectionInfo: ConnectionProperty,  private val mAdapterOperator: IOperationAdapter<NoteViewData>){
+class NoteCapture(private val connectionInfo: ConnectionProperty,  private val mAdapterOperator: IOperationAdapter<NoteViewData>): ICapture{
 
 
     private var socket = Socket()
@@ -37,7 +38,7 @@ class NoteCapture(private val connectionInfo: ConnectionProperty,  private val m
         }
     }
     
-    fun captureNote(viewData: NoteViewData){
+    override fun captureNote(viewData: NoteViewData){
         if(socket.isClosed){
             socket = Socket()
             socket.connect()
@@ -52,7 +53,7 @@ class NoteCapture(private val connectionInfo: ConnectionProperty,  private val m
         }
     }
     
-    fun unCaptureNote(viewData: NoteViewData, isRemove: Boolean = true){
+    override fun unCaptureNote(viewData: NoteViewData, isRemove: Boolean){
         val data = StreamingProperty(type = "unsubNote",
             body = BodyProperty(id = viewData.toShowNote.id)
         )
