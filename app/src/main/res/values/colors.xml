@@ -10,7 +10,7 @@
     <color name="light_primary_text_color">#282828</color>
     <color name="light_secondary_text_color">#505050</color>
     <color name="light_window_background_color">#FFFFFF</color>
-    <color name="light_simple_edit_text_background_color">#FFFFFF</color>
+    <color name="light_simple_edit_text_background_color">#f5f5f5</color>
 
 
     <color name="darkColorPrimary">#2B2B2B</color>
