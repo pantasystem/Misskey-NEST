@@ -9,7 +9,7 @@
                     android:bottomLeftRadius="32dp"
             />
             <solid
-                    android:color="?android:windowBackground"
+                    android:color="?android:colorPrimary"
             />
 
         </shape>
