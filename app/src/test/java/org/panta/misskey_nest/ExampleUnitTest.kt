@@ -1,9 +1,7 @@
 package org.panta.misskeynest
 
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import org.panta.misskeynest.util.parseRGBv11
 import java.util.*
 
 /**
@@ -25,7 +23,6 @@ class ExampleUnitTest {
         //val elapsed = ElapsedTimeFormatter()
         //val a = elapsed.formatTime(testDate!!)
         //assertEquals(a, "1時間前")
-        val rgbList = parseRGBv11("RGB(255,100,255)")
-        Assert.assertEquals(rgbList, listOf(255, 100, 255))
+
     }
 }

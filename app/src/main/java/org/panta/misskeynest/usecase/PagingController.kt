@@ -4,17 +4,17 @@ import android.util.Log
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.interfaces.ID
 import org.panta.misskeynest.interfaces.IItemRepository
-import java.lang.Exception
+import org.panta.misskeynest.interfaces.IPaging
 
-class PagingController<E: ID>(private val mRepository: IItemRepository<E>, private val errorCallBackListener: ErrorCallBackListener){
+class PagingController<E: ID>(private val mRepository: IItemRepository<E>, private val errorCallBackListener: ErrorCallBackListener): IPaging<E>{
     private var latestId: String? = null
     private var oldestId: String? = null
 
     private var requestOldestFlag: String? = null
 
-    fun getNewItems(callBack:(List<E>)->Unit){
+    override fun getNewItems(callBack:(List<E>)->Unit){
         if(latestId == null){
-            getInit(callBack)
+            init(callBack)
             return
         }
         mRepository.getItemsUseSinceId(latestId!!){
@@ -29,9 +29,9 @@ class PagingController<E: ID>(private val mRepository: IItemRepository<E>, priva
             }
         }
     }
-    fun getOldItems(callBack:(List<E>)->Unit){
+    override fun getOldItems(callBack:(List<E>)->Unit){
         if( oldestId == null ){
-            getInit(callBack)
+            init(callBack)
             return
         }
 
@@ -56,7 +56,7 @@ class PagingController<E: ID>(private val mRepository: IItemRepository<E>, priva
             }
         }
     }
-    fun getInit(callBack:(List<E>)->Unit){
+    override fun init(callBack:(List<E>)->Unit){
         mRepository.getItems {
             if(it == null){
                 errorCallBackListener.callBack(Exception("NULL返ってきちゃった・・"))
