@@ -3,13 +3,10 @@ package org.panta.misskeynest.repository
 import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.ReactionCountPair
 import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.network.OkHttpConnection
-import org.panta.misskeynest.network.StreamConverter
 import org.panta.misskeynest.usecase.NoteAdjustment
 import org.panta.misskeynest.viewdata.NoteViewData
 import java.net.URL
@@ -20,7 +17,6 @@ abstract class AbsTimeline(private val timelineURL: URL, private val isDeployRep
 
     private val mConnection = OkHttpConnection()
     private val mapper = jacksonObjectMapper()
-    private val converter = StreamConverter()
 
     private val noteAd = NoteAdjustment(isDeployReplyTo)
 
@@ -28,45 +24,42 @@ abstract class AbsTimeline(private val timelineURL: URL, private val isDeployRep
     //FIXME 直接Dataクラスを送信するようにする
     abstract fun createRequestTimelineJson(sinceId: String? = null, untilId: String? = null, sinceDate: Long? = null, untilDate: Long? = null): String
 
-    override fun getItemsUseSinceId(sinceId: String, callBack: (timeline: List<NoteViewData>?)->Unit) = GlobalScope.launch{
-        try{
+    override fun getItemsUseSinceId(sinceId: String): List<NoteViewData>?{
+        return try{
             val jsonToRequest = createRequestTimelineJson(sinceId = sinceId)
             val noteList = requestTimeline(jsonToRequest)
             if(noteList == null){
-                callBack(null)
+                null
             }else{
                 val list:List<Note> = reverseTimeline(noteList)
-                callBack(noteAd.insertReplyAndCreateInfo(list))
+                noteAd.insertReplyAndCreateInfo(list)
             }
 
         }catch(e: Exception){
             e.printStackTrace()
-
+            null
         }
-
-
     }
 
-    override fun getItemsUseUntilId(untilId: String, callBack: (timeline: List<NoteViewData>?)->Unit) = GlobalScope.launch{
-        try{
+    override fun getItemsUseUntilId(untilId: String): List<NoteViewData>?{
+        return try{
             val jsonToRequest = createRequestTimelineJson(untilId = untilId)
 
             val list:List<Note>? = requestTimeline(jsonToRequest)
             if(list == null){
-                callBack(null)
+                null
             }else{
-                callBack(noteAd.insertReplyAndCreateInfo(list))
+                noteAd.insertReplyAndCreateInfo(list)
             }
         }catch(e: Exception){
             e.printStackTrace()
 
+            null
         }
-
-
     }
 
 
-    override fun getItems(callBack: (timeline: List<NoteViewData>?) -> Unit) = GlobalScope.launch{
+    override fun getItems(): List<NoteViewData>?{
         try{
             val cacheTimeline = emptyList<Note>()
             val timeline = if(cacheTimeline.isEmpty()){
@@ -75,17 +68,16 @@ abstract class AbsTimeline(private val timelineURL: URL, private val isDeployRep
                 cacheTimeline
             }
 
-            if(timeline == null){
-                callBack(null)
+            return if(timeline == null){
+                null
             }else{
-                callBack(noteAd.insertReplyAndCreateInfo(timeline))
+                noteAd.insertReplyAndCreateInfo(timeline)
             }
         }catch(e: Exception){
             e.printStackTrace()
+            return null
         }
-
     }
-
 
 
     private fun requestTimeline(json: String): List<Note>?{

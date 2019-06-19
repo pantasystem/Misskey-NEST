@@ -1,6 +1,8 @@
 package org.panta.misskeynest.usecase
 
 import android.util.Log
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.interfaces.ID
 import org.panta.misskeynest.interfaces.IItemRepository
@@ -17,17 +19,19 @@ class PagingController<E: ID>(private val mRepository: IItemRepository<E>, priva
             init(callBack)
             return
         }
-        mRepository.getItemsUseSinceId(latestId!!){
-            if(it == null){
+        GlobalScope.launch{
+            val list = mRepository.getItemsUseSinceId(latestId!!)
+            if(list == null){
                 errorCallBackListener.callBack(Exception("NULL返ってきちゃった・・"))
-                return@getItemsUseSinceId
+                return@launch
             }
-            callBack(it)
-            val l = searchLatestId(it)
+            callBack(list)
+            val l = searchLatestId(list)
             if(l != null){
                 latestId = l
             }
         }
+
     }
     override fun getOldItems(callBack:(List<E>)->Unit){
         if( oldestId == null ){
@@ -42,14 +46,15 @@ class PagingController<E: ID>(private val mRepository: IItemRepository<E>, priva
         }else{
             requestOldestFlag = oldestId
         }
-        mRepository.getItemsUseUntilId(oldestId!!){
-            if(it == null){
+        GlobalScope.launch{
+            val list = mRepository.getItemsUseUntilId(oldestId!!)
+            if( list == null ){
                 errorCallBackListener.callBack(Exception("NULL返ってきちゃった・・"))
-                return@getItemsUseUntilId
+                return@launch
             }
-            callBack(it)
+            callBack(list)
 
-            val o = searchOldestId(it)
+            val o = searchOldestId(list)
             if(o != null){
                 oldestId = o
                 requestOldestFlag = null
@@ -57,23 +62,25 @@ class PagingController<E: ID>(private val mRepository: IItemRepository<E>, priva
         }
     }
     override fun init(callBack:(List<E>)->Unit){
-        mRepository.getItems {
-            if(it == null){
+        GlobalScope.launch{
+            val list = mRepository.getItems()
+            if( list == null ){
                 errorCallBackListener.callBack(Exception("NULL返ってきちゃった・・"))
-                return@getItems
+                return@launch
             }
-            callBack(it)
 
-            val l = searchLatestId(it)
-            val o = searchOldestId(it)
+            callBack(list)
+
+            val l = searchLatestId(list)
+            val o = searchOldestId(list)
             if(l != null){
                 latestId = l
             }
             if(o != null){
                 oldestId = o
             }
-
         }
+
     }
 
     private fun searchLatestId(list: List<ID>): String?{

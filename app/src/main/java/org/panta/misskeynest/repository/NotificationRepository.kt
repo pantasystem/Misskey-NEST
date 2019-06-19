@@ -23,42 +23,41 @@ class NotificationRepository(private val domain: String, private val authKey: St
     private val noteAd = NoteAdjustment()
 
 
-    override fun getItemsUseSinceId(sinceId: String, callBack: (timeline: List<NotificationViewData>?) -> Unit)= GlobalScope.launch {
-        try{
+    override fun getItemsUseSinceId(sinceId: String): List<NotificationViewData>?{
+        return try{
             val reqObj = RequestNotificationProperty(i = authKey, sinceId = sinceId ,limit = 10)
             val reqJson = mapper.writeValueAsString(reqObj)
 
             val data = getNotificationData(reqJson)
             if(data == null){
-                callBack(null)
+                null
             }else{
-                callBack(reverseList(data))
+                reverseList(data)
             }
         }catch(e: Exception){
             Log.w("Notification", "getItemsでエラー発生", e)
+            null
         }
-
     }
-    override fun getItemsUseUntilId(untilId: String, callBack: (timeline: List<NotificationViewData>?) -> Unit) = GlobalScope.launch {
-        try{
+    override fun getItemsUseUntilId(untilId: String): List<NotificationViewData>?{
+        return try{
             val reqObj = RequestNotificationProperty(i = authKey, untilId = untilId ,limit = 10)
             val reqJson = mapper.writeValueAsString(reqObj)
-            callBack(getNotificationData(reqJson))
+            getNotificationData(reqJson)
         }catch(e: Exception){
             Log.w("Notification", "getItemsでエラー発生", e)
+            null
         }
     }
-    override fun getItems(callBack: (timeline: List<NotificationViewData>?) -> Unit) = GlobalScope.launch{
-        try{
+    override fun getItems(): List<NotificationViewData>?{
+        return try{
             val reqObj = RequestNotificationProperty(i = authKey, limit = 10)
             val reqJson = mapper.writeValueAsString(reqObj)
-            callBack(getNotificationData(reqJson))
-
+            getNotificationData(reqJson)
         }catch(e: Exception){
             Log.w("Notification", "getItemsでエラー発生", e)
+            null
         }
-
-
     }
 
     fun markAllAsRead() = GlobalScope.launch{
@@ -70,7 +69,7 @@ class NotificationRepository(private val domain: String, private val authKey: St
         }
     }
 
-    private suspend fun getNotificationData(json: String): List<NotificationViewData>?{
+    private fun getNotificationData(json: String): List<NotificationViewData>?{
         val resJson = connection.postString(URL("$domain/api/i/notifications"), json)
         return if(resJson == null){
             null

@@ -2,8 +2,6 @@ package org.panta.misskeynest.repository
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.FollowProperty
@@ -26,41 +24,43 @@ class FollowFollowerRepository(private val userId: String, private val type: Fol
 
 
 
-    override fun getItems(callBack: (timeline: List<FollowViewData>?) -> Unit) = GlobalScope.launch{
-        try{
+    override fun getItems(): List<FollowViewData>?{
+        return try{
             val map = HashMap<String, String>()
             map["userId"] = userId
 
-            callBack(getViewData(map))
+            getViewData(map)
         }catch(e: Exception){
             e.printStackTrace()
+            null
         }
     }
 
-    override fun getItemsUseSinceId(sinceId: String, callBack: (timeline: List<FollowViewData>?) -> Unit) = GlobalScope.launch{
-        try{
+    override fun getItemsUseSinceId(sinceId: String): List<FollowViewData>?{
+        return try{
             val map = HashMap<String, String>()
             map["sinceId"] = sinceId
             map["userId"] = userId
-            callBack(getViewData(map))
+            getViewData(map)
         }catch(e: Exception){
             e.printStackTrace()
+            null
         }
     }
 
-    override fun getItemsUseUntilId(untilId: String, callBack: (timeline: List<FollowViewData>?) -> Unit) = GlobalScope.launch{
-        try{
+    override fun getItemsUseUntilId(untilId: String): List<FollowViewData>?{
+        return try{
             val map = HashMap<String, String>()
             map["untilId"] = untilId
             map["userId"] = userId
-            callBack(getViewData(map))
+            getViewData(map)
         }catch(e: Exception){
             e.printStackTrace()
+            null
         }
-
     }
 
-    private suspend fun getFollowFollowerInfo(map: Map<String, String>, url: URL): List<FollowProperty>?{
+    private fun getFollowFollowerInfo(map: Map<String, String>, url: URL): List<FollowProperty>?{
         val json = jacksonObjectMapper().writeValueAsString(map)
         val result = httpsConnection.postString(url, json)
 
@@ -72,7 +72,7 @@ class FollowFollowerRepository(private val userId: String, private val type: Fol
 
     }
 
-    private suspend fun getViewData(map: Map<String, String>): List<FollowViewData>?{
+    private fun getViewData(map: Map<String, String>): List<FollowViewData>?{
         val followerList = getFollowFollowerInfo(map, followerUrl)
         val followingList = getFollowFollowerInfo(map, followingUrl)
         if(followerList == null || followingList == null){

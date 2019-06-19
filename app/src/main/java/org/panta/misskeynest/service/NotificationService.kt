@@ -55,6 +55,9 @@ class NotificationService : Service() {
         })
         //init~
 
+        GlobalScope.launch{
+
+        }
         pagingController.getInit {
             watchDogNotification(10000)
         }
