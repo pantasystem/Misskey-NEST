@@ -25,5 +25,5 @@
 
     <color name="dark_simple_edit_text_window_background_color">#2B2B2B</color>
     <color name="dark_simple_edit_text_background_color">#303030</color>
-    <color name="dark_simple_edit_text_shadow_color">#303030</color>
+    <color name="dark_simple_edit_text_shadow_color">#2A2A2A</color>
 </resources>
