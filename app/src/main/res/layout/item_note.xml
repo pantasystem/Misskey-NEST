@@ -49,11 +49,12 @@
             android:id="@+id/elapsed_time"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_below="@+id/who_reaction_user_link"
-            android:layout_alignParentEnd="true"
-            android:layout_toStartOf="@+id/user_id"
+            android:layout_toEndOf="@+id/user_id"
             android:textSize="16sp"
+            android:text="10秒前"
+            android:singleLine="true"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
     />
 
     <com.vanniktech.emoji.EmojiTextView
