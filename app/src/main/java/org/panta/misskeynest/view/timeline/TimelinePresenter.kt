@@ -34,7 +34,7 @@ class TimelinePresenter(private val mView: TimelineContract.View,
     }
 
     override fun initTimeline() {
-        pagingController.getInit {
+        pagingController.init {
             mView.showInitTimeline(it)
         }
     }

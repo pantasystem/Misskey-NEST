@@ -30,7 +30,7 @@ class NotificationPresenter(private val mView: NotificationContract.View, info: 
     }
 
     override fun initNotification() {
-        pagingController.getInit {
+        pagingController.init {
             mView.showInitNotification(it)
         }
     }
