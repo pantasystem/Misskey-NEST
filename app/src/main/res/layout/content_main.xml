@@ -32,13 +32,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:contentInsetStart="0dp"
-
+            android:theme="@style/AppSimpleEditTextTheme"
+            android:background="?android:colorPrimary"
     >
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?attr/colorPrimary"
+            android:background="?android:windowBackground"
+            android:layout_marginTop="2dp"
             android:id="@+id/linearLayout2">
         <EditText
                 android:layout_width="0dp"

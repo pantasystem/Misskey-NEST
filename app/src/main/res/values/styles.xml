@@ -20,6 +20,8 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
     <style name="AppSimpleEditTextTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorPrimary">@color/light_simple_edit_text_shadow_color</item>
+        <item name="android:windowBackground">@color/light_simple_edit_text_window_background_color</item>
         <item name="android:editTextBackground">@color/light_simple_edit_text_background_color</item>
     </style>
 </resources>

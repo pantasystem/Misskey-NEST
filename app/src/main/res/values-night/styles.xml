@@ -11,6 +11,8 @@
         <item name="android:navigationBarColor">@color/darkColorPrimaryDark</item>
     </style>
     <style name="AppSimpleEditTextTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:colorPrimary">@color/dark_simple_edit_text_shadow_color</item>
+        <item name="android:windowBackground">@color/dark_simple_edit_text_window_background_color</item>
         <item name="android:editTextBackground">@color/dark_window_background_color</item>
     </style>
 </resources>
