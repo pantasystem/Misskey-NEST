@@ -14,6 +14,7 @@ import org.panta.misskeynest.R
 import org.panta.misskeynest.adapter.TimelineAdapter
 import org.panta.misskeynest.constant.TimelineTypeEnum
 import org.panta.misskeynest.entity.ConnectionProperty
+import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.interfaces.IBindScrollPosition
 import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.listener.NoteClickListener
@@ -54,7 +55,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     private lateinit var mNoteClickListener: NoteClickListener
     private lateinit var mUserClickListener: UserClickListener
 
-    var mNoteRepository: IItemRepository<NoteViewData>? = null
+    var mNoteRepository: IItemRepository<Note>? = null
         set(value) {
             field = value
             if(value != null && connectionInfo != null){

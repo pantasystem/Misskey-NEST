@@ -11,6 +11,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.panta.misskeynest.constant.NotificationType
+import org.panta.misskeynest.entity.NotificationProperty
+import org.panta.misskeynest.filter.NotificationFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.repository.NotificationRepository
 import org.panta.misskeynest.repository.PersonalRepository
@@ -24,7 +26,7 @@ import org.panta.misskeynest.viewdata.NotificationViewData
 class NotificationService : Service() {
 
     private lateinit var notificationRepository: NotificationRepository
-    private lateinit var pagingController: PagingController<NotificationViewData>
+    private lateinit var pagingController: PagingController<NotificationProperty ,NotificationViewData>
 
     private val notificationChannelId = "Misskey for Adnroid Notification"
 
@@ -50,7 +52,7 @@ class NotificationService : Service() {
             override fun callBack(e: Exception) {
                 Log.w("NotificationService", "エラー発生", e)
             }
-        })
+        }, NotificationFilter())
         //init~
 
         GlobalScope.launch{

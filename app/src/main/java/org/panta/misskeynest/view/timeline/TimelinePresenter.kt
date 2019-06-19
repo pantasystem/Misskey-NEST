@@ -1,19 +1,23 @@
 package org.panta.misskeynest.view.timeline
 
 import org.panta.misskeynest.entity.ConnectionProperty
+import org.panta.misskeynest.entity.Note
+import org.panta.misskeynest.filter.NoteFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
+import org.panta.misskeynest.interfaces.IItemFilter
 import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.repository.Reaction
 import org.panta.misskeynest.usecase.PagingController
 import org.panta.misskeynest.viewdata.NoteViewData
 
 class TimelinePresenter(private val mView: TimelineContract.View,
-                       mTimeline: IItemRepository<NoteViewData>, info: ConnectionProperty)
+                       mTimeline: IItemRepository<Note>, info: ConnectionProperty)
     : TimelineContract.Presenter, ErrorCallBackListener{
 
 
+    val filter: IItemFilter<Note, NoteViewData> = NoteFilter()
     private val pagingController =
-        PagingController<NoteViewData>(mTimeline, this)
+        PagingController<Note, NoteViewData>(mTimeline, this, filter)
 
 
     private val mReaction = Reaction(domain = info.domain, authKey = info.i)

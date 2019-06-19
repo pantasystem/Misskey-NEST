@@ -7,7 +7,7 @@ import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.FollowProperty
 import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.network.OkHttpConnection
-import org.panta.misskeynest.usecase.FollowViewDataMaker
+import org.panta.misskeynest.usecase.FollowFollowerDataMaker
 import org.panta.misskeynest.viewdata.FollowViewData
 import java.net.URL
 
@@ -79,9 +79,9 @@ class FollowFollowerRepository(private val userId: String, private val type: Fol
             return null
         }
         return if(type == FollowFollowerType.FOLLOWER){
-            FollowViewDataMaker().createFollowerViewDataList(followingList = followingList, followerList = followerList)
+            FollowFollowerDataMaker().createFollowerViewDataList(followingList = followingList, followerList = followerList)
         }else{
-            FollowViewDataMaker().createFollowingViewDataList(followingList = followingList, followerList = followerList)
+            FollowFollowerDataMaker().createFollowingViewDataList(followingList = followingList, followerList = followerList)
         }
     }
 }

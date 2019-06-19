@@ -10,20 +10,16 @@ import org.panta.misskeynest.entity.RequestNotificationProperty
 import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.network.OkHttpConnection
 import org.panta.misskeynest.usecase.NoteAdjustment
-import org.panta.misskeynest.viewdata.NoteViewData
-import org.panta.misskeynest.viewdata.NotificationViewData
 import java.net.URL
-import java.util.*
-import kotlin.collections.ArrayList
 
-class NotificationRepository(private val domain: String, private val authKey: String): IItemRepository<NotificationViewData>{
+class NotificationRepository(private val domain: String, private val authKey: String): IItemRepository<NotificationProperty>{
 
     private val connection = OkHttpConnection()
     private val mapper = jacksonObjectMapper()
     private val noteAd = NoteAdjustment()
 
 
-    override fun getItemsUseSinceId(sinceId: String): List<NotificationViewData>?{
+    override fun getItemsUseSinceId(sinceId: String): List<NotificationProperty>?{
         return try{
             val reqObj = RequestNotificationProperty(i = authKey, sinceId = sinceId ,limit = 10)
             val reqJson = mapper.writeValueAsString(reqObj)
@@ -39,7 +35,7 @@ class NotificationRepository(private val domain: String, private val authKey: St
             null
         }
     }
-    override fun getItemsUseUntilId(untilId: String): List<NotificationViewData>?{
+    override fun getItemsUseUntilId(untilId: String): List<NotificationProperty>?{
         return try{
             val reqObj = RequestNotificationProperty(i = authKey, untilId = untilId ,limit = 10)
             val reqJson = mapper.writeValueAsString(reqObj)
@@ -49,7 +45,7 @@ class NotificationRepository(private val domain: String, private val authKey: St
             null
         }
     }
-    override fun getItems(): List<NotificationViewData>?{
+    override fun getItems(): List<NotificationProperty>?{
         return try{
             val reqObj = RequestNotificationProperty(i = authKey, limit = 10)
             val reqJson = mapper.writeValueAsString(reqObj)
@@ -69,30 +65,21 @@ class NotificationRepository(private val domain: String, private val authKey: St
         }
     }
 
-    private fun getNotificationData(json: String): List<NotificationViewData>?{
+    private fun getNotificationData(json: String): List<NotificationProperty>?{
         val resJson = connection.postString(URL("$domain/api/i/notifications"), json)
         return if(resJson == null){
             null
         }else{
-            val resObj: List<NotificationProperty> = mapper.readValue(resJson)
-            makeViewData(resObj)
+            return mapper.readValue(resJson)
+            //makeViewData(resObj)
         }
 
     }
 
-    private fun makeViewData(list: List<NotificationProperty>): List<NotificationViewData>{
-        return list.map{
-            if(it.note == null){
-                NotificationViewData(it.id,false, it, null)
-            }else{
-                val viewData = NoteViewData(it.note.id, false,it.note, it.note,noteAd.checkUpNoteType(it.note), noteAd.createReactionCountPair(it.note.reactionCounts), Date())
-                NotificationViewData(it.id, false, it, viewData)
-            }
-        }
-    }
 
-    private fun reverseList(list: List<NotificationViewData>): List<NotificationViewData>{
-        val arrayList = ArrayList<NotificationViewData>()
+
+    private fun reverseList(list: List<NotificationProperty>): List<NotificationProperty>{
+        val arrayList = ArrayList<NotificationProperty>()
         for(i in (list.size - 1).downTo(0)){
             arrayList.add(list[i])
         }

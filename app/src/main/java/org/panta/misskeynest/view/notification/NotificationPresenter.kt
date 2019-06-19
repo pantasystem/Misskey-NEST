@@ -1,16 +1,19 @@
 package org.panta.misskeynest.view.notification
 
 import org.panta.misskeynest.entity.ConnectionProperty
+import org.panta.misskeynest.entity.NotificationProperty
+import org.panta.misskeynest.filter.NotificationFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.repository.NotificationRepository
 import org.panta.misskeynest.usecase.PagingController
+import org.panta.misskeynest.viewdata.NotificationViewData
 
 class NotificationPresenter(private val mView: NotificationContract.View, info: ConnectionProperty) :
     NotificationContract.Presenter, ErrorCallBackListener{
 
     private val mNotification = NotificationRepository(domain = info.domain, authKey = info.i)
 
-    private val pagingController = PagingController(mNotification, this)
+    private val pagingController = PagingController<NotificationProperty, NotificationViewData>(mNotification, this, NotificationFilter())
 
     override fun start() {
 

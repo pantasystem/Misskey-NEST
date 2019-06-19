@@ -3,12 +3,13 @@ package org.panta.misskeynest.usecase
 import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.panta.misskeynest.interfaces.ErrorCallBackListener
-import org.panta.misskeynest.interfaces.ID
-import org.panta.misskeynest.interfaces.IItemRepository
-import org.panta.misskeynest.interfaces.IPaging
+import org.panta.misskeynest.interfaces.*
 
-class PagingController<E: ID>(private val mRepository: IItemRepository<E>, private val errorCallBackListener: ErrorCallBackListener): IPaging<E>{
+class PagingController<I: Any ,E: ID>(
+    private val mRepository: IItemRepository<I>,
+    private val errorCallBackListener: ErrorCallBackListener,
+    private val mFilter: IItemFilter<I, E>
+): IPaging<E>{
     private var latestId: String? = null
     private var oldestId: String? = null
 
@@ -25,8 +26,9 @@ class PagingController<E: ID>(private val mRepository: IItemRepository<E>, priva
                 errorCallBackListener.callBack(Exception("NULL返ってきちゃった・・"))
                 return@launch
             }
-            callBack(list)
-            val l = searchLatestId(list)
+            val filteredList = mFilter.filter(list)
+            callBack(filteredList)
+            val l = searchLatestId(filteredList)
             if(l != null){
                 latestId = l
             }
@@ -52,9 +54,10 @@ class PagingController<E: ID>(private val mRepository: IItemRepository<E>, priva
                 errorCallBackListener.callBack(Exception("NULL返ってきちゃった・・"))
                 return@launch
             }
-            callBack(list)
+            val filteredList = mFilter.filter(list)
+            callBack(filteredList)
 
-            val o = searchOldestId(list)
+            val o = searchOldestId(filteredList)
             if(o != null){
                 oldestId = o
                 requestOldestFlag = null
@@ -69,10 +72,11 @@ class PagingController<E: ID>(private val mRepository: IItemRepository<E>, priva
                 return@launch
             }
 
-            callBack(list)
+            val filteredList = mFilter.filter(list)
+            callBack(filteredList)
 
-            val l = searchLatestId(list)
-            val o = searchOldestId(list)
+            val l = searchLatestId(filteredList)
+            val o = searchOldestId(filteredList)
             if(l != null){
                 latestId = l
             }

@@ -6,7 +6,7 @@ import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.AbsFollowViewDataMaker
 import org.panta.misskeynest.viewdata.FollowViewData
 
-class FollowViewDataMaker : AbsFollowViewDataMaker(){
+class FollowFollowerDataMaker : AbsFollowViewDataMaker(){
     override fun createList(baseList: List<FollowProperty>, addList: List<User?>, type: FollowFollowerType): List<FollowViewData> {
         return baseList.map{
             if(type == FollowFollowerType.FOLLOWER){
