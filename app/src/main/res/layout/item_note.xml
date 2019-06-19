@@ -283,12 +283,7 @@
             android:layout_marginBottom="5dp"
             android:layout_toEndOf="@+id/user_icon"
             android:layout_below="@+id/reply_button"/>
-    <View
-            android:id="@+id/horizon-line"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/show_thread_button"
-            android:background="?attr/colorPrimary"/>
+
 
 
 

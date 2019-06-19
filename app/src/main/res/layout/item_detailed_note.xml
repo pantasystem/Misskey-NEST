@@ -252,12 +252,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_below="@+id/note_detail_control_panel"
             android:layout_marginStart="10dp" />
-    <View
-            android:id="@+id/horizon-line"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/elapsed_time"
-            android:background="?attr/colorPrimary"/>
+
 
 
 </RelativeLayout>

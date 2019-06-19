@@ -3,6 +3,7 @@ package org.panta.misskeynest.view.note_description
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.MenuItem
@@ -76,6 +77,9 @@ class NoteDescriptionActivity : AppCompatActivity() {
                 }
             }
             adapter.userClickListener = UserClickListener(applicationContext)
+
+            val dividerItemDecoration = DividerItemDecoration(note_description_view.context, layoutManager.orientation)
+            note_description_view.addItemDecoration(dividerItemDecoration)
 
             val index = notes.indexOf(notes.firstOrNull { it.id == currentNoteId })
 

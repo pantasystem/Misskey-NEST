@@ -2,6 +2,7 @@ package org.panta.misskeynest.view.notification
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -17,8 +18,8 @@ import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.listener.NoteClickListener
-import org.panta.misskeynest.viewdata.NotificationViewData
 import org.panta.misskeynest.view.UserActivity
+import org.panta.misskeynest.viewdata.NotificationViewData
 
 class NotificationFragment : Fragment(), NotificationContract.View{
 
@@ -99,6 +100,9 @@ class NotificationFragment : Fragment(), NotificationContract.View{
 
             adapter.noteClickListener = mNoteClickListener
             adapter.userClickListener = userClickListener
+
+            val dividerItemDecoration = DividerItemDecoration(notification_view.context, mLayoutManager.orientation)
+            notification_view.addItemDecoration(dividerItemDecoration)
 
             notification_view?.adapter = adapter
             notificationAdapter = adapter
