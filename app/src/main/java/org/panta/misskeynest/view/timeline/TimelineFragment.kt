@@ -108,6 +108,9 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             mUserClickListener = UserClickListener(context!!)
         }
 
+        val dividerItemDecoration = DividerItemDecoration(timelineView.context, mLayoutManager.orientation)
+        timelineView.addItemDecoration(dividerItemDecoration)
+
     }
 
 
@@ -134,9 +137,6 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
             mAdapter?.addNoteClickListener(mNoteClickListener)
             mAdapter?.addUserClickListener(mUserClickListener)
-
-            val dividerItemDecoration = DividerItemDecoration(timelineView.context, mLayoutManager.orientation)
-            timelineView.addItemDecoration(dividerItemDecoration)
 
             timelineView?.layoutManager = mLayoutManager
             timelineView?.adapter = mAdapter

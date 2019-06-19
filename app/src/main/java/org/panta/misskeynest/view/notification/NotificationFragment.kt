@@ -69,6 +69,9 @@ class NotificationFragment : Fragment(), NotificationContract.View{
 
         }
 
+        val dividerItemDecoration = DividerItemDecoration(notification_view.context, mLayoutManager.orientation)
+        notification_view.addItemDecoration(dividerItemDecoration)
+
     }
 
     override fun stopRefreshing() {
@@ -101,8 +104,7 @@ class NotificationFragment : Fragment(), NotificationContract.View{
             adapter.noteClickListener = mNoteClickListener
             adapter.userClickListener = userClickListener
 
-            val dividerItemDecoration = DividerItemDecoration(notification_view.context, mLayoutManager.orientation)
-            notification_view.addItemDecoration(dividerItemDecoration)
+
 
             notification_view?.adapter = adapter
             notificationAdapter = adapter
