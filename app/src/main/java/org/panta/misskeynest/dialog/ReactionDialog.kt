@@ -6,6 +6,8 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import kotlinx.android.synthetic.main.dialog_reaction_viewer.view.*
@@ -31,14 +33,10 @@ class ReactionDialog : DialogFragment(){
             val reactionDialog = ReactionDialog()
             val args = Bundle()
             args.putString(ReactionDialog.TARGET_NOTE_ID, targetId)
-            //args.putSerializable(REACTION_DIALOG_CALL_BACK_ARGS_CODE, callBackListener)
             reactionDialog.arguments = args
             reactionDialog.mCallBackListener = callBackListener
 
-            //Log.d("TimelineFragment", "Is fm null? ${fm?:"Yes Null"}")
-            //FIXME ミックスタイムラインから呼び出されると落ちる
-            //reactionDialog.setTargetFragment(fragmentManager, reactionRequestCode)
-            //reactionDialog.show(activity?.supportFragmentManager, "reaction_tag")
+
             return reactionDialog
         }
     }
@@ -47,13 +45,9 @@ class ReactionDialog : DialogFragment(){
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
-        //val dialog = Dialog(context!!)
-        //dialog.setContentView(R.layout.dialog_reaction_viewer)
-
 
         val targetNoteId = arguments?.getString(TARGET_NOTE_ID)
 
-        //val callBackListener = arguments?.getSerializable(REACTION_DIALOG_CALL_BACK_ARGS_CODE) as CallBackListener?
 
         val listener = object : ItemClickListener<String> {
             override fun onClick(e: String) {
@@ -85,10 +79,34 @@ class ReactionDialog : DialogFragment(){
         builder.setView(content)
         val adapter = ReactionViewerAdapter(list, listener)
         content.reaction_viewer.adapter = adapter
-        content.reaction_viewer.layoutManager = LinearLayoutManager(context)
+        val layoutManager = LinearLayoutManager(context)
+        content.reaction_viewer.layoutManager = layoutManager
         content.cancel_button.setOnClickListener {
             dismiss()
         }
+
+        content.emoji_search_box.addTextChangedListener(
+            object : TextWatcher{
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if( content.emoji_search_box.text?.isNotBlank() == true ){
+                        val search = list.indexOfFirst {
+                            it.name.contains(content.emoji_search_box.text)
+                        }
+                        Log.d("ReactionDialog", "探索した位置 $search,　内容 ${content.emoji_search_box.text}")
+                        layoutManager.scrollToPosition(search)
+
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                }
+            }
+        )
 
 
 
