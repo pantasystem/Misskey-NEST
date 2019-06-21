@@ -13,6 +13,8 @@ import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.viewdata.NoteViewData
+const val REACTION_UPDATED = 0
+const val NOTE_UPDATED = 1
 
 class TimelineAdapter(private val context: Context, notesList: List<NoteViewData>) : RecyclerView.Adapter<NoteViewHolder>(), IOperationAdapter<NoteViewData>{
 
@@ -43,6 +45,19 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
         viewHolder.addOnItemClickListener(noteClickListener)
         viewHolder.addOnUserClickListener(userClickListener)
 
+    }
+
+    override fun onBindViewHolder(holder: NoteViewHolder, position: Int, payloads: MutableList<Any>) {
+        //super.onBindViewHolder(holder, position, payloads)
+        if( payloads.any() ){
+            val payload = payloads[0] as Int
+            if(payload == NOTE_UPDATED){
+
+            }else if( payload == REACTION_UPDATED ){
+                holder.setReactionCount(mArrayList[position])
+            }
+        }
+        onBindViewHolder( holder, position )
     }
 
 
@@ -101,7 +116,7 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
                 if(beforeData.toShowNote.id == item.toShowNote.id){
                     mArrayList[n] = beforeData.copy(toShowNote = item.toShowNote, reactionCountPairList = item.reactionCountPairList)
                     Handler().post{
-                        notifyItemChanged(n)
+                        notifyItemChanged(n, REACTION_UPDATED)
                     }
                 }
             }

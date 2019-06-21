@@ -186,7 +186,7 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         }
     }
 
-    private fun setReactionCount(viewData: NoteViewData){
+    fun setReactionCount(viewData: NoteViewData){
 
         if(viewData.toShowNote.myReaction == null){
             reactionButton.setImageResource(R.drawable.ic_plus)
