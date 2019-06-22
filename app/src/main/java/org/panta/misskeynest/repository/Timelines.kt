@@ -11,7 +11,8 @@ import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.network.OkHttpConnection
 import java.net.URL
 
-class GlobalTimeline(private val domain: String, private val authKey: String) : AbsTimeline(URL("$domain/api/notes/global-timeline")){
+class GlobalTimeline(private val connectionProperty: ConnectionProperty)
+    : AbsTimeline(URL("${connectionProperty.domain}/api/notes/global-timeline")){
 
     override fun createRequestTimelineJson(
         sinceId: String?,
@@ -21,7 +22,7 @@ class GlobalTimeline(private val domain: String, private val authKey: String) : 
     ): String {
         Log.d("GlobalTimeline", "値は sinceId:$sinceId, untilId:$untilId, sinceDate:$sinceDate ,untilDate:$untilDate, ")
         val rtp = RequestTimelineProperty()
-        rtp.i = authKey
+        rtp.i = connectionProperty.i
         rtp.limit = 20
         rtp.sinceId = sinceId
         rtp.untilId = untilId
@@ -33,7 +34,8 @@ class GlobalTimeline(private val domain: String, private val authKey: String) : 
     }
 }
 
-class LocalTimeline(domain: String, private val authKey: String) : AbsTimeline(URL("$domain/api/notes/local-timeline")){
+class LocalTimeline(private val connectionProperty: ConnectionProperty)
+    : AbsTimeline(URL("${connectionProperty.domain}/api/notes/local-timeline")){
     private val mapper = jacksonObjectMapper()
     override fun createRequestTimelineJson(
         sinceId: String?,
@@ -43,7 +45,7 @@ class LocalTimeline(domain: String, private val authKey: String) : AbsTimeline(U
     ): String {
         Log.d("HomeTimeline", "値は sinceId:$sinceId, untilId:$untilId, sinceDate:$sinceDate ,untilDate:$untilDate, ")
         val rtp = RequestTimelineProperty()
-        rtp.i = authKey
+        rtp.i = connectionProperty.i
         rtp.limit = 20
         rtp.sinceId = sinceId
         rtp.untilId = untilId
@@ -55,7 +57,8 @@ class LocalTimeline(domain: String, private val authKey: String) : AbsTimeline(U
     }
 }
 
-class HomeTimeline(domain: String, private val authKey: String) : AbsTimeline(URL("$domain/api/notes/timeline")) {
+class HomeTimeline(private val connectionProperty: ConnectionProperty)
+    : AbsTimeline(URL("${connectionProperty.domain}/api/notes/timeline")) {
 
     private val mapper = jacksonObjectMapper()
 
@@ -67,7 +70,7 @@ class HomeTimeline(domain: String, private val authKey: String) : AbsTimeline(UR
     ): String {
         Log.d("HomeTimeline", "値は sinceId:$sinceId, untilId:$untilId, sinceDate:$sinceDate ,untilDate:$untilDate, ")
         val rtp = RequestTimelineProperty()
-        rtp.i = authKey
+        rtp.i = connectionProperty.i
         rtp.limit = 20
         rtp.sinceId = sinceId
         rtp.untilId = untilId
@@ -79,7 +82,8 @@ class HomeTimeline(domain: String, private val authKey: String) : AbsTimeline(UR
     }
 }
 
-class SocialTimeline(domain: String, private val authKey: String) : AbsTimeline(URL("$domain/api/notes/hybrid-timeline")){
+class SocialTimeline(private val connectionProperty: ConnectionProperty)
+    : AbsTimeline(URL("${connectionProperty.domain}/api/notes/hybrid-timeline")){
 
     private val mapper = jacksonObjectMapper()
 
@@ -91,7 +95,7 @@ class SocialTimeline(domain: String, private val authKey: String) : AbsTimeline(
     ): String {
         Log.d("HomeTimeline", "値は sinceId:$sinceId, untilId:$untilId, sinceDate:$sinceDate ,untilDate:$untilDate, ")
         val rtp = RequestTimelineProperty()
-        rtp.i = authKey
+        rtp.i = connectionProperty.i
         rtp.limit = 20
         rtp.sinceId = sinceId
         rtp.untilId = untilId
@@ -103,7 +107,8 @@ class SocialTimeline(domain: String, private val authKey: String) : AbsTimeline(
     }
 }
 
-class UserTimeline(domain: String, private val userId: String, private val isMediaOnly: Boolean? = null) : AbsTimeline(URL("$domain/api/users/notes")){
+class UserTimeline(private val connectionProperty: ConnectionProperty , private val userId: String, private val isMediaOnly: Boolean? = null)
+    : AbsTimeline(URL("${connectionProperty.domain}/api/users/notes")){
 
 
     override fun createRequestTimelineJson(
@@ -114,6 +119,7 @@ class UserTimeline(domain: String, private val userId: String, private val isMed
     ): String {
         Log.d("UserTimeline", "値は sinceId:$sinceId, untilId:$untilId, sinceDate:$sinceDate ,untilDate:$untilDate, ")
         val rtp = RequestTimelineProperty()
+        rtp.i = connectionProperty.i
         rtp.limit = 20
         rtp.sinceId = sinceId
         rtp.untilId = untilId

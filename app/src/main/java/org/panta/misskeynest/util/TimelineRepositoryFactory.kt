@@ -10,10 +10,10 @@ import org.panta.misskeynest.repository.*
 class TimelineRepositoryFactory(private val connectionInfo: ConnectionProperty){
     fun create(timelineType: TimelineTypeEnum): IItemRepository<Note>?{
         return when (timelineType) {
-            TimelineTypeEnum.GLOBAL -> GlobalTimeline(domain = connectionInfo.domain , authKey = connectionInfo.i)
-            TimelineTypeEnum.HOME -> HomeTimeline(domain = connectionInfo.domain  , authKey = connectionInfo.i)
-            TimelineTypeEnum.SOCIAL -> SocialTimeline(domain = connectionInfo.domain  , authKey = connectionInfo.i)
-            TimelineTypeEnum.LOCAL -> LocalTimeline(domain = connectionInfo.domain, authKey = connectionInfo.i)
+            TimelineTypeEnum.GLOBAL -> GlobalTimeline(connectionInfo)
+            TimelineTypeEnum.HOME -> HomeTimeline(connectionInfo)
+            TimelineTypeEnum.SOCIAL -> SocialTimeline(connectionInfo)
+            TimelineTypeEnum.LOCAL -> LocalTimeline(connectionInfo)
             else -> throw IllegalArgumentException("global, home. social, localしか許可されていません。")
         }
     }
@@ -22,7 +22,7 @@ class TimelineRepositoryFactory(private val connectionInfo: ConnectionProperty){
         return if(isPin){
             UserPinNotes(connectionInfo ,user)
         }else{
-            UserTimeline(connectionInfo.domain, user.id, isMediaOnly)
+            UserTimeline(connectionInfo, user.id, isMediaOnly)
         }
     }
 
