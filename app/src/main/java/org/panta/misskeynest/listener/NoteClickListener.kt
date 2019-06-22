@@ -17,12 +17,12 @@ import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.repository.Reaction
 import org.panta.misskeynest.util.copyToClipboad
-import org.panta.misskeynest.viewdata.NoteViewData
+import org.panta.misskeynest.view.EditNoteActivity
 import org.panta.misskeynest.view.image_viewer.ImageViewerActivity
 import org.panta.misskeynest.view.note_description.NoteDescriptionActivity
-import org.panta.misskeynest.view.EditNoteActivity
+import org.panta.misskeynest.viewdata.NoteViewData
 
-class NoteClickListener(private val context: Context, private val activity: Activity, connectionProperty: ConnectionProperty) :INoteClickListener {
+class NoteClickListener(private val context: Context, private val activity: Activity, private val connectionProperty: ConnectionProperty) :INoteClickListener {
 
     var onShowReactionDialog: (ReactionDialog)->Unit = {
         Log.d("NoteClickListener", "onShowReactionDialog is not init")
@@ -47,22 +47,22 @@ class NoteClickListener(private val context: Context, private val activity: Acti
         EditNoteActivity.startActivity(context, targetId, NoteType.RE_NOTE)
     }
 
-    override fun onDescriptionButtonClicked(targetId: String?, note: Note?) {
+    override fun onDetailButtonClicked(viewData: NoteViewData) {
         val item = arrayOf<CharSequence>("内容をコピー", "リンクをコピー", "お気に入り", "ウォッチ", "デバッグ（開発者向け）")
+
+        val note = viewData.toShowNote
 
         AlertDialog.Builder(activity).apply{
             setTitle("詳細")
             setItems(item){ dialog, which->
                 when(which){
-                    0 -> copyToClipboad(context, note?.text.toString())
-                    1 -> copyToClipboad(context, note?.url.toString())
+                    0 -> copyToClipboad(context, note.text.toString())
+                    1 -> copyToClipboad(context, "${connectionProperty.domain}/notes/${viewData.note.id}")
                     2,3 -> Toast.makeText(context, "未実装ですごめんなさい", Toast.LENGTH_SHORT)
                     4 ->{
                         AlertDialog.Builder(activity).apply{
-                            if(note is Note){
-                                val noteString = note.toString().replace(",","\n")
-                                setMessage(noteString)
-                            }
+                            val noteString = viewData.toString().replace(",","\n")
+                            setMessage(noteString)
                             setPositiveButton(android.R.string.ok){i ,b->
                             }
                         }.show()
