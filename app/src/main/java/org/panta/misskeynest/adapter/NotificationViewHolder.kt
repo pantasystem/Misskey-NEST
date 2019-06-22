@@ -9,6 +9,8 @@ import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.NotificationType
 import org.panta.misskeynest.constant.ReactionConstData
 import org.panta.misskeynest.entity.NotificationProperty
+import org.panta.misskeynest.interfaces.INoteClickListener
+import org.panta.misskeynest.interfaces.IUserClickListener
 
 class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
@@ -16,6 +18,10 @@ class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     private val typeIcon = itemView.notification_status_icon
     private val userName = itemView.notification_user_name
     private val content = itemView.notification_content
+
+    var noteClickListener: INoteClickListener? = null
+    var userClickListener: IUserClickListener? = null
+
     fun setNotification(property: NotificationProperty){
         picasso(userIcon, property.user.avatarUrl!!)
         when(NotificationType.getEnumFromString(property.type)){
@@ -32,6 +38,19 @@ class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
                 content.text = property.note?.text
             }
             else -> throw IllegalArgumentException("follow, renote, reactionしか対応していません。${property.type}")
+        }
+        userName.setOnClickListener {
+            userClickListener?.onClickedUser(property.user)
+        }
+
+        userIcon.setOnClickListener {
+            userClickListener?.onClickedUser(property.user)
+        }
+
+        content.setOnClickListener {
+            if(property.note != null){
+                noteClickListener?.onNoteClicked(property.note)
+            }
         }
 
         userName.text = property.user.name

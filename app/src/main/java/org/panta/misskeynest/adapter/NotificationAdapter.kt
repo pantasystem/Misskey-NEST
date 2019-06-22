@@ -32,7 +32,11 @@ class NotificationAdapter(private val notificationList: List<NotificationViewDat
         val isNotification = viewType == NotificationType.FOLLOW.ordinal|| viewType ==  NotificationType.RENOTE.ordinal || viewType == NotificationType.REACTION.ordinal
         return if(isNotification){
             val view = LayoutInflater.from(p0.context).inflate(R.layout.item_notification, p0,false)
-            NotificationViewHolder(view)
+            val holder = NotificationViewHolder(view)
+            holder.noteClickListener = noteClickListener
+            holder.userClickListener = userClickListener
+            holder
+
         }else{
             //Log.d("NotificationAdapter", "onCreateViewHolder params:$notificationType")
             val view = LayoutInflater.from(p0.context).inflate(R.layout.item_note, p0, false)
@@ -40,7 +44,7 @@ class NotificationAdapter(private val notificationList: List<NotificationViewDat
             val holder = NoteViewHolder(view, null)
             holder.addOnItemClickListener(noteClickListener)
             holder.addOnUserClickListener(userClickListener)
-            return holder
+            holder
         }
 
 
