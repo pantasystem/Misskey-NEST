@@ -50,4 +50,12 @@ class NoteRepository(private val connectionInfo: ConnectionProperty){
             }
         }
     }
+
+    fun remove(note: Note): Boolean{
+        val map = hashMapOf("i" to connectionInfo.i)
+        map["noteId"] = note.id
+        val json = jacksonObjectMapper().writeValueAsString(map)
+        val response = connection.postString(URL("${connectionInfo.domain}/api/notes/delete"), json)
+        return response != null
+    }
 }

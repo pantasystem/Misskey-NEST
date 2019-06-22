@@ -9,12 +9,15 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.panta.misskeynest.constant.NoteType
 import org.panta.misskeynest.dialog.ReactionDialog
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.interfaces.INoteClickListener
+import org.panta.misskeynest.repository.NoteRepository
 import org.panta.misskeynest.repository.Reaction
 import org.panta.misskeynest.util.copyToClipboad
 import org.panta.misskeynest.view.EditNoteActivity
@@ -48,13 +51,18 @@ class NoteClickListener(private val context: Context, private val activity: Acti
     }
 
     override fun onDetailButtonClicked(viewData: NoteViewData) {
-        val item = arrayOf<CharSequence>("内容をコピー", "リンクをコピー", "お気に入り", "ウォッチ", "デバッグ（開発者向け）")
+        val itemList = arrayListOf("内容をコピー", "リンクをコピー", "お気に入り", "ウォッチ", "デバッグ")
+        if(viewData.toShowNote.user?.id == connectionProperty.userPrimaryId){
+            itemList.add("削除")
+        }
+        //val item = arrayOf<CharSequence>("内容をコピー", "リンクをコピー", "お気に入り", "ウォッチ", "デバッグ（開発者向け）")
 
+        val a = itemList.toTypedArray()
         val note = viewData.toShowNote
 
         AlertDialog.Builder(activity).apply{
             setTitle("詳細")
-            setItems(item){ dialog, which->
+            setItems(itemList.toTypedArray()){ _, which->
                 when(which){
                     0 -> copyToClipboad(context, note.text.toString())
                     1 -> copyToClipboad(context, "${connectionProperty.domain}/notes/${viewData.note.id}")
@@ -66,6 +74,15 @@ class NoteClickListener(private val context: Context, private val activity: Acti
                             setPositiveButton(android.R.string.ok){i ,b->
                             }
                         }.show()
+                    }
+                    5 ->{
+                        GlobalScope.launch {
+                            val b = NoteRepository(connectionProperty).remove(note)
+                            Handler(Looper.getMainLooper()).post{
+                                val statusMsg = if(b) "成功しました" else "失敗しました"
+                                Toast.makeText(context, statusMsg, Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                 }
 
