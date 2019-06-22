@@ -3,8 +3,14 @@ package org.panta.misskeynest.util
 import android.text.SpannableString
 import android.util.LruCache
 
-class SpannableStringCache : LruCache<String, SpannableString>(10 * 1024 * 1024) {
+class SpannableStringCache private constructor(): LruCache<String, SpannableString>(10 * 1024 * 1024) {
 
+    companion object{
+        private val cache = SpannableStringCache()
+        fun getInstance(): SpannableStringCache{
+            return cache
+        }
+    }
     override fun sizeOf(key: String?, value: SpannableString?): Int {
 
         if(value == null){

@@ -1,5 +1,6 @@
 package org.panta.misskeynest.adapter
 
+import android.graphics.Bitmap
 import android.os.Handler
 import android.os.Looper
 import android.support.v7.widget.RecyclerView
@@ -14,8 +15,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.panta.misskeynest.R
 import org.panta.misskeynest.interfaces.ItemClickListener
+import org.panta.misskeynest.util.BitmapCache
 import org.panta.misskeynest.util.SVGParser
 import org.panta.misskeynest.util.getEmojiPathFromName
+import java.io.File
 
 class ReactionHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
@@ -47,46 +50,13 @@ class ReactionHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val emojiFile = getEmojiPathFromName(itemView.context, emoji.replace(":", ""))
 
         if(resourceId == null && emojiFile == null){
-            reactionStringIcon.visibility = View.VISIBLE
-            reactionIcon.visibility = View.GONE
-            reactionStringIcon.text = emoji
+            //全てに当てはまらない場合
+            setTextReaction(emoji)
         }else if(resourceId != null){
-            reactionStringIcon.visibility = View.GONE
-            reactionIcon.visibility = View.VISIBLE
-            reactionIcon.setImageResource(resourceId)
-        }else if(emojiFile != null && emojiFile.name.endsWith(".svg")){
-            reactionIcon.visibility = View.INVISIBLE
-            reactionStringIcon.visibility = View.GONE
-            GlobalScope.launch {
-                try{
-                    //TODO キャッシュの対象にならないので修正する
-                    val bitmap = SVGParser().getBitmapFromFile(emojiFile, 50, 50)
-
-                    Handler(Looper.getMainLooper()).post{
-                        try{
-                            reactionIcon.setImageBitmap(bitmap)
-                            reactionIcon.visibility = View.VISIBLE
-                        }catch(e: Exception){
-                            Log.d("ReactionHolder", "error", e)
-                        }
-                    }
-                }catch(e: Exception){
-                    Log.d("ReactionHolder", "error", e)
-                }
-
-            }
-
-
-
-            //Log.d("ReactionHolder", "SVGタイプの画像が来た")
-        }else if(emojiFile != null && ! emojiFile.name.endsWith(".svg")){
-            reactionStringIcon.visibility = View.GONE
-            reactionIcon.visibility = View.VISIBLE
-            Picasso
-                .get()
-                .load(emojiFile)
-                .fit()
-                .into(reactionIcon)
+            //定数画像に含まれる場合
+            setReactionFromResource(resourceId)
+        }else if(emojiFile != null){
+            setImageFromFile(emojiFile)
         }
 
 
@@ -109,6 +79,71 @@ class ReactionHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         reactionCount.setOnClickListener(listener)
         reactionCountItem.setOnClickListener(listener)
         reactionViewItem.setOnClickListener(listener)
+    }
+
+    private fun setTextReaction(emoji: String){
+        reactionStringIcon.visibility = View.VISIBLE
+        reactionIcon.visibility = View.GONE
+        reactionStringIcon.text = emoji
+    }
+
+    private fun setReactionFromResource(id: Int){
+        reactionStringIcon.visibility = View.GONE
+        reactionIcon.visibility = View.VISIBLE
+        reactionIcon.setImageResource(id)
+    }
+
+    private fun setImageFromFile(file: File){
+        if(file.name.endsWith(".svg")){
+            reactionIcon.visibility = View.INVISIBLE
+            reactionStringIcon.visibility = View.GONE
+            GlobalScope.launch {
+                try{
+
+                    val bitmap = getBitmapFromSvgFile(file)
+
+                    Handler(Looper.getMainLooper()).post{
+                        try{
+                            reactionIcon.setImageBitmap(bitmap)
+                            reactionIcon.visibility = View.VISIBLE
+                        }catch(e: Exception){
+                            Log.d("ReactionHolder", "error", e)
+                        }
+                    }
+                }catch(e: Exception){
+                    Log.d("ReactionHolder", "error", e)
+                }
+
+            }
+
+
+
+            //Log.d("ReactionHolder", "SVGタイプの画像が来た")
+        }else if( ! file.name.endsWith(".svg")){
+            reactionStringIcon.visibility = View.GONE
+            reactionIcon.visibility = View.VISIBLE
+            Picasso
+                .get()
+                .load(file)
+                .fit()
+                .into(reactionIcon)
+        }
+    }
+
+    private fun getBitmapFromSvgFile(file: File): Bitmap{
+        val cache = BitmapCache.getInstance()
+
+        val name = file.name.split(".")[0]
+
+        val cacheBitmap: Bitmap? = cache.get(name)
+
+        return if( cacheBitmap == null ){
+            val tmpBitmap = SVGParser().getBitmapFromFile(file, 50, 50)
+            cache.put(file.name.split(".")[0], tmpBitmap)
+            tmpBitmap
+        }else{
+            cacheBitmap
+        }
     }
 
 }

@@ -14,11 +14,13 @@ import java.io.File
 
 class CustomEmojiTextBuilder(private val context: Context, private val size: Int) {
 
-    companion object{
+    /*companion object{
         private val bitmapCache = BitmapCache()
 
         private val spannableCache = SpannableStringCache()
-    }
+    }*/
+    private val bitmapCache = BitmapCache.getInstance()
+    private val spannableCache = SpannableStringCache.getInstance()
 
     private val svgParser = SVGParser()
     private val emojiFileList = context.fileList().map{
