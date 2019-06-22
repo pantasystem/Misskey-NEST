@@ -19,7 +19,6 @@ import org.panta.misskeynest.repository.UserRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 import org.panta.misskeynest.view.user.UserPagerAdapter
 import org.panta.misskeynest.view.user_auth.AuthActivity
-import java.lang.IllegalArgumentException
 
 class UserActivity : AppCompatActivity() {
 
@@ -83,7 +82,7 @@ class UserActivity : AppCompatActivity() {
 
         val ad = profile_view_pager.adapter
         val adapter = if(ad == null){
-            UserPagerAdapter(supportFragmentManager, tmpUser.id, info)
+            UserPagerAdapter(supportFragmentManager, tmpUser, info)
         }else{
             ad.notifyDataSetChanged()
             ad

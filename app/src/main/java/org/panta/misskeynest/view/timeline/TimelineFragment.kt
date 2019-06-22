@@ -16,11 +16,13 @@ import org.panta.misskeynest.adapter.TimelineAdapter
 import org.panta.misskeynest.constant.TimelineTypeEnum
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
+import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.IBindScrollPosition
 import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.listener.UserClickListener
 import org.panta.misskeynest.usecase.ObservationNote
+import org.panta.misskeynest.util.TimelineRepositoryFactory
 import org.panta.misskeynest.viewdata.NoteViewData
 
 class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, TimelineContract.View,
@@ -28,15 +30,38 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
 
     companion object{
-        private const val CONNECTION_INFOMATION = "TimelineFragmentConnectionInfomation"
+        private const val CONNECTION_PROPERTY = "TimelineFragmentConnectionInfomation"
         private const val TIMELINE_TYPE = "TIMELINE_FRAGMENT_TIMELINE_TYPE"
-        private const val USER_ID = "TIMELINE_FRAGMENT_USER_TIMELINE"
+        private const val USER_PROPERTY = "TIMELINE_FRAGMENT_USER_TIMELINE"
         private const val IS_MEDIA_ONLY = "IS_MEDIA_ONLY"
+        private const val SEARCH_WORD = "SEARCH_WORD"
 
-        fun getInstance(info: ConnectionProperty/*, type: TimelineTypeEnum, userId: String? = null, isMediaOnly: Boolean = false*/): TimelineFragment{
+        fun getInstance(info: ConnectionProperty, type: TimelineTypeEnum, isMediaOnly: Boolean): TimelineFragment{
             return TimelineFragment().apply{
                 val args = Bundle()
-                args.putSerializable(CONNECTION_INFOMATION, info)
+                args.putSerializable(CONNECTION_PROPERTY, info)
+                args.putString(TIMELINE_TYPE, type.name)
+                args.putBoolean(IS_MEDIA_ONLY, isMediaOnly)
+                this.arguments = args
+            }
+        }
+
+        fun getInstance(info: ConnectionProperty, user: User ,isMediaOnly: Boolean): TimelineFragment{
+            return TimelineFragment().apply{
+                val args = Bundle()
+                args.putSerializable(CONNECTION_PROPERTY, info)
+                args.putSerializable(USER_PROPERTY, user)
+                args.putBoolean(IS_MEDIA_ONLY, isMediaOnly)
+                this.arguments = args
+            }
+        }
+
+        fun getInstance(info: ConnectionProperty, keyWord: String, isMediaOnly: Boolean): TimelineFragment{
+            return TimelineFragment().apply{
+                val args = Bundle()
+                args.putSerializable(CONNECTION_PROPERTY, info)
+                args.putString(SEARCH_WORD, keyWord)
+                args.putBoolean(IS_MEDIA_ONLY, isMediaOnly)
                 this.arguments = args
             }
         }
@@ -47,7 +72,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
     private var connectionInfo: ConnectionProperty? = null
 
-    private var mTimelineType: TimelineTypeEnum = TimelineTypeEnum.HOME
+    //private var mTimelineType: TimelineTypeEnum = TimelineTypeEnum.HOME
     private val mLayoutManager: LinearLayoutManager by lazy{
         LinearLayoutManager(context)
     }
@@ -56,38 +81,37 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     private lateinit var mNoteClickListener: NoteClickListener
     private lateinit var mUserClickListener: UserClickListener
 
-    var mNoteRepository: IItemRepository<Note>? = null
-        set(value) {
-            field = value
-            if(value != null && connectionInfo != null){
-                mPresenter = TimelinePresenter(this, mNoteRepository!!, connectionInfo!!)
-                mPresenter?.initTimeline()
-            }else{
-                Log.d(tag, if(value == null) "NULLだなんでだ！！！" else "重要な情報が来ない")
-            }
-        }
 
-    var mObservationNote: ObservationNote? = null
+    private var mNoteRepository: IItemRepository<Note>? = null
+
+    private var mObservationNote: ObservationNote? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
         val args = arguments
 
-        connectionInfo = args?.getSerializable(CONNECTION_INFOMATION) as ConnectionProperty
+        connectionInfo = args?.getSerializable(CONNECTION_PROPERTY) as ConnectionProperty
         val timelineType = args.getString(TIMELINE_TYPE)
-        //isMediaOnly = args.getBoolean(IS_MEDIA_ONLY)
-        //userId = args.getString(USER_ID)
+        val timelineTypeEnum = if( timelineType == null ) null else TimelineTypeEnum.toEnum(timelineType)
+        val connectionProperty = args.getSerializable(CONNECTION_PROPERTY) !!as ConnectionProperty
+        val isMediaOnly = args.getBoolean(IS_MEDIA_ONLY)?: false
+        val userProperty = args.getSerializable(USER_PROPERTY) as User?
 
-        if(timelineType != null){
-            mTimelineType = TimelineTypeEnum.toEnum(timelineType)
+        val searchWord = args.getString(SEARCH_WORD)
+
+        val factory = TimelineRepositoryFactory(connectionProperty)
+        mNoteRepository = when {
+            (timelineTypeEnum == null) xor ( userProperty == null ) -> when {
+                timelineTypeEnum != null -> factory.create(timelineTypeEnum)
+                userProperty != null -> factory.create(userProperty, isMediaOnly)
+                else -> throw IllegalArgumentException("不正な値です")
+            }
+            searchWord != null -> factory.create(searchWord, isMediaOnly)
+            else -> throw IllegalArgumentException("不正な値です")
         }
 
-        if(mNoteRepository != null){
-            mPresenter = TimelinePresenter(this, mNoteRepository!!, connectionInfo!!)
-        }else{
-            Log.d(tag, "プレゼンターを作成することができなかった")
-        }
+        mPresenter = TimelinePresenter(this, mNoteRepository!!, connectionInfo!!)
 
         return inflater.inflate(R.layout.fragment_timeline, container, false)
     }

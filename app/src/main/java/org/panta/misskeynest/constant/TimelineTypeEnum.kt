@@ -5,12 +5,12 @@ enum class TimelineTypeEnum{
     companion object {
         fun toEnum(st: String): TimelineTypeEnum{
             return when(st.toUpperCase()){
-                TimelineTypeEnum.GLOBAL.name -> TimelineTypeEnum.GLOBAL
-                TimelineTypeEnum.HOME.name -> TimelineTypeEnum.HOME
-                TimelineTypeEnum.LOCAL.name -> TimelineTypeEnum.LOCAL
-                TimelineTypeEnum.SOCIAL.name -> TimelineTypeEnum.SOCIAL
-                TimelineTypeEnum.USER.name -> TimelineTypeEnum.USER
-                else -> TimelineTypeEnum.HOME
+                GLOBAL.name -> GLOBAL
+                HOME.name -> HOME
+                LOCAL.name -> LOCAL
+                SOCIAL.name -> SOCIAL
+                USER.name -> USER
+                else -> HOME
             }
         }
     }

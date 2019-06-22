@@ -7,7 +7,6 @@ import android.util.Log
 import android.util.SparseArray
 import org.panta.misskeynest.constant.TimelineTypeEnum
 import org.panta.misskeynest.entity.ConnectionProperty
-import org.panta.misskeynest.util.PopularTimelineRepositoryFactory
 import org.panta.misskeynest.view.timeline.TimelineFragment
 
 class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo: ConnectionProperty) : FragmentPagerAdapter(fragmentManager){
@@ -50,7 +49,7 @@ class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo:
 
 
         }*/
-        val factory = PopularTimelineRepositoryFactory(connectionInfo)
+        /*val factory = TimelineRepositoryFactory(connectionInfo)
         val repository = when(p0){
             0 -> factory.create(TimelineTypeEnum.HOME)
             1 -> factory.create(TimelineTypeEnum.LOCAL)
@@ -61,9 +60,15 @@ class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo:
         }!!
         val fragment = TimelineFragment.getInstance(connectionInfo)
         fragment.mNoteRepository= repository
-        fragmentList.put(p0, fragment)
+        fragmentList.put(p0, fragment)*/
+        return when(p0){
+            0 -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.HOME, false)
+            1 -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.LOCAL, false)
+            2 -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.SOCIAL, false)
+            3 -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.GLOBAL, false)
+            else -> throw IllegalArgumentException("異常な呼び出し")
+        }
 
-        return fragment
     }
 
     fun getFragment(position: Int): TimelineFragment{

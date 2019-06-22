@@ -3,20 +3,26 @@ package org.panta.misskeynest.util
 import org.panta.misskeynest.constant.TimelineTypeEnum
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
+import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.IItemRepository
-import org.panta.misskeynest.repository.GlobalTimeline
-import org.panta.misskeynest.repository.HomeTimeline
-import org.panta.misskeynest.repository.LocalTimeline
-import org.panta.misskeynest.repository.SocialTimeline
+import org.panta.misskeynest.repository.*
 
-class PopularTimelineRepositoryFactory(private val connectionInfo: ConnectionProperty){
-    fun create(mTimelineType: TimelineTypeEnum): IItemRepository<Note>?{
-        return when (mTimelineType) {
+class TimelineRepositoryFactory(private val connectionInfo: ConnectionProperty){
+    fun create(timelineType: TimelineTypeEnum): IItemRepository<Note>?{
+        return when (timelineType) {
             TimelineTypeEnum.GLOBAL -> GlobalTimeline(domain = connectionInfo.domain , authKey = connectionInfo.i)
             TimelineTypeEnum.HOME -> HomeTimeline(domain = connectionInfo.domain  , authKey = connectionInfo.i)
             TimelineTypeEnum.SOCIAL -> SocialTimeline(domain = connectionInfo.domain  , authKey = connectionInfo.i)
             TimelineTypeEnum.LOCAL -> LocalTimeline(domain = connectionInfo.domain, authKey = connectionInfo.i)
-            else -> null
+            else -> throw IllegalArgumentException("global, home. social, localしか許可されていません。")
         }
+    }
+
+    fun create(user: User, isMediaOnly: Boolean): IItemRepository<Note>{
+        return UserTimeline(connectionInfo.domain, user.id, isMediaOnly)
+    }
+
+    fun create(keyWord: String, isMediaOnly: Boolean): IItemRepository<Note>{
+        return SearchRepository(connectionInfo, keyWord)
     }
 }
