@@ -269,7 +269,7 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
             contentClickListener?.onReactionClicked(note.id, note, viewData,null)
         }
         descriptionButton.setOnClickListener {
-            contentClickListener?.onDetailButtonClicked(viewData)
+            contentClickListener?.onDetailButtonClicked(viewData.toShowNote)
         }
     }
 
@@ -297,6 +297,10 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         view.forEach {
             it.setOnClickListener{
                 contentClickListener?.onNoteClicked(note)
+            }
+            it.setOnLongClickListener {
+                contentClickListener?.onDetailButtonClicked(note)
+                true
             }
         }
     }

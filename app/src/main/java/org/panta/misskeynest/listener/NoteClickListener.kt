@@ -50,26 +50,25 @@ class NoteClickListener(private val context: Context, private val activity: Acti
         EditNoteActivity.startActivity(context, targetId, NoteType.RE_NOTE)
     }
 
-    override fun onDetailButtonClicked(viewData: NoteViewData) {
+    override fun onDetailButtonClicked(note: Note) {
         val itemList = arrayListOf("内容をコピー", "リンクをコピー", "お気に入り", "ウォッチ", "デバッグ")
-        if(viewData.toShowNote.user?.id == connectionProperty.userPrimaryId){
+        if(note.user?.id == connectionProperty.userPrimaryId){
             itemList.add("削除")
         }
         //val item = arrayOf<CharSequence>("内容をコピー", "リンクをコピー", "お気に入り", "ウォッチ", "デバッグ（開発者向け）")
 
         val a = itemList.toTypedArray()
-        val note = viewData.toShowNote
 
         AlertDialog.Builder(activity).apply{
             setTitle("詳細")
             setItems(itemList.toTypedArray()){ _, which->
                 when(which){
                     0 -> copyToClipboad(context, note.text.toString())
-                    1 -> copyToClipboad(context, "${connectionProperty.domain}/notes/${viewData.note.id}")
+                    1 -> copyToClipboad(context, "${connectionProperty.domain}/notes/${note.id}")
                     2,3 -> Toast.makeText(context, "未実装ですごめんなさい", Toast.LENGTH_SHORT)
                     4 ->{
                         AlertDialog.Builder(activity).apply{
-                            val noteString = viewData.toString().replace(",","\n")
+                            val noteString = note.toString().replace(",","\n")
                             setMessage(noteString)
                             setPositiveButton(android.R.string.ok){i ,b->
                             }
