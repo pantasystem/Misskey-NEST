@@ -3,6 +3,7 @@ package org.panta.misskeynest.adapter
 
 import android.content.Context
 import android.os.Handler
+import android.os.Looper
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -128,12 +129,22 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
 
     override fun removeItem(item: NoteViewData){
         synchronized(mArrayList){
-            val index = mArrayList.indexOf(item)
-            mArrayList.remove(item)
-
-            Handler().post{
-                notifyItemRemoved(index)
+            //val index = mArrayList.indexOf(item)
+            //mArrayList.remove(item)
+            val iterator = mArrayList.iterator()
+            while(iterator.hasNext()){
+                val data = iterator.next()
+                val index = mArrayList.indexOf(data)
+                if( data.id == item.id ){
+                    iterator.remove()
+                    Handler(Looper.getMainLooper()).post{
+                        notifyItemRemoved(index)
+                    }
+                }
             }
+
+
+
         }
     }
 

@@ -79,9 +79,9 @@ class NoteCapture(private val connectionInfo: ConnectionProperty,  private val m
                 if(obj.type == "noteUpdated"){
 
                     val id = obj.body.id
-                    val userId = obj.body.body?.userId!!
+                    val userId = obj.body.body?.userId
                     val isMyReaction = connectionInfo.userPrimaryId == userId
-                    val reaction = obj.body.body.reaction!!
+                    val reaction = obj.body.body?.reaction
 
                     //TODO キャッシュとViewのデータが別のデータのため同期がとれていないので取れるようにする
 
@@ -92,15 +92,21 @@ class NoteCapture(private val connectionInfo: ConnectionProperty,  private val m
                         val viewsData = mAdapterOperator.getItem(it)
 
                         if(viewsData != null){
-                            val updatedViewData = if(obj.body.type == "reacted"){
-                                noteUpdater.addReaction(reaction, viewsData, isMyReaction)
-                            }else{
-                                noteUpdater.removeReaction(reaction, viewsData, isMyReaction)
-                            }
-                            //bindStreamingProperty.onUpdateNote(updatedViewData)
                             Handler(Looper.getMainLooper()).post{
-                                mAdapterOperator.updateItem(updatedViewData)
+                                if(obj.body.type == "reacted"){
+                                    mAdapterOperator.updateItem(noteUpdater.addReaction(reaction!!, viewsData, isMyReaction))
+                                }else if(obj.body.type == "unreacted"){
+                                    mAdapterOperator.updateItem(noteUpdater.removeReaction(reaction!!, viewsData, isMyReaction))
+                                }else if(obj.body.type =="deleted"){
+                                    Log.d("NoteCapture", "アイテムは削除されたようです: $viewsData")
+                                    mAdapterOperator.removeItem(viewsData)
+                                }else{
+                                    Log.d("NoteCapture", "どれにも当てはまらない")
+                                }
                             }
+
+                            //bindStreamingProperty.onUpdateNote(updatedViewData)
+
                         }
                     }
 
@@ -108,7 +114,7 @@ class NoteCapture(private val connectionInfo: ConnectionProperty,  private val m
 
 
             }catch(e: Exception){
-
+                Log.d("NoteCapture", "エラー発生", e)
             }
         }
 
