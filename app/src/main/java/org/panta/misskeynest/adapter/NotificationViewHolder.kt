@@ -2,8 +2,6 @@ package org.panta.misskeynest.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.ImageView
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_notification.view.*
 import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.NotificationType
@@ -12,6 +10,8 @@ import org.panta.misskeynest.entity.NotificationProperty
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.usecase.ShowReaction
+import org.panta.misskeynest.util.InjectionImage
+import org.panta.misskeynest.util.InjectionText
 import org.panta.misskeynest.util.getEmojiPathFromName
 
 class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -27,7 +27,9 @@ class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     var userClickListener: IUserClickListener? = null
 
     fun setNotification(property: NotificationProperty){
-        picasso(userIcon, property.user.avatarUrl!!)
+        //picasso(userIcon, property.user.avatarUrl!!)
+        InjectionImage().roundInjectionImage(property.user.avatarUrl!!, userIcon, 180)
+
         when(NotificationType.getEnumFromString(property.type)){
             NotificationType.FOLLOW ->{
                 typeIcon.setImageResource(R.drawable.ic_human)
@@ -37,11 +39,12 @@ class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
             NotificationType.RENOTE ->{
                 typeIcon.setImageResource(R.drawable.ic_re_note)
                 typeTextIcon.visibility = View.GONE
-                content.text = property.note?.renote?.text
+
+                InjectionText().injectionTextInvisible(property.note?.renote?.text, content, null, property.note?.renote?.emojis)
             }
             NotificationType.REACTION ->{
                 setReactionTypeIcon(property.reaction)
-                content.text = property.note?.text
+                InjectionText().injectionTextInvisible(property.note?.text, content, null, property.note?.emojis)
             }
             else -> throw IllegalArgumentException("follow, renote, reactionしか対応していません。${property.type}")
         }
@@ -59,7 +62,12 @@ class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
             }
         }
 
-        userName.text = property.user.name
+        if(property.user.name == null ){
+            userName.text = property.user.userName
+        }else{
+            InjectionText()
+                .injection(property.user.name, userName, property.user.emojis)
+        }
     }
 
     private fun setReactionTypeIcon(type: String?){
@@ -82,10 +90,5 @@ class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     }
 
-    private fun picasso(imageView: ImageView, url: String){
-        Picasso
-            .get()
-            .load(url)
-            .into(imageView)
-    }
+
 }
