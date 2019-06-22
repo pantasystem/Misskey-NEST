@@ -27,47 +27,16 @@ class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo:
     }
 
     override fun getItem(p0: Int): Fragment? {
-        /*return when(p0){
-            0 ->{
-                TimelineFragment.getInstance(connectionInfo)
 
-            }
-            1 ->{
-                Log.d("PagerAdapter", "Localを表示中")
-                TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.LOCAL)
-            }
-            2 ->{
-                Log.d("PagerAdapter", "SOCIALを表示中")
-                TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.SOCIAL)
-            }
-            3 ->{
-                Log.d("PagerAdapter", "Globalを表示中")
-                TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.GLOBAL)
-            }
-
-            else -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.LOCAL)
-
-
-        }*/
-        /*val factory = TimelineRepositoryFactory(connectionInfo)
-        val repository = when(p0){
-            0 -> factory.create(TimelineTypeEnum.HOME)
-            1 -> factory.create(TimelineTypeEnum.LOCAL)
-            2 -> factory.create(TimelineTypeEnum.SOCIAL)
-            3 -> factory.create(TimelineTypeEnum.GLOBAL)
-            else -> throw IllegalAccessException("おかしな呼び出し")
-
-        }!!
-        val fragment = TimelineFragment.getInstance(connectionInfo)
-        fragment.mNoteRepository= repository
-        fragmentList.put(p0, fragment)*/
-        return when(p0){
+        val fragment =  when(p0){
             0 -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.HOME, false)
             1 -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.LOCAL, false)
             2 -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.SOCIAL, false)
             3 -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.GLOBAL, false)
             else -> throw IllegalArgumentException("異常な呼び出し")
         }
+        fragmentList.put(p0, fragment)
+        return fragment
 
     }
 
