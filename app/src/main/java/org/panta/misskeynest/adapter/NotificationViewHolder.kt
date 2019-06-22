@@ -11,11 +11,15 @@ import org.panta.misskeynest.constant.ReactionConstData
 import org.panta.misskeynest.entity.NotificationProperty
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.IUserClickListener
+import org.panta.misskeynest.usecase.ShowReaction
+import org.panta.misskeynest.util.getEmojiPathFromName
 
 class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
     private val userIcon = itemView.notification_user_icon
     private val typeIcon = itemView.notification_status_icon
+    private val typeTextIcon = itemView.notification_status_text_icon
+
     private val userName = itemView.notification_user_name
     private val content = itemView.notification_content
 
@@ -27,10 +31,12 @@ class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
         when(NotificationType.getEnumFromString(property.type)){
             NotificationType.FOLLOW ->{
                 typeIcon.setImageResource(R.drawable.ic_human)
+                typeTextIcon.visibility = View.GONE
                 content.visibility = View.INVISIBLE
             }
             NotificationType.RENOTE ->{
                 typeIcon.setImageResource(R.drawable.ic_re_note)
+                typeTextIcon.visibility = View.GONE
                 content.text = property.note?.renote?.text
             }
             NotificationType.REACTION ->{
@@ -57,18 +63,23 @@ class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     }
 
     private fun setReactionTypeIcon(type: String?){
-        when(type){
-            ReactionConstData.RIP -> typeIcon.setImageResource(R.drawable.ic_reaction_rip)
-            ReactionConstData.PUDDING -> typeIcon.setImageResource(R.drawable.ic_reaction_pudding)
-            ReactionConstData.LOVE -> typeIcon.setImageResource(R.drawable.ic_reaction_love)
-            ReactionConstData.LAUGH -> typeIcon.setImageResource(R.drawable.ic_reaction_laugh)
-            ReactionConstData.ANGRY -> typeIcon.setImageResource(R.drawable.ic_reaction_angry)
-            ReactionConstData.CONFUSED -> typeIcon.setImageResource(R.drawable.ic_reaction_confused)
-            ReactionConstData.CONGRATS -> typeIcon.setImageResource(R.drawable.ic_reaction_congrats)
-            ReactionConstData.HMM -> typeIcon.setImageResource(R.drawable.ic_reaction_hmm)
-            ReactionConstData.LIKE -> typeIcon.setImageResource(R.drawable.ic_reaction_like)
-            ReactionConstData.SURPRISE -> typeIcon.setImageResource(R.drawable.ic_reaction_surprise)
+
+        if(type == null)return
+        val resourceId = ReactionConstData.getDefaultReactionIconMapping()[type]
+        val emojiFile = getEmojiPathFromName(itemView.context, type.replace(":", ""))
+        val showReaction = ShowReaction(typeIcon, typeTextIcon)
+
+        if(resourceId == null && emojiFile == null){
+            //全てに当てはまらない場合
+            showReaction.setTextReaction(type)
+        }else if(resourceId != null){
+            //定数画像に含まれる場合
+            showReaction.setReactionFromResource(resourceId)
+        }else if(emojiFile != null){
+            showReaction.setImageFromFile(emojiFile)
         }
+
+
     }
 
     private fun picasso(imageView: ImageView, url: String){

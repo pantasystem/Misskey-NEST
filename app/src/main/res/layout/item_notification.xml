@@ -17,6 +17,13 @@
             android:layout_marginStart="8dp" android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/notification_user_icon"
             android:scaleType="fitXY"/>
+    <TextView
+            android:id="@+id/notification_status_text_icon"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/notification_status_icon"
+            android:textSize="22sp"
+            android:text="a"
+    />
     <com.vanniktech.emoji.EmojiTextView
             android:id="@+id/notification_user_name"
             android:text="TextView"
@@ -27,7 +34,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginStart="5dp"
             android:textSize="16sp"
-            android:layout_toEndOf="@+id/notification_status_icon"
+            android:layout_toEndOf="@+id/notification_status_text_icon"
     />
     <com.vanniktech.emoji.EmojiTextView
             android:id="@+id/notification_content"
