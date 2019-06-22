@@ -2,8 +2,13 @@ package org.panta.misskeynest.repository
 
 import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import org.panta.misskeynest.entity.ConnectionProperty
+import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.RequestTimelineProperty
+import org.panta.misskeynest.entity.User
+import org.panta.misskeynest.interfaces.IItemRepository
+import org.panta.misskeynest.network.OkHttpConnection
 import java.net.URL
 
 class GlobalTimeline(private val domain: String, private val authKey: String) : AbsTimeline(URL("$domain/api/notes/global-timeline")){
@@ -120,6 +125,30 @@ class UserTimeline(domain: String, private val userId: String, private val isMed
         return jacksonObjectMapper().writeValueAsString(rtp)
 
         //json.
+    }
+}
+
+class UserPinNotes(private val connectionProperty: ConnectionProperty ,private val user: User): IItemRepository<Note>{
+    override fun getItems(): List<Note>? {
+        //return user.pinnedNotes
+        return user.pinnedNotes ?: try{
+            val map = mapOf("i" to connectionProperty.i, "userId" to user.id)
+            val json = jacksonObjectMapper().writeValueAsString(map)
+            val response = OkHttpConnection().postString(URL("${connectionProperty.domain}/api/users/show"), json)?: return null
+            val user: User = jacksonObjectMapper().readValue(response)
+            return user.pinnedNotes
+        }catch(e: Exception){
+            Log.d("UserPinNotes" ,"error", e)
+            null
+        }
+    }
+
+    override fun getItemsUseSinceId(sinceId: String): List<Note>? {
+        return null
+    }
+
+    override fun getItemsUseUntilId(untilId: String): List<Note>? {
+        return null
     }
 }
 

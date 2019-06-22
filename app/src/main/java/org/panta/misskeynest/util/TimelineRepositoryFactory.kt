@@ -18,8 +18,12 @@ class TimelineRepositoryFactory(private val connectionInfo: ConnectionProperty){
         }
     }
 
-    fun create(user: User, isMediaOnly: Boolean): IItemRepository<Note>{
-        return UserTimeline(connectionInfo.domain, user.id, isMediaOnly)
+    fun create(user: User, isMediaOnly: Boolean, isPin: Boolean): IItemRepository<Note>{
+        return if(isPin){
+            UserPinNotes(connectionInfo ,user)
+        }else{
+            UserTimeline(connectionInfo.domain, user.id, isMediaOnly)
+        }
     }
 
     fun create(keyWord: String, isMediaOnly: Boolean): IItemRepository<Note>{

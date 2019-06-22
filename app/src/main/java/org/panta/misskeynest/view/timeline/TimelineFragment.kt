@@ -35,6 +35,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         private const val USER_PROPERTY = "TIMELINE_FRAGMENT_USER_TIMELINE"
         private const val IS_MEDIA_ONLY = "IS_MEDIA_ONLY"
         private const val SEARCH_WORD = "SEARCH_WORD"
+        private const val USER_PIN_NOTES = "TimelineFragmentUserPinNotesKey"
 
         fun getInstance(info: ConnectionProperty, type: TimelineTypeEnum, isMediaOnly: Boolean): TimelineFragment{
             return TimelineFragment().apply{
@@ -46,12 +47,13 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             }
         }
 
-        fun getInstance(info: ConnectionProperty, user: User ,isMediaOnly: Boolean): TimelineFragment{
+        fun getInstance(info: ConnectionProperty, user: User ,isMediaOnly: Boolean, isPin: Boolean): TimelineFragment{
             return TimelineFragment().apply{
                 val args = Bundle()
                 args.putSerializable(CONNECTION_PROPERTY, info)
                 args.putSerializable(USER_PROPERTY, user)
                 args.putBoolean(IS_MEDIA_ONLY, isMediaOnly)
+                args.putBoolean(USER_PIN_NOTES, isPin)
                 this.arguments = args
             }
         }
@@ -98,13 +100,15 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         val isMediaOnly = args.getBoolean(IS_MEDIA_ONLY)?: false
         val userProperty = args.getSerializable(USER_PROPERTY) as User?
 
+        val isPin = args.getBoolean(USER_PIN_NOTES)?: false
+
         val searchWord = args.getString(SEARCH_WORD)
 
         val factory = TimelineRepositoryFactory(connectionProperty)
         mNoteRepository = when {
             (timelineTypeEnum == null) xor ( userProperty == null ) -> when {
                 timelineTypeEnum != null -> factory.create(timelineTypeEnum)
-                userProperty != null -> factory.create(userProperty, isMediaOnly)
+                userProperty != null -> factory.create(userProperty, isMediaOnly, isPin)
                 else -> throw IllegalArgumentException("不正な値です")
             }
             searchWord != null -> factory.create(searchWord, isMediaOnly)

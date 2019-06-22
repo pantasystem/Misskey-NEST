@@ -10,7 +10,7 @@ import org.panta.misskeynest.view.timeline.TimelineFragment
 
 class UserPagerAdapter(fragmentManager: FragmentManager, private val user: User, private val connectionInfo: ConnectionProperty) : FragmentPagerAdapter(fragmentManager){
 
-    private val tabTitles = arrayOf<CharSequence>("タイムライン","メディア")
+    private val tabTitles = arrayOf<CharSequence>("投稿", "ピン", "メディア")
     override fun getCount(): Int {
         return tabTitles.size
     }
@@ -23,8 +23,9 @@ class UserPagerAdapter(fragmentManager: FragmentManager, private val user: User,
     override fun getItem(p0: Int): Fragment? {
 
         return when( p0 ){
-            0 -> TimelineFragment.getInstance(connectionInfo, user, false)
-            1 -> TimelineFragment.getInstance(connectionInfo, user, true)
+            0 -> TimelineFragment.getInstance(connectionInfo, user, isMediaOnly = false, isPin = false)
+            1 -> TimelineFragment.getInstance(connectionInfo, user, isMediaOnly = false, isPin = true)
+            2 -> TimelineFragment.getInstance(connectionInfo, user, isMediaOnly = true, isPin = false)
             else -> throw IllegalAccessException("不正な値")
         }
 
