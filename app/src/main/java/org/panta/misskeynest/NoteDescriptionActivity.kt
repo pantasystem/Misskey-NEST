@@ -11,7 +11,8 @@ import kotlinx.android.synthetic.main.activity_note_description.*
 import org.panta.misskeynest.adapter.NoteDetailAdapter
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
-import org.panta.misskeynest.interactor.GetNoteDetail
+import org.panta.misskeynest.interactor.NoteUseCase
+import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.listener.UserClickListener
 import org.panta.misskeynest.repository.local.PersonalRepository
@@ -54,7 +55,7 @@ class NoteDescriptionActivity : AppCompatActivity() {
         }
 
 
-        GetNoteDetail(NoteRepository(mConnectionProperty!!)).get(note){
+        NoteUseCase(NoteRepository(mConnectionProperty!!), errorListener).getNoteDetail(note){
             runOnUiThread {
                 //FIXME QuoteNoteが含む場合不具合を発生する
                 Log.d("NoteDescriptionActivity", "返ってきた $it")
@@ -100,5 +101,11 @@ class NoteDescriptionActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
 
+    }
+
+    val errorListener = object : ErrorCallBackListener{
+        override fun callBack(e: Exception) {
+            Log.d("", "error", e)
+        }
     }
 }

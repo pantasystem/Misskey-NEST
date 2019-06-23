@@ -8,4 +8,5 @@ interface INoteUseCase {
     fun send(property: CreateNoteProperty, callBack: (Boolean)->Unit)
     fun getNote(noteId: String, callBack: (NoteViewData?)-> Unit)
     fun remove(note: Note, callBack: (Boolean)-> Unit)
+    fun getNoteDetail(currentNote: Note ,callBack:(List<NoteViewData>)-> Unit)
 }

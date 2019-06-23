@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_auth.*
 import org.panta.misskeynest.constant.DomainAndAppSecret
 import org.panta.misskeynest.constant.getInstanceInfoList
 import org.panta.misskeynest.entity.SessionResponse
-import org.panta.misskeynest.interfaces.AuthContract
+import org.panta.misskeynest.contract.AuthContract
 import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 import org.panta.misskeynest.presenter.AuthPresenter

@@ -28,7 +28,7 @@ import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
-import org.panta.misskeynest.interfaces.MainContract
+import org.panta.misskeynest.contract.MainContract
 import org.panta.misskeynest.pager.PagerAdapter
 import org.panta.misskeynest.presenter.MainPresenter
 import org.panta.misskeynest.service.EmojiDownloadService

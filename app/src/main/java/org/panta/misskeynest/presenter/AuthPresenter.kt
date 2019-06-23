@@ -1,7 +1,7 @@
 package org.panta.misskeynest.presenter
 
 import org.panta.misskeynest.constant.getInstanceInfoList
-import org.panta.misskeynest.interfaces.AuthContract
+import org.panta.misskeynest.contract.AuthContract
 import org.panta.misskeynest.repository.remote.AuthRepository
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator

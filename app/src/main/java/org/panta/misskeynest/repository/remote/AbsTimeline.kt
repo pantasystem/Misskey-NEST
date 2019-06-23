@@ -31,7 +31,7 @@ abstract class AbsTimeline(private val timelineURL: URL, private val isDeployRep
             if(noteList == null){
                 null
             }else{
-                return reverseTimeline(noteList)
+                return noteList.reversed()//reverseTimeline(noteList)
             }
 
         }catch(e: Exception){
@@ -90,18 +90,13 @@ abstract class AbsTimeline(private val timelineURL: URL, private val isDeployRep
         }
     }
 
-    //FIXME　他のクラスでもよく使用するので分離予定
-    private fun reverseTimeline(list: List<Note>):List<Note>{
+    /*private fun reverseTimeline(list: List<Note>):List<Note>{
         val reversedList = ArrayList<Note>()
         for(n in list.size - 1 downTo 0){
             reversedList.add(list[n])
         }
         return reversedList
-    }
-
-
-
-
+    }*/
 
 
 

@@ -1,12 +1,14 @@
-package org.panta.misskeynest.interfaces
+package org.panta.misskeynest.contract
 
 import android.net.Uri
 import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.User
+import org.panta.misskeynest.interfaces.BasePresenter
+import org.panta.misskeynest.interfaces.BaseView
 
 interface MainContract {
-    interface View : BaseView<Presenter>{
+    interface View : BaseView<Presenter> {
         fun showPersonalMiniProfile(user: User)
         fun showPersonalProfilePage(user: User, connectionInfo: ConnectionProperty)
         fun showAuthActivity()
@@ -19,7 +21,7 @@ interface MainContract {
         fun stopNotificationService()
     }
 
-    interface Presenter : BasePresenter{
+    interface Presenter : BasePresenter {
         fun getPersonalMiniProfile()
         fun getPersonalProfilePage()
         //fun saveConnectInfo(domain: String, userToken:String)

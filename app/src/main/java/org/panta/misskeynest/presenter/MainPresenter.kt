@@ -10,7 +10,7 @@ import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interactor.NoteUseCase
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
-import org.panta.misskeynest.interfaces.MainContract
+import org.panta.misskeynest.contract.MainContract
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.repository.local.SettingsRepository
 import org.panta.misskeynest.repository.remote.MyInfo

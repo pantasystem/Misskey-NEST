@@ -1,8 +1,9 @@
-package org.panta.misskeynest.interfaces
+package org.panta.misskeynest.contract
 
 import android.net.Uri
 import org.panta.misskeynest.entity.SessionResponse
-import java.net.URI
+import org.panta.misskeynest.interfaces.BasePresenter
+import org.panta.misskeynest.interfaces.BaseView
 
 interface AuthContract {
     interface View : BaseView<Presenter> {

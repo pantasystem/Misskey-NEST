@@ -26,7 +26,6 @@ class NoteCapture(private val connectionInfo: ConnectionProperty,  private val m
     }
     val tag = "StreamingChannel"
 
-    //TODO キャッシュとViewのデータが別のデータのため同期がとれていないので取れるようにする
     private var captureViewData = ArrayList<NoteViewData>()
     private val noteUpdater = NoteUpdateUseCase()
 
@@ -84,7 +83,6 @@ class NoteCapture(private val connectionInfo: ConnectionProperty,  private val m
                     val isMyReaction = connectionInfo.userPrimaryId == userId
                     val reaction = obj.body.body?.reaction
 
-                    //TODO キャッシュとViewのデータが別のデータのため同期がとれていないので取れるようにする
 
 
                     captureViewData.filter{
