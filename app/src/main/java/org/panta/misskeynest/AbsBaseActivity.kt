@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view
+package org.panta.misskeynest
 
 import android.content.Context
 import android.os.Bundle

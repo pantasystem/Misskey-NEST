@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view
+package org.panta.misskeynest
 
 import android.Manifest
 import android.content.Context
@@ -19,7 +19,6 @@ import android.view.View
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider
 import kotlinx.android.synthetic.main.activity_edit_note.*
-import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.NoteType
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.CreateNoteProperty
@@ -27,10 +26,8 @@ import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.service.NotePostService
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.view.image_viewer.ImageViewerActivity
 import org.panta.misskeynest.view.note_editor.EditNoteContract
 import org.panta.misskeynest.view.note_editor.EditNotePresenter
-import org.panta.misskeynest.view.user_auth.AuthActivity
 import java.io.File
 
 class EditNoteActivity : AppCompatActivity(), EditNoteContract.View {

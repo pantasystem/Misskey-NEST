@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.user_auth
+package org.panta.misskeynest
 
 import android.content.Intent
 import android.net.Uri
@@ -9,14 +9,13 @@ import android.util.Log
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider
 import kotlinx.android.synthetic.main.activity_auth.*
-import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.DomainAndAppSecret
 import org.panta.misskeynest.constant.getInstanceInfoList
 import org.panta.misskeynest.entity.SessionResponse
 import org.panta.misskeynest.interfaces.AuthContract
 import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.view.MainActivity
+import org.panta.misskeynest.view.user_auth.AuthPresenter
 
 class AuthActivity : AppCompatActivity(), AuthContract.View {
 
@@ -44,7 +43,12 @@ class AuthActivity : AppCompatActivity(), AuthContract.View {
         }else{
             val instanceList = getInstanceInfoList()
             val defaultInfo = instanceList[0]
-            mPresenter = AuthPresenter(this, sharedPref, defaultInfo.domain, defaultInfo.appSecret)
+            mPresenter = AuthPresenter(
+                this,
+                sharedPref,
+                defaultInfo.domain,
+                defaultInfo.appSecret
+            )
 
             val lm = LinearLayoutManager(this)
             val adapter = org.panta.misskeynest.adapter.InstanceListAdapter(instanceList)
@@ -54,7 +58,8 @@ class AuthActivity : AppCompatActivity(), AuthContract.View {
             val c = this
             adapter.clickListener = object : ItemClickListener<DomainAndAppSecret> {
                 override fun onClick(e: DomainAndAppSecret) {
-                    mPresenter = AuthPresenter(c, sharedPref, e.domain, e.appSecret)
+                    mPresenter =
+                        AuthPresenter(c, sharedPref, e.domain, e.appSecret)
                 }
             }
         }

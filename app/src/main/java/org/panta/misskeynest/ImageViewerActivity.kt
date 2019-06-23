@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.image_viewer
+package org.panta.misskeynest
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_image_viewer.*
-import org.panta.misskeynest.R
+import org.panta.misskeynest.view.image_viewer.ImagePageAdapter
 
 class ImageViewerActivity : AppCompatActivity() {
 

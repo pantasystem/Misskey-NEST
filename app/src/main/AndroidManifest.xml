@@ -17,7 +17,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.MessageActivity">
+        <activity android:name=".MessageActivity">
         </activity>
         <activity android:name=".view.test_ui.TestActivity">
         </activity>
@@ -28,9 +28,9 @@
                 android:exported="true">
         </service>
 
-        <activity android:name=".view.SearchActivity">
+        <activity android:name=".SearchActivity">
         </activity>
-        <activity android:name=".view.NotificationActivity">
+        <activity android:name=".NotificationActivity">
         </activity>
 
         <service
@@ -44,9 +44,9 @@
                 android:exported="true">
         </service>
 
-        <activity android:name=".view.FollowFollowerActivity">
+        <activity android:name=".FollowFollowerActivity">
         </activity>
-        <activity android:name=".view.user_auth.AuthActivity">
+        <activity android:name=".AuthActivity">
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -59,19 +59,19 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".view.UserActivity"
+                android:name=".UserActivity"
                 android:label="@string/title_activity_user">
         </activity>
-        <activity android:name=".view.image_viewer.ImageViewerActivity">
+        <activity android:name=".ImageViewerActivity">
         </activity>
         <activity android:name=".view.note_description.NoteDescriptionActivity">
         </activity>
         <activity
-                android:name=".view.EditNoteActivity"
+                android:name=".EditNoteActivity"
                 android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
-                android:name=".view.MainActivity"
+                android:name=".MainActivity"
                 android:configChanges="orientation"
                 android:label="@string/app_name"
                 android:windowSoftInputMode="stateAlwaysHidden">

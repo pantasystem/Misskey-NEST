@@ -11,6 +11,8 @@ import android.util.Log
 import android.widget.Toast
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.panta.misskeynest.EditNoteActivity
+import org.panta.misskeynest.ImageViewerActivity
 import org.panta.misskeynest.constant.NoteType
 import org.panta.misskeynest.dialog.ReactionDialog
 import org.panta.misskeynest.entity.ConnectionProperty
@@ -18,10 +20,8 @@ import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.repository.remote.NoteRepository
-import org.panta.misskeynest.repository.remote.Reaction
+import org.panta.misskeynest.repository.remote.ReactionRepository
 import org.panta.misskeynest.util.copyToClipboad
-import org.panta.misskeynest.view.EditNoteActivity
-import org.panta.misskeynest.view.image_viewer.ImageViewerActivity
 import org.panta.misskeynest.view.note_description.NoteDescriptionActivity
 import org.panta.misskeynest.viewdata.NoteViewData
 
@@ -30,7 +30,7 @@ class NoteClickListener(private val context: Context, private val activity: Acti
     var onShowReactionDialog: (ReactionDialog)->Unit = {
         Log.d("NoteClickListener", "onShowReactionDialog is not init")
     }
-    private val reactionRepository = Reaction(
+    private val reactionRepository = ReactionRepository(
         domain = connectionProperty.domain,
         authKey = connectionProperty.i
     )
@@ -46,7 +46,7 @@ class NoteClickListener(private val context: Context, private val activity: Acti
 
     override fun onReactionClicked(targetId: String?, note: Note?, viewData: NoteViewData, reactionType: String?) {
         //mPresenter?.setReactionSelectedState(targetId, note, viewData, reactionType)
-        reactionSelected(targetId, note, viewData, reactionType)
+        reactionSelected(viewData, reactionType)
     }
 
     override fun onReNoteButtonClicked(targetId: String?, note: Note?) {
@@ -101,25 +101,22 @@ class NoteClickListener(private val context: Context, private val activity: Acti
         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(fileProperty.url)))
     }
 
-    private fun reactionSelected(targetId: String?, note: Note?, viewData: NoteViewData, reactionType: String?){
-        Log.d("NoteClickListener", "targetId :$targetId, reactionType: $reactionType")
-        if(targetId != null && note != null){
-            when {
-                viewData.toShowNote.myReaction != null -> deleteReaction(viewData.toShowNote.id)
-                reactionType != null -> this.sendReaction(noteId = note.id, reactionType = reactionType, viewData = viewData)
-                else -> showReactionSelectorView(targetId, viewData)
-            }
-
+    private fun reactionSelected(viewData: NoteViewData, reactionType: String?){
+        Log.d("NoteClickListener", "targetId :${viewData.toShowNote.id}, reactionType: $reactionType")
+        when {
+            viewData.toShowNote.myReaction != null -> deleteReaction(viewData.toShowNote.id)
+            reactionType != null -> this.sendReaction(reactionType = reactionType, viewData = viewData)
+            else -> showReactionSelectorView(viewData)
         }
     }
 
-    private fun showReactionSelectorView(targetId: String, viewData: NoteViewData) {
+    private fun showReactionSelectorView(viewData: NoteViewData) {
         Log.d("NoteClickListener", "showReactionSelectorViewが呼び出された")
-        val reactionDialog = ReactionDialog.getInstance(targetId, object : ReactionDialog.CallBackListener{
+        val reactionDialog = ReactionDialog.getInstance(viewData.toShowNote.id, object : ReactionDialog.CallBackListener{
             override fun callBack(noteId: String?, reactionParameter: String) {
                 if(noteId != null){
                     Log.d("TimelineFragment", "成功した")
-                    sendReaction(noteId = noteId, reactionType = reactionParameter, viewData = viewData)
+                    sendReaction(reactionType = reactionParameter, viewData = viewData)
                 }
             }
         })
@@ -128,12 +125,15 @@ class NoteClickListener(private val context: Context, private val activity: Acti
     }
 
     private fun deleteReaction(noteId: String){
-        reactionRepository.deleteReaction(noteId)
+        GlobalScope.launch{
+            reactionRepository.deleteReaction(noteId)
+        }
     }
 
-    private fun sendReaction(noteId: String, viewData: NoteViewData, reactionType: String) {
-        reactionRepository.sendReaction(noteId, reactionType){
-            if(it){
+    private fun sendReaction(viewData: NoteViewData, reactionType: String) {
+        GlobalScope.launch{
+            val result = reactionRepository.sendReaction(viewData.toShowNote.id, reactionType)
+            if(result){
                 Log.d("NoteClickListener", "sendReaction成功したようだ")
                 Handler(Looper.getMainLooper()).post{
                     Toast.makeText(context, "リアクションに成功しました", Toast.LENGTH_SHORT).show()
@@ -147,8 +147,6 @@ class NoteClickListener(private val context: Context, private val activity: Acti
                 }
             }
         }
-        //mView.showUpdatedNote(viewData)
-
 
     }
 

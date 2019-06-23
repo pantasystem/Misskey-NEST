@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view
+package org.panta.misskeynest
 
 import android.content.Intent
 import android.net.Uri
@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
-import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.User
@@ -34,7 +33,7 @@ import org.panta.misskeynest.pager.PagerAdapter
 import org.panta.misskeynest.service.EmojiDownloadService
 import org.panta.misskeynest.service.NotificationService
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.view.user_auth.AuthActivity
+import org.panta.misskeynest.view.*
 
 private const val FRAGMENT_HOME = "FRAGMENT_HOME"
 private const val FRAGMENT_OTHER = "FRAGMENT_OTHER"

@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view
+package org.panta.misskeynest
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,7 +10,6 @@ import com.squareup.picasso.Picasso
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider
 import kotlinx.android.synthetic.main.activity_user.*
-import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.User
@@ -18,7 +17,6 @@ import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.repository.remote.UserRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 import org.panta.misskeynest.view.user.UserPagerAdapter
-import org.panta.misskeynest.view.user_auth.AuthActivity
 
 class UserActivity : AppCompatActivity() {
 
@@ -69,10 +67,18 @@ class UserActivity : AppCompatActivity() {
                 posts_count.text = "${it.notesCount} 投稿"
                 profile_age.visibility = View.GONE
                 profile_follow_count.setOnClickListener{_ ->
-                    FollowFollowerActivity.startActivity(applicationContext, FollowFollowerType.FOLLOWING, it.id)
+                    FollowFollowerActivity.startActivity(
+                        applicationContext,
+                        FollowFollowerType.FOLLOWING,
+                        it.id
+                    )
                 }
                 profile_follower_count.setOnClickListener{_ ->
-                    FollowFollowerActivity.startActivity(applicationContext, FollowFollowerType.FOLLOWER, it.id)
+                    FollowFollowerActivity.startActivity(
+                        applicationContext,
+                        FollowFollowerType.FOLLOWER,
+                        it.id
+                    )
                 }
 
                 Picasso.get().load(it.bannerUrl).into(header_image)

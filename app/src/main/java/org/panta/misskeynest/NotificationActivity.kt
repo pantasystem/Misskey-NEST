@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view
+package org.panta.misskeynest
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -7,11 +7,9 @@ import android.view.MenuItem
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider
 import kotlinx.android.synthetic.main.activity_notification.*
-import org.panta.misskeynest.R
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 import org.panta.misskeynest.view.notification.NotificationFragment
-import org.panta.misskeynest.view.user_auth.AuthActivity
 
 class NotificationActivity : AppCompatActivity() {
 

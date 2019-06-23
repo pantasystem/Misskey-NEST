@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view
+package org.panta.misskeynest
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
