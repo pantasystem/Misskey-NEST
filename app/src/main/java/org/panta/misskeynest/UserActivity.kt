@@ -24,10 +24,10 @@ class UserActivity : AppCompatActivity() {
         private const val USER_PROPERTY_TAG = "UserActivityUserPropertyTag"
         //private const val CONNECTION_INFO = "UserActivityConnectionInfo"
 
-        fun startActivity(context: Context?, user: User){
+        fun getIntent(context: Context?, user: User): Intent{
             val intent = Intent(context, UserActivity::class.java)
             intent.putExtra(USER_PROPERTY_TAG, user)
-            context?.startActivity(intent)
+            return intent
         }
     }
     @SuppressLint("SetTextI18n")

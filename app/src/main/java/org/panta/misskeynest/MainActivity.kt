@@ -225,7 +225,7 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
     }
 
     override fun showPersonalProfilePage(user: User, connectionInfo: ConnectionProperty) {
-        UserActivity.startActivity(applicationContext, user)
+        startActivity(UserActivity.getIntent(applicationContext, user))
     }
 
     override fun showEditNote(connectionInfo: ConnectionProperty) {

@@ -12,14 +12,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_notification.*
 import org.panta.misskeynest.R
+import org.panta.misskeynest.UserActivity
 import org.panta.misskeynest.adapter.NotificationAdapter
+import org.panta.misskeynest.contract.NotificationContract
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.listener.NoteClickListener
-import org.panta.misskeynest.UserActivity
-import org.panta.misskeynest.contract.NotificationContract
 import org.panta.misskeynest.presenter.NotificationPresenter
 import org.panta.misskeynest.viewdata.NotificationViewData
 
@@ -141,7 +141,7 @@ class NotificationFragment : Fragment(), NotificationContract.View{
 
     private val userClickListener = object: IUserClickListener {
         override fun onClickedUser(user: User) {
-            UserActivity.startActivity(context!!, user)
+            startActivity(UserActivity.getIntent(context!!, user))
         }
     }
 

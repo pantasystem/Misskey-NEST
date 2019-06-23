@@ -57,7 +57,6 @@ class NoteDescriptionActivity : AppCompatActivity() {
 
         NoteUseCase(NoteRepository(mConnectionProperty!!), errorListener).getNoteDetail(note){
             runOnUiThread {
-                //FIXME QuoteNoteが含む場合不具合を発生する
                 Log.d("NoteDescriptionActivity", "返ってきた $it")
                 showNotes(it, note.id)
             }
@@ -76,7 +75,7 @@ class NoteDescriptionActivity : AppCompatActivity() {
                     it.show(supportFragmentManager, "reaction")
                 }
             }
-            adapter.userClickListener = UserClickListener(applicationContext)
+            adapter.userClickListener = UserClickListener(this)
 
             val dividerItemDecoration = DividerItemDecoration(note_description_view.context, layoutManager.orientation)
             note_description_view.addItemDecoration(dividerItemDecoration)
@@ -103,7 +102,7 @@ class NoteDescriptionActivity : AppCompatActivity() {
 
     }
 
-    val errorListener = object : ErrorCallBackListener{
+    private val errorListener = object : ErrorCallBackListener{
         override fun callBack(e: Exception) {
             Log.d("", "error", e)
         }
