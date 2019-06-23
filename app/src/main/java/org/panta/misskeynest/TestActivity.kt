@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.test_ui
+package org.panta.misskeynest
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -7,10 +7,10 @@ import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.android.synthetic.main.activity_test.*
-import org.panta.misskeynest.R
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.MetaProperty
 import org.panta.misskeynest.network.OkHttpConnection
+import org.panta.misskeynest.adapter.RecyclerAdapter
 import java.io.File
 import java.net.URL
 

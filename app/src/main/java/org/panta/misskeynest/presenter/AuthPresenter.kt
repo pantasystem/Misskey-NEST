@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.user_auth
+package org.panta.misskeynest.presenter
 
 import org.panta.misskeynest.constant.getInstanceInfoList
 import org.panta.misskeynest.interfaces.AuthContract

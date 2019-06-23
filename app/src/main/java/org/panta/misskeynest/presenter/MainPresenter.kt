@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view
+package org.panta.misskeynest.presenter
 
 import android.net.Uri
 import org.panta.misskeynest.constant.FollowFollowerType

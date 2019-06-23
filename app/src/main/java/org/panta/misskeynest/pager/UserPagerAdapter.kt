@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.user
+package org.panta.misskeynest.pager
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.util.Log
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.User
-import org.panta.misskeynest.view.timeline.TimelineFragment
+import org.panta.misskeynest.fragment.TimelineFragment
 
 class UserPagerAdapter(fragmentManager: FragmentManager, private val user: User, private val connectionInfo: ConnectionProperty) : FragmentPagerAdapter(fragmentManager){
 

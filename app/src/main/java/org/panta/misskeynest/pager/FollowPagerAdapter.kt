@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.follow_follower
+package org.panta.misskeynest.pager
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.util.Log
 import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.ConnectionProperty
+import org.panta.misskeynest.fragment.FollowFollowerFragment
 
 class FollowPagerAdapter(fragmentManager: FragmentManager, private val connectionInfo: ConnectionProperty, private val userId: String) : FragmentPagerAdapter(fragmentManager){
 
@@ -23,14 +24,26 @@ class FollowPagerAdapter(fragmentManager: FragmentManager, private val connectio
         val tmp = p0 % 2
         return when(tmp){
             0 ->{
-                FollowFollowerFragment.getInstance(userId, FollowFollowerType.FOLLOWING, connectionInfo)
+                FollowFollowerFragment.getInstance(
+                    userId,
+                    FollowFollowerType.FOLLOWING,
+                    connectionInfo
+                )
             }
             1 ->{
-                FollowFollowerFragment.getInstance(userId, FollowFollowerType.FOLLOWER, connectionInfo)
+                FollowFollowerFragment.getInstance(
+                    userId,
+                    FollowFollowerType.FOLLOWER,
+                    connectionInfo
+                )
 
             }
 
-            else -> FollowFollowerFragment.getInstance(userId, FollowFollowerType.FOLLOWING, connectionInfo)
+            else -> FollowFollowerFragment.getInstance(
+                userId,
+                FollowFollowerType.FOLLOWING,
+                connectionInfo
+            )
 
 
         }

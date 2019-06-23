@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.timeline
+package org.panta.misskeynest.presenter
 
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
@@ -8,6 +8,7 @@ import org.panta.misskeynest.interfaces.IItemFilter
 import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.repository.remote.ReactionRepository
 import org.panta.misskeynest.interactor.PagingController
+import org.panta.misskeynest.contract.TimelineContract
 import org.panta.misskeynest.viewdata.NoteViewData
 
 class TimelinePresenter(private val mView: TimelineContract.View,

@@ -1,8 +1,9 @@
-package org.panta.misskeynest.view.image_viewer
+package org.panta.misskeynest.pager
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import org.panta.misskeynest.fragment.ImageViewFragment
 
 class ImagePageAdapter(fragmentManager: FragmentManager, private val imageUrlList: List<String>) : FragmentPagerAdapter(fragmentManager){
 

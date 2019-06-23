@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.image_viewer
+package org.panta.misskeynest.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -16,7 +16,7 @@ class ImageViewFragment : Fragment(){
 
     companion object{
         private const val IMAGE_VIEW_FRAGMENT_URL = "IMAGE_VIEW_FRAGMENT_URL"
-        fun getInstance(imageUrl: String): ImageViewFragment{
+        fun getInstance(imageUrl: String): ImageViewFragment {
             val bundle = Bundle()
             bundle.putString(IMAGE_VIEW_FRAGMENT_URL, imageUrl)
 

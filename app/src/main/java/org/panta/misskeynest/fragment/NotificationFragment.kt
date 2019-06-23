@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.notification
+package org.panta.misskeynest.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -19,6 +19,8 @@ import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.UserActivity
+import org.panta.misskeynest.contract.NotificationContract
+import org.panta.misskeynest.presenter.NotificationPresenter
 import org.panta.misskeynest.viewdata.NotificationViewData
 
 class NotificationFragment : Fragment(), NotificationContract.View{
@@ -30,7 +32,7 @@ class NotificationFragment : Fragment(), NotificationContract.View{
 
     companion object{
         private const val CONNECTION_INFO = "NotificationFragmentConnectionInfo"
-        fun getInstance(info: ConnectionProperty): NotificationFragment{
+        fun getInstance(info: ConnectionProperty): NotificationFragment {
             val fragment = NotificationFragment()
             val bundle = Bundle()
             bundle.putSerializable(CONNECTION_INFO, info)

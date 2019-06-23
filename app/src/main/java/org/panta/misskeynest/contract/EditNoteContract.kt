@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.note_editor
+package org.panta.misskeynest.contract
 
 
 import org.panta.misskeynest.entity.CreateNoteProperty

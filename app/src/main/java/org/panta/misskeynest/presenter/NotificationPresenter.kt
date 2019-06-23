@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.notification
+package org.panta.misskeynest.presenter
 
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.NotificationProperty
@@ -6,6 +6,7 @@ import org.panta.misskeynest.filter.NotificationFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.repository.remote.NotificationRepository
 import org.panta.misskeynest.interactor.PagingController
+import org.panta.misskeynest.contract.NotificationContract
 import org.panta.misskeynest.viewdata.NotificationViewData
 
 class NotificationPresenter(private val mView: NotificationContract.View, info: ConnectionProperty) :

@@ -16,7 +16,7 @@ import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.repository.remote.UserRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.view.user.UserPagerAdapter
+import org.panta.misskeynest.pager.UserPagerAdapter
 
 class UserActivity : AppCompatActivity() {
 

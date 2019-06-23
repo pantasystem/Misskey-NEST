@@ -9,7 +9,7 @@ import com.vanniktech.emoji.twitter.TwitterEmojiProvider
 import kotlinx.android.synthetic.main.activity_notification.*
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.view.notification.NotificationFragment
+import org.panta.misskeynest.fragment.NotificationFragment
 
 class NotificationActivity : AppCompatActivity() {
 

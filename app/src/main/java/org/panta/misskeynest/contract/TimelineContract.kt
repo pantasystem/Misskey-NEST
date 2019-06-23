@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.timeline
+package org.panta.misskeynest.contract
 
 import org.panta.misskeynest.interfaces.BasePresenter
 import org.panta.misskeynest.interfaces.BaseView

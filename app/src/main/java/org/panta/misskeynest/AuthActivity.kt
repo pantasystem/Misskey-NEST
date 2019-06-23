@@ -15,7 +15,7 @@ import org.panta.misskeynest.entity.SessionResponse
 import org.panta.misskeynest.interfaces.AuthContract
 import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.view.user_auth.AuthPresenter
+import org.panta.misskeynest.presenter.AuthPresenter
 
 class AuthActivity : AppCompatActivity(), AuthContract.View {
 

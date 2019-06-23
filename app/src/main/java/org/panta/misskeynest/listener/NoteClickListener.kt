@@ -18,11 +18,11 @@ import org.panta.misskeynest.dialog.ReactionDialog
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.entity.Note
+import org.panta.misskeynest.NoteDescriptionActivity
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.repository.remote.NoteRepository
 import org.panta.misskeynest.repository.remote.ReactionRepository
 import org.panta.misskeynest.util.copyToClipboad
-import org.panta.misskeynest.view.note_description.NoteDescriptionActivity
 import org.panta.misskeynest.viewdata.NoteViewData
 
 class NoteClickListener(private val context: Context, private val activity: Activity, private val connectionProperty: ConnectionProperty) :INoteClickListener {

@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.message
+package org.panta.misskeynest.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.timeline
+package org.panta.misskeynest.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_timeline.*
 import org.panta.misskeynest.R
 import org.panta.misskeynest.adapter.TimelineAdapter
 import org.panta.misskeynest.constant.TimelineTypeEnum
+import org.panta.misskeynest.contract.TimelineContract
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.User
@@ -22,6 +23,7 @@ import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.listener.UserClickListener
 import org.panta.misskeynest.interactor.ObservationNote
+import org.panta.misskeynest.presenter.TimelinePresenter
 import org.panta.misskeynest.util.TimelineRepositoryFactory
 import org.panta.misskeynest.viewdata.NoteViewData
 
@@ -37,7 +39,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         private const val SEARCH_WORD = "SEARCH_WORD"
         private const val USER_PIN_NOTES = "TimelineFragmentUserPinNotesKey"
 
-        fun getInstance(info: ConnectionProperty, type: TimelineTypeEnum, isMediaOnly: Boolean): TimelineFragment{
+        fun getInstance(info: ConnectionProperty, type: TimelineTypeEnum, isMediaOnly: Boolean): TimelineFragment {
             return TimelineFragment().apply{
                 val args = Bundle()
                 args.putSerializable(CONNECTION_PROPERTY, info)
@@ -47,7 +49,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             }
         }
 
-        fun getInstance(info: ConnectionProperty, user: User ,isMediaOnly: Boolean, isPin: Boolean): TimelineFragment{
+        fun getInstance(info: ConnectionProperty, user: User ,isMediaOnly: Boolean, isPin: Boolean): TimelineFragment {
             return TimelineFragment().apply{
                 val args = Bundle()
                 args.putSerializable(CONNECTION_PROPERTY, info)
@@ -58,7 +60,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             }
         }
 
-        fun getInstance(info: ConnectionProperty, keyWord: String, isMediaOnly: Boolean): TimelineFragment{
+        fun getInstance(info: ConnectionProperty, keyWord: String, isMediaOnly: Boolean): TimelineFragment {
             return TimelineFragment().apply{
                 val args = Bundle()
                 args.putSerializable(CONNECTION_PROPERTY, info)

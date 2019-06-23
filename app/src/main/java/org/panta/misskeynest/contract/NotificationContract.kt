@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.notification
+package org.panta.misskeynest.contract
 
 import org.panta.misskeynest.interfaces.BasePresenter
 import org.panta.misskeynest.interfaces.BaseView

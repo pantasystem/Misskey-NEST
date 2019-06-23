@@ -30,10 +30,10 @@ import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
 import org.panta.misskeynest.interfaces.MainContract
 import org.panta.misskeynest.pager.PagerAdapter
+import org.panta.misskeynest.presenter.MainPresenter
 import org.panta.misskeynest.service.EmojiDownloadService
 import org.panta.misskeynest.service.NotificationService
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.view.*
 
 private const val FRAGMENT_HOME = "FRAGMENT_HOME"
 private const val FRAGMENT_OTHER = "FRAGMENT_OTHER"

@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.message
+package org.panta.misskeynest.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -16,7 +16,7 @@ class MessageSelectionFragment : Fragment(){
     companion object{
         private const val CONNECTION_PROPERTY_KEY = "MessageSelectionFragmentConnectionPropertyKey"
         private const val IS_GROUP_KEY = "MessageSelectionFragmentIsGroupKey"
-        fun getInstance(connectionProperty: ConnectionProperty, isGroup: Boolean): MessageSelectionFragment{
+        fun getInstance(connectionProperty: ConnectionProperty, isGroup: Boolean): MessageSelectionFragment {
             val fragment = MessageSelectionFragment()
             val bundle = Bundle()
             bundle.putSerializable(CONNECTION_PROPERTY_KEY, connectionProperty)
@@ -25,7 +25,7 @@ class MessageSelectionFragment : Fragment(){
             return fragment
         }
 
-        fun getInstance(connectionProperty: ConnectionProperty): MessageSelectionFragment{
+        fun getInstance(connectionProperty: ConnectionProperty): MessageSelectionFragment {
             return MessageSelectionFragment().apply{
                 val bundle = Bundle()
                 bundle.putSerializable(CONNECTION_PROPERTY_KEY, connectionProperty)

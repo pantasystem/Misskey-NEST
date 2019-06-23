@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.follow_follower
+package org.panta.misskeynest.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -15,6 +15,7 @@ import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.FollowFollowerContract
+import org.panta.misskeynest.presenter.FollowFollowerPresenter
 import org.panta.misskeynest.repository.remote.FollowFollowerRepository
 import org.panta.misskeynest.viewdata.FollowViewData
 import java.lang.Exception
@@ -26,7 +27,7 @@ class FollowFollowerFragment : Fragment(), FollowFollowerContract.View,
         private const val USER_ID = "followFollowerFragment"
         private const val CONNECTION_INFO = "followFollowerConnectionInfo"
         private const val FOLLOW_FOLLOWER_TYPE = "FOLLOW_FOLLOWER_TYPE_INFO"
-        fun getInstance(userId: String, type: FollowFollowerType,connectionInfo: ConnectionProperty): FollowFollowerFragment{
+        fun getInstance(userId: String, type: FollowFollowerType,connectionInfo: ConnectionProperty): FollowFollowerFragment {
             val fragment = FollowFollowerFragment()
             val bundle = Bundle()
             bundle.putString(USER_ID, userId)

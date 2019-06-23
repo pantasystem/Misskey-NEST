@@ -26,8 +26,8 @@ import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.service.NotePostService
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.view.note_editor.EditNoteContract
-import org.panta.misskeynest.view.note_editor.EditNotePresenter
+import org.panta.misskeynest.contract.EditNoteContract
+import org.panta.misskeynest.presenter.EditNotePresenter
 import java.io.File
 
 class EditNoteActivity : AppCompatActivity(), EditNoteContract.View {

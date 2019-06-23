@@ -1,4 +1,4 @@
-package org.panta.misskeynest.view.test_ui
+package org.panta.misskeynest.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
