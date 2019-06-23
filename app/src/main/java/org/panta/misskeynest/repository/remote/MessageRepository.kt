@@ -5,13 +5,14 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.MessageProperty
 import org.panta.misskeynest.network.OkHttpConnection
+import org.panta.misskeynest.repository.IMessageRepository
 import java.net.URL
 
-class MessageRepository(private val connectionProperty: ConnectionProperty){
+class MessageRepository(private val connectionProperty: ConnectionProperty): IMessageRepository{
 
     private val httpConnection = OkHttpConnection()
 
-    fun getHistory(isGroup: Boolean): List<MessageProperty>?{
+    override fun getHistory(isGroup: Boolean): List<MessageProperty>?{
         val json = jacksonObjectMapper().writeValueAsString(mapOf("i" to connectionProperty.i, "limit" to 100, "group" to isGroup))
         val response =  httpConnection.postString(URL("${connectionProperty.domain}/api/messaging/history"), json)
         response?: return null
@@ -19,7 +20,7 @@ class MessageRepository(private val connectionProperty: ConnectionProperty){
         return jacksonObjectMapper().readValue(response)
     }
 
-    fun create(userId: String?, groupId: String?, text: String, fileId: String?): Boolean{
+    override fun create(userId: String?, groupId: String?, text: String, fileId: String?): Boolean{
 
         //どちらかしか許容しない
         if( ( userId == null ) xor ( groupId == null ) ){
@@ -37,7 +38,7 @@ class MessageRepository(private val connectionProperty: ConnectionProperty){
         }
     }
 
-    fun getMessages(userId: String?, groupId: String?, untilId: String?, sinceId: String?): List<MessageProperty>?{
+    override fun getMessages(userId: String?, groupId: String?, untilId: String?, sinceId: String?): List<MessageProperty>?{
         //どちらかしか許容しない
         if( ( userId == null ) xor ( groupId == null ) ){
             val objectMap = HashMap<String, Any>()
