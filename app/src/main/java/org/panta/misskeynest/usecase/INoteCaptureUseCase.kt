@@ -4,7 +4,7 @@ import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.viewdata.NoteViewData
 
 interface INoteCaptureUseCase {
-    val mAdapterOperator: IOperationAdapter<NoteViewData>
+    val mAdapterOperator: IOperationAdapter<NoteViewData>?
 
     fun start()
 

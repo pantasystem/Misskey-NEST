@@ -18,12 +18,12 @@ import org.panta.misskeynest.contract.TimelineContract
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.User
+import org.panta.misskeynest.interactor.NoteCaptureUseCase
 import org.panta.misskeynest.interfaces.IBindScrollPosition
-import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.listener.UserClickListener
-import org.panta.misskeynest.interactor.ObservationNote
 import org.panta.misskeynest.presenter.TimelinePresenter
+import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.util.TimelineRepositoryFactory
 import org.panta.misskeynest.viewdata.NoteViewData
 
@@ -88,7 +88,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
     private var mNoteRepository: IItemRepository<Note>? = null
 
-    private var mObservationNote: ObservationNote? = null
+    private lateinit var mNoteCaptureUseCase: NoteCaptureUseCase
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -117,7 +117,9 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             else -> throw IllegalArgumentException("不正な値です")
         }
 
-        mPresenter = TimelinePresenter(this, mNoteRepository!!, connectionInfo!!)
+        mNoteCaptureUseCase= NoteCaptureUseCase(null,connectionInfo!!)
+        mPresenter = TimelinePresenter(this, mNoteCaptureUseCase,mNoteRepository!!, connectionInfo!!)
+        mNoteCaptureUseCase.start()
 
         return inflater.inflate(R.layout.fragment_timeline, container, false)
     }
@@ -170,8 +172,8 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
             timelineView?.layoutManager = mLayoutManager
             timelineView?.adapter = mAdapter
+            mNoteCaptureUseCase.mAdapterOperator = mAdapter
 
-            mObservationNote = ObservationNote(mAdapter!!, this, connectionInfo!!)
             stopRefreshing()
 
         }

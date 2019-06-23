@@ -41,7 +41,6 @@ class ElapsedTimeFormatter : ITimeFormat{
             }
             else -> "かなり昔"
         }
-        Log.d("ElapsedTimeFormatter", "求めた時間差 $tmp, TimeLag $timeLag")
         return tmp
     }
 
