@@ -4,7 +4,7 @@ import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.filter.FollowFollowerFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.interfaces.FollowFollowerContract
-import org.panta.misskeynest.interfaces.IItemRepository
+import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.repository.remote.UserRepository
 import org.panta.misskeynest.interactor.PagingController
 import org.panta.misskeynest.viewdata.FollowViewData

@@ -7,8 +7,8 @@ import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.RequestTimelineProperty
 import org.panta.misskeynest.entity.User
-import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.network.OkHttpConnection
+import org.panta.misskeynest.repository.IItemRepository
 import java.net.URL
 
 class GlobalTimeline(private val connectionProperty: ConnectionProperty)
@@ -134,7 +134,8 @@ class UserTimeline(private val connectionProperty: ConnectionProperty , private 
     }
 }
 
-class UserPinNotes(private val connectionProperty: ConnectionProperty ,private val user: User): IItemRepository<Note>{
+class UserPinNotes(private val connectionProperty: ConnectionProperty ,private val user: User):
+    IItemRepository<Note> {
     override fun getItems(): List<Note>? {
         //return user.pinnedNotes
         return user.pinnedNotes ?: try{

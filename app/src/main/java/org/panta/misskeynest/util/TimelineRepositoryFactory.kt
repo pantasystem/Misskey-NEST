@@ -4,7 +4,7 @@ import org.panta.misskeynest.constant.TimelineTypeEnum
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.User
-import org.panta.misskeynest.interfaces.IItemRepository
+import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.repository.remote.*
 
 class TimelineRepositoryFactory(private val connectionInfo: ConnectionProperty){
@@ -18,7 +18,7 @@ class TimelineRepositoryFactory(private val connectionInfo: ConnectionProperty){
         }
     }
 
-    fun create(user: User, isMediaOnly: Boolean, isPin: Boolean): IItemRepository<Note>{
+    fun create(user: User, isMediaOnly: Boolean, isPin: Boolean): IItemRepository<Note> {
         return if(isPin){
             UserPinNotes(connectionInfo, user)
         }else{
@@ -26,7 +26,7 @@ class TimelineRepositoryFactory(private val connectionInfo: ConnectionProperty){
         }
     }
 
-    fun create(keyWord: String, isMediaOnly: Boolean): IItemRepository<Note>{
+    fun create(keyWord: String, isMediaOnly: Boolean): IItemRepository<Note> {
         return SearchRepository(connectionInfo, keyWord)
     }
 }

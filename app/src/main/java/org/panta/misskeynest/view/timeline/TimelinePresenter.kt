@@ -5,13 +5,13 @@ import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.filter.NoteFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.interfaces.IItemFilter
-import org.panta.misskeynest.interfaces.IItemRepository
+import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.repository.remote.Reaction
 import org.panta.misskeynest.interactor.PagingController
 import org.panta.misskeynest.viewdata.NoteViewData
 
 class TimelinePresenter(private val mView: TimelineContract.View,
-                       mTimeline: IItemRepository<Note>, info: ConnectionProperty)
+                        mTimeline: IItemRepository<Note>, info: ConnectionProperty)
     : TimelineContract.Presenter, ErrorCallBackListener{
 
 

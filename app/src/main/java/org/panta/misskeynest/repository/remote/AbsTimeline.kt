@@ -5,13 +5,14 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.ReactionCountPair
-import org.panta.misskeynest.interfaces.IItemRepository
-import org.panta.misskeynest.network.OkHttpConnection
 import org.panta.misskeynest.interactor.NoteFormatUseCase
+import org.panta.misskeynest.network.OkHttpConnection
+import org.panta.misskeynest.repository.IItemRepository
 import java.net.URL
 import java.util.*
 
-abstract class AbsTimeline(private val timelineURL: URL, private val isDeployReplyTo: Boolean = false): IItemRepository<Note>{
+abstract class AbsTimeline(private val timelineURL: URL, private val isDeployReplyTo: Boolean = false):
+    IItemRepository<Note> {
 
 
     private val mConnection = OkHttpConnection()

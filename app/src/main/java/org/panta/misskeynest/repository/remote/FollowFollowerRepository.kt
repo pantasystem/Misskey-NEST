@@ -6,12 +6,13 @@ import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.FollowProperty
 import org.panta.misskeynest.interactor.FollowFollowerDataMaker
-import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.network.OkHttpConnection
+import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.viewdata.FollowViewData
 import java.net.URL
 
-class FollowFollowerRepository(private val userId: String, private val type: FollowFollowerType, private val connectionInfo: ConnectionProperty) : IItemRepository<FollowViewData>{
+class FollowFollowerRepository(private val userId: String, private val type: FollowFollowerType, private val connectionInfo: ConnectionProperty) :
+    IItemRepository<FollowViewData> {
 
     private val httpsConnection = OkHttpConnection()
     /*private val url =if(type == FollowFollowerType.FOLLOWING){

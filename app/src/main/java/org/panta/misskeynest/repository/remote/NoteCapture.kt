@@ -11,12 +11,13 @@ import org.panta.misskeynest.entity.BodyProperty
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.StreamingProperty
 import org.panta.misskeynest.interactor.NoteUpdateUseCase
-import org.panta.misskeynest.interfaces.ICapture
 import org.panta.misskeynest.interfaces.IOperationAdapter
+import org.panta.misskeynest.repository.ICapture
 import org.panta.misskeynest.viewdata.NoteViewData
 import java.net.URI
 
-class NoteCapture(private val connectionInfo: ConnectionProperty,  private val mAdapterOperator: IOperationAdapter<NoteViewData>): ICapture{
+class NoteCapture(private val connectionInfo: ConnectionProperty,  private val mAdapterOperator: IOperationAdapter<NoteViewData>):
+    ICapture {
 
 
     private var socket = Socket()

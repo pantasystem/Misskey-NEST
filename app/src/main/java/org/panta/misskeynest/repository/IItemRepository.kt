@@ -1,4 +1,4 @@
-package org.panta.misskeynest.interfaces
+package org.panta.misskeynest.repository
 
 interface IItemRepository<E> {
     fun getItemsUseSinceId( sinceId: String ): List<E>?

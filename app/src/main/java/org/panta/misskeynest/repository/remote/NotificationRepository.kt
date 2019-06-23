@@ -8,11 +8,12 @@ import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.NotificationProperty
 import org.panta.misskeynest.entity.RequestNotificationProperty
 import org.panta.misskeynest.interactor.NoteFormatUseCase
-import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.network.OkHttpConnection
+import org.panta.misskeynest.repository.IItemRepository
 import java.net.URL
 
-class NotificationRepository(private val domain: String, private val authKey: String): IItemRepository<NotificationProperty>{
+class NotificationRepository(private val domain: String, private val authKey: String):
+    IItemRepository<NotificationProperty> {
 
     private val connection = OkHttpConnection()
     private val mapper = jacksonObjectMapper()

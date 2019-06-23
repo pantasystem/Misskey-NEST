@@ -18,7 +18,7 @@ import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.IBindScrollPosition
-import org.panta.misskeynest.interfaces.IItemRepository
+import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.listener.UserClickListener
 import org.panta.misskeynest.interactor.ObservationNote

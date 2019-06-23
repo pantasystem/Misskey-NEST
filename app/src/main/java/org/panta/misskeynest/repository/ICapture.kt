@@ -1,4 +1,4 @@
-package org.panta.misskeynest.interfaces
+package org.panta.misskeynest.repository
 
 import org.panta.misskeynest.viewdata.NoteViewData
 
