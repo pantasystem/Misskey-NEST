@@ -46,12 +46,12 @@ class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteVi
     override fun add(viewData: NoteViewData) {
 
         synchronized(captureNoteMap){
-            val isIncludeNote = captureNoteMap[viewData.toShowNote.id]
+            val isIncludeNote = captureNoteMap[viewData.id]
             if( isIncludeNote != null ){
                 couldNoteBeSentDataQueue.add(viewData)
                 return
             }
-            captureNoteMap[viewData.toShowNote.id] = viewData
+            captureNoteMap[viewData.id] = viewData
         }
 
 
@@ -101,7 +101,7 @@ class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteVi
 
             unCapture(viewData)
             synchronized(captureNoteMap){
-                captureNoteMap.remove(viewData.toShowNote.id)
+                captureNoteMap.remove(viewData.id)
             }
         }catch(e: Exception){
             Log.d(TAG, "remove中にエラー発生", e)
@@ -142,7 +142,7 @@ class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteVi
             val reaction = obj.body.body?.reaction
 
             captureNoteMap.filter{
-                it.key == id
+                it.value.toShowNote.id == id
             }.forEach{
                 val viewData = mAdapterOperator?.getItem(it.key)
 
