@@ -13,12 +13,12 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.panta.misskeynest.EditNoteActivity
 import org.panta.misskeynest.ImageViewerActivity
+import org.panta.misskeynest.NoteDescriptionActivity
 import org.panta.misskeynest.constant.NoteType
 import org.panta.misskeynest.dialog.ReactionDialog
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.entity.Note
-import org.panta.misskeynest.NoteDescriptionActivity
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.repository.remote.NoteRepository
 import org.panta.misskeynest.repository.remote.ReactionRepository
@@ -94,7 +94,7 @@ class NoteClickListener(private val context: Context, private val activity: Acti
 
     }
     override fun onImageClicked(clickedIndex: Int, clickedImageUrlCollection: Array<String>) {
-        ImageViewerActivity.startActivity(context, clickedImageUrlCollection, clickedIndex)
+        context.startActivity(ImageViewerActivity.getIntent(context, clickedImageUrlCollection, clickedIndex))
     }
 
     override fun onMediaPlayClicked(fileProperty: FileProperty) {

@@ -2,8 +2,8 @@ package org.panta.misskeynest
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_image_viewer.*
@@ -15,11 +15,11 @@ class ImageViewerActivity : AppCompatActivity() {
         private const val IMAGE_URL_LIST = "IMAGE_VIEW_ACTIVITY_IMAGE_URL_LIST"
         private const val CLICKED_IMAGE_URL = "CLICKED_IMAGE_URL_IMAGE_VIEWER_ACTIVITY"
 
-        fun startActivity(context: Context?, imageUrlList: Array<String>, showImagePage: Int){
+        fun getIntent(context: Context?, imageUrlList: Array<String>, showImagePage: Int): Intent{
             val intent = Intent(context, ImageViewerActivity::class.java)
             intent.putExtra(IMAGE_URL_LIST, imageUrlList)
             intent.putExtra(CLICKED_IMAGE_URL, showImagePage)
-            context?.startActivity(intent)
+            return intent
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {

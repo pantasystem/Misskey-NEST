@@ -2,16 +2,16 @@ package org.panta.misskeynest
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider
 import kotlinx.android.synthetic.main.activity_follow_follower.*
 import org.panta.misskeynest.constant.FollowFollowerType
+import org.panta.misskeynest.pager.FollowPagerAdapter
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.pager.FollowPagerAdapter
 
 class FollowFollowerActivity : AppCompatActivity() {
 
@@ -20,12 +20,12 @@ class FollowFollowerActivity : AppCompatActivity() {
         const val FOLLOW_FOLLOWER_TYPE = "FollowFollowerActivityFollowingFollowerType"
         //const val CONNECTION_INFO = "FollowFollowerActivityConnectionInfo"
 
-        fun startActivity(context: Context, type: FollowFollowerType, userId: String){
+        fun getIntent(context: Context, type: FollowFollowerType, userId: String): Intent{
             val intent = Intent(context, FollowFollowerActivity::class.java)
             //intent.putExtra(FollowFollowerActivity.CONNECTION_INFO, info)
             intent.putExtra(FOLLOW_FOLLOWER_TYPE, type.ordinal)
             intent.putExtra(USER_ID_TAG, userId)
-            context.startActivity(intent)
+            return intent
         }
     }
 

@@ -25,13 +25,12 @@ import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import org.panta.misskeynest.constant.FollowFollowerType
+import org.panta.misskeynest.contract.MainContract
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
-import org.panta.misskeynest.contract.MainContract
 import org.panta.misskeynest.pager.PagerAdapter
 import org.panta.misskeynest.presenter.MainPresenter
-import org.panta.misskeynest.service.EmojiDownloadService
 import org.panta.misskeynest.service.NotificationService
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 
@@ -236,7 +235,8 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
     }
 
     override fun showFollowFollower(connectionInfo: ConnectionProperty, user: User, type: FollowFollowerType) {
-        FollowFollowerActivity.startActivity(applicationContext, type, user.id)
+        val intent = FollowFollowerActivity.getIntent(applicationContext, type, user.id)
+        startActivity(intent)
     }
 
     override fun showMisskeyOnBrowser(url: Uri) {
@@ -287,9 +287,9 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
         Log.d("MainActivity", "あああああああああああああああああああああああああああonStartが呼び出された")
         mPresenter?.getPersonalMiniProfile()
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            startForegroundService(Intent(applicationContext, EmojiDownloadService::class.java))
+            //startForegroundService(Intent(applicationContext, EmojiDownloadService::class.java))
         }else{
-            startService(Intent(applicationContext, EmojiDownloadService::class.java))
+            //startService(Intent(applicationContext, EmojiDownloadService::class.java))
         }
 
     }

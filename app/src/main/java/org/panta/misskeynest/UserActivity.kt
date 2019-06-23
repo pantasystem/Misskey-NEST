@@ -13,10 +13,10 @@ import kotlinx.android.synthetic.main.activity_user.*
 import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.User
+import org.panta.misskeynest.pager.UserPagerAdapter
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.repository.remote.UserRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.pager.UserPagerAdapter
 
 class UserActivity : AppCompatActivity() {
 
@@ -67,17 +67,21 @@ class UserActivity : AppCompatActivity() {
                 posts_count.text = "${it.notesCount} 投稿"
                 profile_age.visibility = View.GONE
                 profile_follow_count.setOnClickListener{_ ->
-                    FollowFollowerActivity.startActivity(
-                        applicationContext,
-                        FollowFollowerType.FOLLOWING,
-                        it.id
+                    startActivity(
+                        FollowFollowerActivity.getIntent(
+                            applicationContext,
+                            FollowFollowerType.FOLLOWING,
+                            it.id
+                        )
                     )
                 }
                 profile_follower_count.setOnClickListener{_ ->
-                    FollowFollowerActivity.startActivity(
-                        applicationContext,
-                        FollowFollowerType.FOLLOWER,
-                        it.id
+                    startActivity(
+                        FollowFollowerActivity.getIntent(
+                            applicationContext,
+                            FollowFollowerType.FOLLOWER,
+                            it.id
+                        )
                     )
                 }
 

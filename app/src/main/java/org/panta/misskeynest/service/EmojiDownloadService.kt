@@ -36,7 +36,7 @@ class EmojiDownloadService : Service() {
             setContentTitle("カスタム絵文字を更新しています。")
             setSmallIcon(R.drawable.misskey_icon)
         }.build()
-        startForeground(1, notification)
+        startForeground(3, notification)
         Log.d("EmojiDownloadService", "onStartCommand　サービスを開始しました！！！！")
 
         Log.d("EmojiDownloadService", "onCreateが呼び出された")

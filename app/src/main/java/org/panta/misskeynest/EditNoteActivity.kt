@@ -4,13 +4,13 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
@@ -20,14 +20,14 @@ import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.twitter.TwitterEmojiProvider
 import kotlinx.android.synthetic.main.activity_edit_note.*
 import org.panta.misskeynest.constant.NoteType
+import org.panta.misskeynest.contract.EditNoteContract
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.CreateNoteProperty
 import org.panta.misskeynest.interfaces.ItemClickListener
+import org.panta.misskeynest.presenter.EditNotePresenter
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.service.NotePostService
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.contract.EditNoteContract
-import org.panta.misskeynest.presenter.EditNotePresenter
 import java.io.File
 
 class EditNoteActivity : AppCompatActivity(), EditNoteContract.View {
@@ -284,7 +284,7 @@ class EditNoteActivity : AppCompatActivity(), EditNoteContract.View {
         runOnUiThread {
             val path = imagePreviewAdapter.getItem(index).path
             val list = arrayOf(path)
-            ImageViewerActivity.startActivity(this, list, 0)
+            startActivity(ImageViewerActivity.getIntent(this, list, 0))
         }
     }
 
