@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_note_description.*
 import org.panta.misskeynest.adapter.NoteDetailAdapter
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
+import org.panta.misskeynest.interactor.NoteCaptureUseCase
 import org.panta.misskeynest.interactor.NoteUseCase
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.listener.NoteClickListener
@@ -84,6 +85,10 @@ class NoteDescriptionActivity : AppCompatActivity() {
 
             note_description_view.adapter = adapter
             note_description_view.scrollToPosition(index)
+
+            val noteCapture = NoteCaptureUseCase(adapter, mConnectionProperty!!)
+            noteCapture.start()
+            noteCapture.addAll(notes)
         }catch(e: Exception){
             Log.d("NoteDescriptionActivity", "error", e)
         }
