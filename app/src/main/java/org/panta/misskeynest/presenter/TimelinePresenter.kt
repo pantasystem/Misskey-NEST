@@ -30,6 +30,11 @@ class TimelinePresenter(private val mView: TimelineContract.View, private val mN
         pagingController.getNewItems {
             mView.showNewTimeline(it)
             mNoteCaptureUseCase.addAll(it)
+            if(mNoteCaptureUseCase.isActive()){
+
+            }else{
+                mNoteCaptureUseCase.start()
+            }
         }
     }
 
@@ -37,6 +42,11 @@ class TimelinePresenter(private val mView: TimelineContract.View, private val mN
         pagingController.getOldItems {
             mView.showOldTimeline(it)
             mNoteCaptureUseCase.addAll(it)
+            if(mNoteCaptureUseCase.isActive()){
+
+            }else{
+                mNoteCaptureUseCase.start()
+            }
         }
     }
 

@@ -12,6 +12,7 @@ interface INoteCaptureUseCase {
     fun addAll(list: List<NoteViewData>)
     fun clear()
     fun remove(viewData: NoteViewData)
+    fun isActive(): Boolean
 
 
 
