@@ -19,7 +19,6 @@ import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interactor.NoteCaptureUseCase
-import org.panta.misskeynest.interfaces.IBindScrollPosition
 import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.listener.UserClickListener
 import org.panta.misskeynest.presenter.TimelinePresenter
@@ -27,8 +26,7 @@ import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.util.TimelineRepositoryFactory
 import org.panta.misskeynest.viewdata.NoteViewData
 
-class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, TimelineContract.View,
-    /*NoteClickListener,*/ /*UserClickListener,*/ IBindScrollPosition{
+class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, TimelineContract.View {
 
 
     companion object{
@@ -207,32 +205,9 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
     }
 
-
-
     override fun onError(errorMsg: String) {
         Log.w("TimelineFragment", "エラー発生 message$errorMsg")
     }
-
-
-    override fun bindFindItemCount(): Int? {
-        return timelineView?.childCount
-    }
-
-    override fun bindFirstVisibleItemPosition(): Int? {
-        return mLayoutManager.findFirstVisibleItemPosition()
-    }
-
-    override fun bindTotalItemCount(): Int? {
-        return mLayoutManager.itemCount
-    }
-
-    /*override fun pickViewData(index: Int): NoteViewData? {
-        return mAdapter?.getItem(index)
-    }
-
-    override fun pickViewData(viewData: NoteViewData): NoteViewData? {
-        return mAdapter?.getItem(viewData)
-    }*/
 
 
     private val listener = object : RecyclerView.OnScrollListener(){

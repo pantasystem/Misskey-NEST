@@ -1,16 +1,19 @@
-package org.panta.misskeynest.interfaces
+package org.panta.misskeynest.contract
 
+import org.panta.misskeynest.interfaces.BasePresenter
+import org.panta.misskeynest.interfaces.BaseView
 import org.panta.misskeynest.viewdata.FollowViewData
 
 interface FollowFollowerContract{
-    interface Presenter : BasePresenter{
+    interface Presenter : BasePresenter {
         fun getOldItems()
         fun getNewItems()
         fun getItems()
         fun onFollowUnFollowButtonClicked(item: FollowViewData)
     }
 
-    interface View : BaseView<Presenter>{
+    interface View :
+        BaseView<Presenter> {
         fun showOldItems(list: List<FollowViewData>)
         fun showNewItems(list: List<FollowViewData>)
         fun showItems(list: List<FollowViewData>)
