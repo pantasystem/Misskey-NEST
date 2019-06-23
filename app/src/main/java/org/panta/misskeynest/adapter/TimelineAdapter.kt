@@ -1,12 +1,7 @@
 package org.panta.misskeynest.adapter
 
 
-import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.panta.misskeynest.R
@@ -17,9 +12,9 @@ import org.panta.misskeynest.viewdata.NoteViewData
 const val REACTION_UPDATED = 0
 const val NOTE_UPDATED = 1
 
-class TimelineAdapter(private val context: Context, notesList: List<NoteViewData>) : RecyclerView.Adapter<NoteViewHolder>(), IOperationAdapter<NoteViewData>{
+class TimelineAdapter(notesList: List<NoteViewData>) : AbsTimelineAdapter<NoteViewHolder>(), IOperationAdapter<NoteViewData>{
 
-    private val mArrayList = ArrayList<NoteViewData>(notesList)
+    override val mArrayList = ArrayList<NoteViewData>(notesList)
     private var noteClickListener: INoteClickListener? = null
     private var userClickListener: IUserClickListener? = null
 
@@ -31,7 +26,7 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): NoteViewHolder {
         val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_note, p0, false)
-        val lm = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        val lm = LinearLayoutManager(p0.context, LinearLayoutManager.HORIZONTAL, false)
         return NoteViewHolder(inflater, lm)
 
     }
@@ -62,91 +57,7 @@ class TimelineAdapter(private val context: Context, notesList: List<NoteViewData
     }
 
 
-    override fun addAllFirst(list: List<NoteViewData>){
-        synchronized(mArrayList){
-            mArrayList.addAll(0, list)
-        }
-        Handler().post{
-            notifyItemRangeInserted(0, list.size)
-        }
-    }
 
-    override fun addAllLast(list: List<NoteViewData>){
-        val lastIndex = mArrayList.size
-        synchronized(mArrayList){
-            mArrayList.addAll(list)
-        }
-        Handler().post{
-            notifyItemRangeInserted(lastIndex, list.size)
-        }
-    }
-
-    override fun getItem(index: Int): NoteViewData?{
-        synchronized(mArrayList){
-            return try{
-                mArrayList[index]
-            }catch(e: Exception){
-                Log.d("TimelineAdapter", "インデックスがオーバーしてる！！", e)
-                null
-            }
-        }
-    }
-
-    override fun getItem(item: NoteViewData): NoteViewData? {
-        return getItem(item.id)
-    }
-
-    override fun getItem(id: String): NoteViewData? {
-        synchronized(mArrayList){
-            return try{
-                mArrayList.first { it.id == id }
-
-            }catch(e: Exception){
-                Log.d("TimelineAdapter", "インデックスがオーバーしてる！！", e)
-                null
-            }
-        }
-    }
-
-    override fun updateItem(item: NoteViewData){
-       // var index = -1
-        synchronized(mArrayList){
-
-            for(n in 0.until(mArrayList.size)){
-                val beforeData = mArrayList[n]
-                if(beforeData.toShowNote.id == item.toShowNote.id){
-                    mArrayList[n] = beforeData.copy(toShowNote = item.toShowNote, reactionCountPairList = item.reactionCountPairList)
-                    Handler().post{
-                        notifyItemChanged(n, REACTION_UPDATED)
-                    }
-                }
-            }
-
-        }
-
-    }
-
-
-    override fun removeItem(item: NoteViewData){
-        synchronized(mArrayList){
-            //val index = mArrayList.indexOf(item)
-            //mArrayList.remove(item)
-            val iterator = mArrayList.iterator()
-            while(iterator.hasNext()){
-                val data = iterator.next()
-                val index = mArrayList.indexOf(data)
-                if( data.id == item.id ){
-                    iterator.remove()
-                    Handler(Looper.getMainLooper()).post{
-                        notifyItemRemoved(index)
-                    }
-                }
-            }
-
-
-
-        }
-    }
 
     fun addNoteClickListener(listener: INoteClickListener){
         this.noteClickListener = listener

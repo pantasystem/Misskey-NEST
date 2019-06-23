@@ -165,7 +165,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             Log.d("TimelineFragment", "データの取得が完了した")
 
 
-            mAdapter = TimelineAdapter(context!!, list)
+            mAdapter = TimelineAdapter(list)
 
             mAdapter?.addNoteClickListener(mNoteClickListener)
             mAdapter?.addUserClickListener(mUserClickListener)
