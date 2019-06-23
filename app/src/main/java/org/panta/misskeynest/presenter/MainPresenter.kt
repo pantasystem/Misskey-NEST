@@ -5,15 +5,16 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import org.panta.misskeynest.constant.FollowFollowerType
+import org.panta.misskeynest.contract.MainContract
 import org.panta.misskeynest.entity.CreateNoteProperty
 import org.panta.misskeynest.entity.User
+import org.panta.misskeynest.interactor.AccountUseCase
 import org.panta.misskeynest.interactor.NoteUseCase
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
-import org.panta.misskeynest.contract.MainContract
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.repository.local.SettingsRepository
-import org.panta.misskeynest.repository.remote.MyInfo
+import org.panta.misskeynest.repository.remote.AccountRepository
 import org.panta.misskeynest.repository.remote.NoteRepository
 
 class MainPresenter(private val mView: MainContract.View, sharedOperator: ISharedPreferenceOperator) : MainContract.Presenter{
@@ -28,14 +29,14 @@ class MainPresenter(private val mView: MainContract.View, sharedOperator: IShare
             mView.showAuthActivity()
             return
         }
-        MyInfo(domain = info.domain, authKey = info.i).getMyInfo {
-            if(it == null){
+
+        AccountUseCase(AccountRepository(info), errorListener).getMyInfo {
+            if( it == null ){
 
             }else{
                 mView.showPersonalMiniProfile(it)
                 mUser = it
             }
-
         }
     }
 
@@ -70,8 +71,15 @@ class MainPresenter(private val mView: MainContract.View, sharedOperator: IShare
             mView.showAuthActivity()
             return
         }
-        MyInfo(domain = info.domain, authKey = info.i).getMyInfo {
+        /*MyInfo(domain = info.domain, authKey = info.i).getMyInfo {
             if(it == null){
+
+            }else{
+                mView.showPersonalProfilePage(it, info)
+            }
+        }*/
+        AccountUseCase(AccountRepository(info), errorListener).getMyInfo {
+            if( it == null ){
 
             }else{
                 mView.showPersonalProfilePage(it, info)

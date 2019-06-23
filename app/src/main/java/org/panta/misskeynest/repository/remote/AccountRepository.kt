@@ -1,17 +1,16 @@
 package org.panta.misskeynest.repository.remote
 
-import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.network.OkHttpConnection
+import org.panta.misskeynest.repository.IAccountRepository
 import java.net.URL
 
-class MyInfo(val domain: String, private val authKey: String){
-    private val httpsConnection = OkHttpConnection()
-    fun getMyInfo(callBack: (User?)->Unit){
+class AccountRepository(private val connectionProperty: ConnectionProperty): IAccountRepository{
+    private val mConnection = OkHttpConnection()
+    /*fun getMyInfo(callBack: (User?)->Unit){
         GlobalScope.launch{
             try{
                 val json = "{\"i\":\"$authKey\"}"
@@ -28,5 +27,16 @@ class MyInfo(val domain: String, private val authKey: String){
             }
         }
 
+    }*/
+
+    override fun getMyInfo(): User? {
+
+        val json = "{\"i\":\"${connectionProperty.i}\"}"
+        val responseString = mConnection.postString(URL("${connectionProperty.domain}/api/i"), json)
+        return if(responseString == null){
+            null
+        }else{
+            jacksonObjectMapper().readValue<User>(responseString)
+        }
     }
 }
