@@ -50,11 +50,11 @@ class CustomEmojiTextBuilder(private val context: Context, private val size: Int
         mSpannable = SpannableStringBuilder()
         val cache = spannableCache.get(text)
         if(cache != null){
-            Log.d("CustomEmojiTextBuilder", "キャッシュから見つかったので終了 $text")
+            //Log.d("CustomEmojiTextBuilder", "キャッシュから見つかったので終了 $text")
             return cache
         }
 
-        Log.d("CustomEmojiTextBuilder", "キャッシュから見つからなかったので続行 $text")
+        //Log.d("CustomEmojiTextBuilder", "キャッシュから見つからなかったので続行 $text")
 
 
         try{

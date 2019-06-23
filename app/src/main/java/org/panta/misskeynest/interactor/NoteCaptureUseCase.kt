@@ -223,29 +223,10 @@ class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteVi
             }
             mWebSocket = null
 
+            Thread.sleep(1000)
+            start()
+
         }
     }
-    /*private val wsListener = object : WebSocketListener{
 
-        override fun onOpen(webSocket: WebSocket?, response: Response?) {
-
-            mWebSocket = webSocket
-            Log.d(TAG, "onOpenコネクション開始")
-        }
-
-        override fun onMessage(message: ResponseBody?) {
-            val msg = message?.string()
-
-        }
-
-        override fun onClose(code: Int, reason: String?) {
-        }
-
-        override fun onFailure(e: IOException?, response: Response?) {
-        }
-
-        override fun onPong(payload: Buffer?) {
-            //制御用　メッセージ
-        }
-    }*/
 }
