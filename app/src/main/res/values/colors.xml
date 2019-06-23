@@ -2,10 +2,10 @@
 <resources>
     <color name="colorPrimary">#B4B4B4</color>
     <color name="colorPrimaryDark">#636363</color>
-    <color name="colorAccent">#1B4AD8</color>
+    <color name="colorAccent">#FF694E</color>
 
     <color name="lightColorPrimary">#FFFFFF</color>
-    <color name="color_has_my_reaction_color">#FFEF454A</color>
+    <color name="color_has_my_reaction_color">#FF694E</color>
     <color name="color_normal_reaction_color">#757575</color>
     <color name="light_primary_text_color">#282828</color>
     <color name="light_secondary_text_color">#505050</color>
