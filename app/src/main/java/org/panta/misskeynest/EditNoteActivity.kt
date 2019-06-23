@@ -44,12 +44,12 @@ class EditNoteActivity : AppCompatActivity(), EditNoteContract.View {
         private const val REQUEST_PERMISSION_CODE = 238
         private const val FILE_MANAGER_RESULT_CODE = 852
 
-        fun startActivity(context:Context, targetId: String?, type: NoteType?){
+        fun getIntent(context:Context, targetId: String?, type: NoteType?): Intent{
             val intent = Intent(context, EditNoteActivity::class.java)
             //intent.putExtra(EditNoteActivity.CONNECTION_INFO, info)
             if(type != null)  intent.putExtra(EDIT_TYPE, type.ordinal)
             if(targetId != null) intent.putExtra(CREATE_NOTE_TARGET_ID, targetId)
-            context.startActivity(intent)
+            return intent
         }
     }
 

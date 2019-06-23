@@ -41,7 +41,7 @@ class NoteClickListener(private val context: Context, private val activity: Acti
         context.startActivity(intent)
     }
     override fun onReplyButtonClicked(targetId: String?, note: Note?) {
-        EditNoteActivity.startActivity(context, targetId, NoteType.REPLY)
+        context.startActivity(EditNoteActivity.getIntent(context, targetId, NoteType.REPLY))
     }
 
     override fun onReactionClicked(targetId: String?, note: Note?, viewData: NoteViewData, reactionType: String?) {
@@ -50,7 +50,7 @@ class NoteClickListener(private val context: Context, private val activity: Acti
     }
 
     override fun onReNoteButtonClicked(targetId: String?, note: Note?) {
-        EditNoteActivity.startActivity(context, targetId, NoteType.RE_NOTE)
+        context.startActivity(EditNoteActivity.getIntent(context, targetId, NoteType.RE_NOTE))
     }
 
     override fun onDetailButtonClicked(note: Note) {
