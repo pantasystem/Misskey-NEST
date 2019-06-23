@@ -1,12 +1,12 @@
 package org.panta.misskeynest.listener
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.support.v4.app.DialogFragment
 import android.util.Log
 import android.widget.Toast
 import kotlinx.coroutines.GlobalScope
@@ -15,19 +15,18 @@ import org.panta.misskeynest.EditNoteActivity
 import org.panta.misskeynest.ImageViewerActivity
 import org.panta.misskeynest.NoteDescriptionActivity
 import org.panta.misskeynest.constant.NoteType
+import org.panta.misskeynest.dialog.DetailDialog
 import org.panta.misskeynest.dialog.ReactionDialog
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.interfaces.INoteClickListener
-import org.panta.misskeynest.repository.remote.NoteRepository
 import org.panta.misskeynest.repository.remote.ReactionRepository
-import org.panta.misskeynest.util.copyToClipboad
 import org.panta.misskeynest.viewdata.NoteViewData
 
 class NoteClickListener(private val context: Context, private val activity: Activity, private val connectionProperty: ConnectionProperty) :INoteClickListener {
 
-    var onShowReactionDialog: (ReactionDialog)->Unit = {
+    var onShowReactionDialog: (DialogFragment)->Unit = {
         Log.d("NoteClickListener", "onShowReactionDialog is not init")
     }
     private val reactionRepository = ReactionRepository(
@@ -54,42 +53,9 @@ class NoteClickListener(private val context: Context, private val activity: Acti
     }
 
     override fun onDetailButtonClicked(note: Note) {
-        val itemList = arrayListOf("内容をコピー", "リンクをコピー", "お気に入り", "ウォッチ", "デバッグ")
-        if(note.user?.id == connectionProperty.userPrimaryId){
-            itemList.add("削除")
-        }
-        //val item = arrayOf<CharSequence>("内容をコピー", "リンクをコピー", "お気に入り", "ウォッチ", "デバッグ（開発者向け）")
 
-        val a = itemList.toTypedArray()
-
-        AlertDialog.Builder(activity).apply{
-            setTitle("詳細")
-            setItems(itemList.toTypedArray()){ _, which->
-                when(which){
-                    0 -> copyToClipboad(context, note.text.toString())
-                    1 -> copyToClipboad(context, "${connectionProperty.domain}/notes/${note.id}")
-                    2,3 -> Toast.makeText(context, "未実装ですごめんなさい", Toast.LENGTH_SHORT)
-                    4 ->{
-                        AlertDialog.Builder(activity).apply{
-                            val noteString = note.toString().replace(",","\n")
-                            setMessage(noteString)
-                            setPositiveButton(android.R.string.ok){i ,b->
-                            }
-                        }.show()
-                    }
-                    5 ->{
-                        GlobalScope.launch {
-                            val b = NoteRepository(connectionProperty).remove(note)
-                            Handler(Looper.getMainLooper()).post{
-                                val statusMsg = if(b) "成功しました" else "失敗しました"
-                                Toast.makeText(context, statusMsg, Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                }
-
-            }
-        }.show()
+        val dialog = DetailDialog.getInstance(connectionProperty, note)
+        onShowReactionDialog(dialog)
 
 
     }
