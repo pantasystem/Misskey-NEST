@@ -1,15 +1,20 @@
 package org.panta.misskeynest.presenter
 
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.CreateNoteProperty
 import org.panta.misskeynest.entity.User
+import org.panta.misskeynest.interactor.NoteUseCase
+import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
 import org.panta.misskeynest.interfaces.MainContract
-import org.panta.misskeynest.repository.remote.MyInfo
-import org.panta.misskeynest.repository.remote.NoteRepository
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.repository.local.SettingsRepository
+import org.panta.misskeynest.repository.remote.MyInfo
+import org.panta.misskeynest.repository.remote.NoteRepository
 
 class MainPresenter(private val mView: MainContract.View, sharedOperator: ISharedPreferenceOperator) : MainContract.Presenter{
 
@@ -106,11 +111,22 @@ class MainPresenter(private val mView: MainContract.View, sharedOperator: IShare
 
     override fun sendNote(text: String) {
         val info = secretRepository.getConnectionInfo()
-        if(text.length > 3 && info != null){
+        if(text.length > 1 && info != null){
             val note = CreateNoteProperty.Builder(i = info.i).apply {
                 this.text = text
             }.create()
-            NoteRepository(connectionInfo = info).send(note)
+            //NoteRepository(mConnectionProperty = info).send(note)
+            NoteUseCase(NoteRepository(info), errorListener).send(note){
+                Handler(Looper.getMainLooper()).post{
+
+                }
+            }
+        }
+    }
+
+    private val errorListener = object : ErrorCallBackListener{
+        override fun callBack(e: Exception) {
+            Log.d("", "error", e)
         }
     }
 

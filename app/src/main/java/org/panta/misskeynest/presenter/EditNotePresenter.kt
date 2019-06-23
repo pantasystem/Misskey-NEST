@@ -4,7 +4,6 @@ import org.panta.misskeynest.constant.NoteType
 
 import org.panta.misskeynest.entity.CreateNoteProperty
 import org.panta.misskeynest.entity.ConnectionProperty
-import org.panta.misskeynest.repository.remote.NoteRepository
 import org.panta.misskeynest.contract.EditNoteContract
 import java.io.File
 
@@ -12,7 +11,6 @@ class EditNotePresenter(private val mView: EditNoteContract.View, private val co
     EditNoteContract.Presenter {
 
     private val noteBuilder = CreateNoteProperty.Builder(connectionInfo.i)
-    private val noteRepository = NoteRepository(connectionInfo)
 
     private var noteType: NoteType = NoteType.CREATE
 

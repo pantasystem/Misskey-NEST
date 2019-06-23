@@ -15,6 +15,7 @@ import org.panta.misskeynest.interactor.GetNoteDetail
 import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.listener.UserClickListener
 import org.panta.misskeynest.repository.local.PersonalRepository
+import org.panta.misskeynest.repository.remote.NoteRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 import org.panta.misskeynest.viewdata.NoteViewData
 
@@ -53,7 +54,7 @@ class NoteDescriptionActivity : AppCompatActivity() {
         }
 
 
-        GetNoteDetail(mConnectionProperty!!).get(note){
+        GetNoteDetail(NoteRepository(mConnectionProperty!!)).get(note){
             runOnUiThread {
                 //FIXME QuoteNoteが含む場合不具合を発生する
                 Log.d("NoteDescriptionActivity", "返ってきた $it")
