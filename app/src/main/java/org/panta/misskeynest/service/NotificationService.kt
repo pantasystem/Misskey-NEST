@@ -14,10 +14,10 @@ import org.panta.misskeynest.constant.NotificationType
 import org.panta.misskeynest.entity.NotificationProperty
 import org.panta.misskeynest.filter.NotificationFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
-import org.panta.misskeynest.repository.NotificationRepository
-import org.panta.misskeynest.repository.PersonalRepository
+import org.panta.misskeynest.repository.remote.NotificationRepository
+import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.usecase.PagingController
+import org.panta.misskeynest.interactor.PagingController
 import org.panta.misskeynest.view.MainActivity
 import org.panta.misskeynest.viewdata.NotificationViewData
 
@@ -26,7 +26,7 @@ import org.panta.misskeynest.viewdata.NotificationViewData
 class NotificationService : Service() {
 
     private lateinit var notificationRepository: NotificationRepository
-    private lateinit var pagingController: PagingController<NotificationProperty ,NotificationViewData>
+    private lateinit var pagingController: PagingController<NotificationProperty, NotificationViewData>
 
     private val notificationChannelId = "Misskey for Adnroid Notification"
 
@@ -40,19 +40,25 @@ class NotificationService : Service() {
         super.onCreate()
 
         //~init
-        val conProperty = PersonalRepository(SharedPreferenceOperator(applicationContext)).getConnectionInfo()
+        val conProperty = PersonalRepository(
+            SharedPreferenceOperator(
+                applicationContext
+            )
+        ).getConnectionInfo()
         if(conProperty == null){
             Log.d("NotificationService", "connectionInfo不明のため停止します")
             this.stopSelf()
             return
         }
-        notificationRepository = NotificationRepository(conProperty.domain, conProperty.i)
+        notificationRepository =
+            NotificationRepository(conProperty.domain, conProperty.i)
 
-        pagingController = PagingController(notificationRepository, object : ErrorCallBackListener{
-            override fun callBack(e: Exception) {
-                Log.w("NotificationService", "エラー発生", e)
-            }
-        }, NotificationFilter())
+        pagingController =
+            PagingController(notificationRepository, object : ErrorCallBackListener {
+                override fun callBack(e: Exception) {
+                    Log.w("NotificationService", "エラー発生", e)
+                }
+            }, NotificationFilter())
         //init~
 
         GlobalScope.launch{

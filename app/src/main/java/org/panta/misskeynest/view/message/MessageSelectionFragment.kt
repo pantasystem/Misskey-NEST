@@ -9,7 +9,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.panta.misskeynest.R
 import org.panta.misskeynest.entity.ConnectionProperty
-import org.panta.misskeynest.repository.MessageRepository
+import org.panta.misskeynest.repository.remote.MessageRepository
 
 class MessageSelectionFragment : Fragment(){
 

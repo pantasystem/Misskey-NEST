@@ -10,7 +10,7 @@ import com.vanniktech.emoji.twitter.TwitterEmojiProvider
 import kotlinx.android.synthetic.main.activity_follow_follower.*
 import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.FollowFollowerType
-import org.panta.misskeynest.repository.PersonalRepository
+import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 import org.panta.misskeynest.view.follow_follower.FollowPagerAdapter
 import org.panta.misskeynest.view.user_auth.AuthActivity

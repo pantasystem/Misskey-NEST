@@ -1,4 +1,4 @@
-package org.panta.misskeynest.repository
+package org.panta.misskeynest.repository.local
 
 import org.panta.misskeynest.constant.ThemeType
 import org.panta.misskeynest.constant.getInstanceInfoList

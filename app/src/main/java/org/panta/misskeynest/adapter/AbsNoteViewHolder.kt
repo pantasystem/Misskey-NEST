@@ -14,7 +14,7 @@ import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.ITimeFormat
 import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.interfaces.ItemClickListener
-import org.panta.misskeynest.usecase.NoteAdjustment
+import org.panta.misskeynest.interactor.NoteFormatUseCase
 import org.panta.misskeynest.util.InjectionImage
 import org.panta.misskeynest.util.InjectionText
 import org.panta.misskeynest.viewdata.NoteViewData
@@ -72,18 +72,18 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
             //invisibleReactionCount()
         }
         when(content.type){
-            NoteAdjustment.NoteType.REPLY -> {
+            NoteFormatUseCase.NoteType.REPLY -> {
                 setReply(content)
             }
-            NoteAdjustment.NoteType.NOTE -> {
+            NoteFormatUseCase.NoteType.NOTE -> {
                 //これはNote
                 setNote(content)
             }
-            NoteAdjustment.NoteType.RE_NOTE -> {
+            NoteFormatUseCase.NoteType.RE_NOTE -> {
                 //これはリノート
                 setReNote(content)
             }
-            NoteAdjustment.NoteType.QUOTE_RE_NOTE -> {
+            NoteFormatUseCase.NoteType.QUOTE_RE_NOTE -> {
                 setQuoteReNote(content)
             }
             else -> throw IllegalAccessException("利用が許されていない値です $${content.type}")

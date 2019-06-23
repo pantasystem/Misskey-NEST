@@ -1,4 +1,4 @@
-package org.panta.misskeynest.repository
+package org.panta.misskeynest.repository.remote
 
 import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -8,8 +8,8 @@ import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.ReactionCountPair
+import org.panta.misskeynest.interactor.NoteFormatUseCase
 import org.panta.misskeynest.network.OkHttpConnection
-import org.panta.misskeynest.usecase.NoteAdjustment
 import org.panta.misskeynest.viewdata.NoteViewData
 import java.net.URL
 import java.util.*
@@ -47,7 +47,7 @@ class NoteDetail(private val connectionProperty: ConnectionProperty){
         try{
             var reply: Note? = note.reply
             val replyList = ArrayList<NoteViewData>()
-            replyList.add(NoteViewData(id = note.id, isIgnore = false ,note = note, type = NoteAdjustment.NoteType.NOTE, reactionCountPairList = ReactionCountPair.createList(note.reactionCounts!!), toShowNote = note, updatedAt = Date()))
+            replyList.add(NoteViewData(id = note.id, isIgnore = false ,note = note, type = NoteFormatUseCase.NoteType.NOTE, reactionCountPairList = ReactionCountPair.createList(note.reactionCounts!!), toShowNote = note, updatedAt = Date()))
             while(reply != null){
                 val reactionPair = if(reply.reactionCounts == null){
                     emptyList()
@@ -57,7 +57,7 @@ class NoteDetail(private val connectionProperty: ConnectionProperty){
                         ReactionCountPair(it.key, it.value)
                     }
                 }
-                replyList.add(NoteViewData(id = reply.id, isIgnore = false ,note = reply, type = NoteAdjustment.NoteType.NOTE, reactionCountPairList = reactionPair, toShowNote = reply, updatedAt =Date()))
+                replyList.add(NoteViewData(id = reply.id, isIgnore = false ,note = reply, type = NoteFormatUseCase.NoteType.NOTE, reactionCountPairList = reactionPair, toShowNote = reply, updatedAt =Date()))
                 reply = reply.reply
             }
             callBack(reverseTimeline(replyList))

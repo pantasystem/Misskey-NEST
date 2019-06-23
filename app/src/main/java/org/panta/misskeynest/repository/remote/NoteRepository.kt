@@ -1,4 +1,4 @@
-package org.panta.misskeynest.repository
+package org.panta.misskeynest.repository.remote
 
 import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -8,8 +8,8 @@ import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.CreateNoteProperty
 import org.panta.misskeynest.entity.Note
+import org.panta.misskeynest.interactor.NoteFormatUseCase
 import org.panta.misskeynest.network.OkHttpConnection
-import org.panta.misskeynest.usecase.NoteAdjustment
 import org.panta.misskeynest.viewdata.NoteViewData
 import java.net.URL
 
@@ -42,7 +42,7 @@ class NoteRepository(private val connectionInfo: ConnectionProperty){
                 }
 
                 val responseData: Note = jacksonObjectMapper().readValue(response)
-                val viewData = NoteAdjustment().createViewData(responseData)
+                val viewData = NoteFormatUseCase().createViewData(responseData)
                 callBack(viewData)
 
             }catch(e: Exception){

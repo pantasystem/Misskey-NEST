@@ -15,7 +15,7 @@ import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.FollowFollowerContract
-import org.panta.misskeynest.repository.FollowFollowerRepository
+import org.panta.misskeynest.repository.remote.FollowFollowerRepository
 import org.panta.misskeynest.viewdata.FollowViewData
 import java.lang.Exception
 

@@ -9,7 +9,7 @@ import android.widget.TextView
 import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.ReactionConstData
 import org.panta.misskeynest.interfaces.ItemClickListener
-import org.panta.misskeynest.usecase.ShowReaction
+import org.panta.misskeynest.interactor.InjectReaction
 import org.panta.misskeynest.util.getEmojiPathFromName
 
 class ReactionHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -31,7 +31,7 @@ class ReactionHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val resourceId = reactionImageMapping[emoji]
         val emojiFile = getEmojiPathFromName(itemView.context, emoji.replace(":", ""))
 
-        val showReaction = ShowReaction(reactionIcon, reactionStringIcon)
+        val showReaction = InjectReaction(reactionIcon, reactionStringIcon)
 
         if(resourceId == null && emojiFile == null){
             //全てに当てはまらない場合

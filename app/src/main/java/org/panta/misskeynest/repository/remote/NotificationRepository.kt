@@ -1,4 +1,4 @@
-package org.panta.misskeynest.repository
+package org.panta.misskeynest.repository.remote
 
 import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -7,16 +7,16 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.NotificationProperty
 import org.panta.misskeynest.entity.RequestNotificationProperty
+import org.panta.misskeynest.interactor.NoteFormatUseCase
 import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.network.OkHttpConnection
-import org.panta.misskeynest.usecase.NoteAdjustment
 import java.net.URL
 
 class NotificationRepository(private val domain: String, private val authKey: String): IItemRepository<NotificationProperty>{
 
     private val connection = OkHttpConnection()
     private val mapper = jacksonObjectMapper()
-    private val noteAd = NoteAdjustment()
+    private val noteAd = NoteFormatUseCase()
 
 
     override fun getItemsUseSinceId(sinceId: String): List<NotificationProperty>?{

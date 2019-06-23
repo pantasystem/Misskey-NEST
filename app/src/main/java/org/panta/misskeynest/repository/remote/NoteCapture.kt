@@ -1,4 +1,4 @@
-package org.panta.misskeynest.repository
+package org.panta.misskeynest.repository.remote
 
 import android.os.Handler
 import android.os.Looper
@@ -10,9 +10,9 @@ import org.java_websocket.handshake.ServerHandshake
 import org.panta.misskeynest.entity.BodyProperty
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.StreamingProperty
+import org.panta.misskeynest.interactor.NoteUpdateUseCase
 import org.panta.misskeynest.interfaces.ICapture
 import org.panta.misskeynest.interfaces.IOperationAdapter
-import org.panta.misskeynest.usecase.NoteUpdateUseCase
 import org.panta.misskeynest.viewdata.NoteViewData
 import java.net.URI
 

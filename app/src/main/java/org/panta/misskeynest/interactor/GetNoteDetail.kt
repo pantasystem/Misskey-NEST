@@ -1,16 +1,16 @@
-package org.panta.misskeynest.usecase
+package org.panta.misskeynest.interactor
 
 import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
-import org.panta.misskeynest.repository.NoteDetail
+import org.panta.misskeynest.repository.remote.NoteDetail
 import org.panta.misskeynest.viewdata.NoteViewData
 
 class GetNoteDetail(conProperty: ConnectionProperty) {
 
-    private val noteJus = NoteAdjustment()
+    private val noteJus = NoteFormatUseCase()
 
     private val mNoteDetail = NoteDetail(conProperty)
 

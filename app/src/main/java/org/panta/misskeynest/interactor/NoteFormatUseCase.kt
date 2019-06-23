@@ -1,4 +1,4 @@
-package org.panta.misskeynest.usecase
+package org.panta.misskeynest.interactor
 
 import android.util.Log
 import org.panta.misskeynest.entity.Note
@@ -6,7 +6,7 @@ import org.panta.misskeynest.entity.ReactionCountPair
 import org.panta.misskeynest.viewdata.NoteViewData
 import java.util.*
 
-class NoteAdjustment(private val isDeployReplyTo: Boolean = true){
+class NoteFormatUseCase(private val isDeployReplyTo: Boolean = true){
     enum class NoteType{
         REPLY,
         REPLY_TO,   //返信先

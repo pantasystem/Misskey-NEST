@@ -1,4 +1,4 @@
-package org.panta.misskeynest.repository
+package org.panta.misskeynest.repository.remote
 
 import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper

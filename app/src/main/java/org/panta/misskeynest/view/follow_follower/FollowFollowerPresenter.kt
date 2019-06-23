@@ -5,14 +5,15 @@ import org.panta.misskeynest.filter.FollowFollowerFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.interfaces.FollowFollowerContract
 import org.panta.misskeynest.interfaces.IItemRepository
-import org.panta.misskeynest.repository.UserRepository
-import org.panta.misskeynest.usecase.PagingController
+import org.panta.misskeynest.repository.remote.UserRepository
+import org.panta.misskeynest.interactor.PagingController
 import org.panta.misskeynest.viewdata.FollowViewData
 
 class FollowFollowerPresenter(private val mView: FollowFollowerContract.View, mTimeline: IItemRepository<FollowViewData>, private val info: ConnectionProperty)
     : FollowFollowerContract.Presenter, ErrorCallBackListener{
 
-    private val pagingController = PagingController(mTimeline, this, FollowFollowerFilter())
+    private val pagingController =
+        PagingController(mTimeline, this, FollowFollowerFilter())
     override fun getItems() {
         pagingController.init {
             mView.showItems(it)

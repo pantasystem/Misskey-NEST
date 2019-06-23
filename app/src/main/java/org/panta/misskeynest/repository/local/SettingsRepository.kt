@@ -1,8 +1,6 @@
-package org.panta.misskeynest.repository
+package org.panta.misskeynest.repository.local
 
-import android.content.Context
 import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
-import org.panta.misskeynest.storage.SharedPreferenceOperator
 
 class SettingsRepository(val pref: ISharedPreferenceOperator){
 

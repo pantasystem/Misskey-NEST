@@ -1,13 +1,11 @@
-package org.panta.misskeynest.repository
+package org.panta.misskeynest.repository.remote
 
 import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.ReactionCreateXorDeleteProperty
-import org.panta.misskeynest.network.HttpsConnection
 import org.panta.misskeynest.network.OkHttpConnection
-import org.panta.misskeynest.network.StreamHttpsConnection
 import java.net.URL
 
 class Reaction(private val domain: String, private val authKey: String){

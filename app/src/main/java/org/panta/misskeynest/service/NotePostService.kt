@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.CreateNoteProperty
 import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.network.OkHttpConnection
-import org.panta.misskeynest.repository.PersonalRepository
+import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 import org.panta.misskeynest.view.user_auth.AuthActivity
 import java.io.File

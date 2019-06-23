@@ -6,10 +6,10 @@ import org.panta.misskeynest.entity.CreateNoteProperty
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
 import org.panta.misskeynest.interfaces.MainContract
-import org.panta.misskeynest.repository.MyInfo
-import org.panta.misskeynest.repository.NoteRepository
-import org.panta.misskeynest.repository.PersonalRepository
-import org.panta.misskeynest.repository.SettingsRepository
+import org.panta.misskeynest.repository.remote.MyInfo
+import org.panta.misskeynest.repository.remote.NoteRepository
+import org.panta.misskeynest.repository.local.PersonalRepository
+import org.panta.misskeynest.repository.local.SettingsRepository
 
 class MainPresenter(private val mView: MainContract.View, sharedOperator: ISharedPreferenceOperator) : MainContract.Presenter{
 

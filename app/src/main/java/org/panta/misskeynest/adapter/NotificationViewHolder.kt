@@ -9,7 +9,7 @@ import org.panta.misskeynest.constant.ReactionConstData
 import org.panta.misskeynest.entity.NotificationProperty
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.IUserClickListener
-import org.panta.misskeynest.usecase.ShowReaction
+import org.panta.misskeynest.interactor.InjectReaction
 import org.panta.misskeynest.util.InjectionImage
 import org.panta.misskeynest.util.InjectionText
 import org.panta.misskeynest.util.getEmojiPathFromName
@@ -75,7 +75,7 @@ class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
         if(type == null)return
         val resourceId = ReactionConstData.getDefaultReactionIconMapping()[type]
         val emojiFile = getEmojiPathFromName(itemView.context, type.replace(":", ""))
-        val showReaction = ShowReaction(typeIcon, typeTextIcon)
+        val showReaction = InjectReaction(typeIcon, typeTextIcon)
 
         if(resourceId == null && emojiFile == null){
             //全てに当てはまらない場合

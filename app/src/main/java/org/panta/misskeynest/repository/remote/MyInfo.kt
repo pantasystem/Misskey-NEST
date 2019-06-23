@@ -1,4 +1,4 @@
-package org.panta.misskeynest.repository
+package org.panta.misskeynest.repository.remote
 
 import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -6,9 +6,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.User
-import org.panta.misskeynest.network.HttpsConnection
 import org.panta.misskeynest.network.OkHttpConnection
-import org.panta.misskeynest.network.StreamConverter
 import java.net.URL
 
 class MyInfo(val domain: String, private val authKey: String){

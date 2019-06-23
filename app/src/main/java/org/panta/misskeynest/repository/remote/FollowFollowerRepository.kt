@@ -1,13 +1,13 @@
-package org.panta.misskeynest.repository
+package org.panta.misskeynest.repository.remote
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.FollowProperty
+import org.panta.misskeynest.interactor.FollowFollowerDataMaker
 import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.network.OkHttpConnection
-import org.panta.misskeynest.usecase.FollowFollowerDataMaker
 import org.panta.misskeynest.viewdata.FollowViewData
 import java.net.URL
 
@@ -79,9 +79,11 @@ class FollowFollowerRepository(private val userId: String, private val type: Fol
             return null
         }
         return if(type == FollowFollowerType.FOLLOWER){
-            FollowFollowerDataMaker().createFollowerViewDataList(followingList = followingList, followerList = followerList)
+            FollowFollowerDataMaker()
+                .createFollowerViewDataList(followingList = followingList, followerList = followerList)
         }else{
-            FollowFollowerDataMaker().createFollowingViewDataList(followingList = followingList, followerList = followerList)
+            FollowFollowerDataMaker()
+                .createFollowingViewDataList(followingList = followingList, followerList = followerList)
         }
     }
 }

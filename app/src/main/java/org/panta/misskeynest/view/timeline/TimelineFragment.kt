@@ -21,7 +21,7 @@ import org.panta.misskeynest.interfaces.IBindScrollPosition
 import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.listener.UserClickListener
-import org.panta.misskeynest.usecase.ObservationNote
+import org.panta.misskeynest.interactor.ObservationNote
 import org.panta.misskeynest.util.TimelineRepositoryFactory
 import org.panta.misskeynest.viewdata.NoteViewData
 

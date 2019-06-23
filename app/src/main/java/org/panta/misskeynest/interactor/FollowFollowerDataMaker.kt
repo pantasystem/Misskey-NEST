@@ -1,9 +1,8 @@
-package org.panta.misskeynest.usecase
+package org.panta.misskeynest.interactor
 
 import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.FollowProperty
 import org.panta.misskeynest.entity.User
-import org.panta.misskeynest.interfaces.AbsFollowViewDataMaker
 import org.panta.misskeynest.viewdata.FollowViewData
 
 class FollowFollowerDataMaker : AbsFollowViewDataMaker(){

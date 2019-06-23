@@ -2,8 +2,8 @@ package org.panta.misskeynest.view.user_auth
 
 import org.panta.misskeynest.constant.getInstanceInfoList
 import org.panta.misskeynest.interfaces.AuthContract
-import org.panta.misskeynest.repository.AuthRepository
-import org.panta.misskeynest.repository.PersonalRepository
+import org.panta.misskeynest.repository.remote.AuthRepository
+import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 
 class AuthPresenter(private val mView: AuthContract.View, private val sharedPref: SharedPreferenceOperator, domain: String?, appSecret: String?) : AuthContract.Presenter{

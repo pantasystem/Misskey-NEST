@@ -17,8 +17,8 @@ import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.interfaces.INoteClickListener
-import org.panta.misskeynest.repository.NoteRepository
-import org.panta.misskeynest.repository.Reaction
+import org.panta.misskeynest.repository.remote.NoteRepository
+import org.panta.misskeynest.repository.remote.Reaction
 import org.panta.misskeynest.util.copyToClipboad
 import org.panta.misskeynest.view.EditNoteActivity
 import org.panta.misskeynest.view.image_viewer.ImageViewerActivity
@@ -30,7 +30,10 @@ class NoteClickListener(private val context: Context, private val activity: Acti
     var onShowReactionDialog: (ReactionDialog)->Unit = {
         Log.d("NoteClickListener", "onShowReactionDialog is not init")
     }
-    private val reactionRepository = Reaction(domain = connectionProperty.domain, authKey = connectionProperty.i)
+    private val reactionRepository = Reaction(
+        domain = connectionProperty.domain,
+        authKey = connectionProperty.i
+    )
     override fun onNoteClicked(note: Note) {
         Log.d("TimelineFragment", "Noteをクリックした :$note")
         val intent = Intent(context, NoteDescriptionActivity::class.java)

@@ -1,4 +1,4 @@
-package org.panta.misskeynest.repository
+package org.panta.misskeynest.repository.remote
 
 import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -7,7 +7,7 @@ import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.ReactionCountPair
 import org.panta.misskeynest.interfaces.IItemRepository
 import org.panta.misskeynest.network.OkHttpConnection
-import org.panta.misskeynest.usecase.NoteAdjustment
+import org.panta.misskeynest.interactor.NoteFormatUseCase
 import java.net.URL
 import java.util.*
 
@@ -17,7 +17,7 @@ abstract class AbsTimeline(private val timelineURL: URL, private val isDeployRep
     private val mConnection = OkHttpConnection()
     private val mapper = jacksonObjectMapper()
 
-    private val noteAd = NoteAdjustment(isDeployReplyTo)
+    private val noteAd = NoteFormatUseCase(isDeployReplyTo)
 
 
     //FIXME 直接Dataクラスを送信するようにする

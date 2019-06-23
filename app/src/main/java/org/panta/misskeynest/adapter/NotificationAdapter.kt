@@ -9,7 +9,7 @@ import org.panta.misskeynest.constant.NotificationType
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.IUserClickListener
-import org.panta.misskeynest.usecase.NoteAdjustment
+import org.panta.misskeynest.interactor.NoteFormatUseCase
 import org.panta.misskeynest.viewdata.NotificationViewData
 
 class NotificationAdapter(private val notificationList: List<NotificationViewData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), IOperationAdapter<NotificationViewData>{
@@ -58,21 +58,21 @@ class NotificationAdapter(private val notificationList: List<NotificationViewDat
             val viewData = data.noteViewData
             viewHolder.invisibleReactionCount()
             when{
-                viewData!!.type == NoteAdjustment.NoteType.REPLY -> {
+                viewData!!.type == NoteFormatUseCase.NoteType.REPLY -> {
                     viewHolder.setReply(viewData)
                 }
-                viewData.type == NoteAdjustment.NoteType.REPLY_TO ->{
+                viewData.type == NoteFormatUseCase.NoteType.REPLY_TO ->{
                     //viewHolder.setReplyTo(viewData)
                 }
-                viewData.type == NoteAdjustment.NoteType.NOTE -> {
+                viewData.type == NoteFormatUseCase.NoteType.NOTE -> {
                     //これはNote
                     viewHolder.setNote(viewData)
                 }
-                viewData.type == NoteAdjustment.NoteType.RE_NOTE -> {
+                viewData.type == NoteFormatUseCase.NoteType.RE_NOTE -> {
                     //これはリノート
                     viewHolder.setReNote(viewData)
                 }
-                viewData.type == NoteAdjustment.NoteType.QUOTE_RE_NOTE -> {
+                viewData.type == NoteFormatUseCase.NoteType.QUOTE_RE_NOTE -> {
                     viewHolder.setQuoteReNote(viewData)
                 }
             }

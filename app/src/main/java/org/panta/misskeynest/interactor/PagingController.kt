@@ -1,15 +1,19 @@
-package org.panta.misskeynest.usecase
+package org.panta.misskeynest.interactor
 
 import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.panta.misskeynest.interfaces.*
+import org.panta.misskeynest.interfaces.ErrorCallBackListener
+import org.panta.misskeynest.interfaces.ID
+import org.panta.misskeynest.interfaces.IItemFilter
+import org.panta.misskeynest.interfaces.IItemRepository
+import org.panta.misskeynest.usecase.IPaging
 
 class PagingController<I: Any ,E: ID>(
     private val mRepository: IItemRepository<I>,
     private val errorCallBackListener: ErrorCallBackListener,
     private val mFilter: IItemFilter<I, E>
-): IPaging<E>{
+): IPaging<E> {
     private var latestId: String? = null
     private var oldestId: String? = null
 

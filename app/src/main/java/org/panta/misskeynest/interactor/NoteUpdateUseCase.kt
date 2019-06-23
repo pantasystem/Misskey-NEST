@@ -1,11 +1,11 @@
-package org.panta.misskeynest.usecase
+package org.panta.misskeynest.interactor
 
 import org.panta.misskeynest.entity.ReactionCountPair
 import org.panta.misskeynest.viewdata.NoteViewData
 
 class NoteUpdateUseCase{
 
-    private val noteAdjustment = NoteAdjustment(false)
+    private val noteAdjustment = NoteFormatUseCase(false)
 
     fun addReaction(reaction: String, viewData: NoteViewData, hasMyReaction: Boolean): NoteViewData{
         val note = viewData.toShowNote

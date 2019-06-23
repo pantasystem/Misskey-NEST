@@ -1,4 +1,4 @@
-package org.panta.misskeynest.interfaces
+package org.panta.misskeynest.interactor
 
 import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.FollowProperty

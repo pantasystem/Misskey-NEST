@@ -4,7 +4,7 @@ import org.panta.misskeynest.constant.NoteType
 
 import org.panta.misskeynest.entity.CreateNoteProperty
 import org.panta.misskeynest.entity.ConnectionProperty
-import org.panta.misskeynest.repository.NoteRepository
+import org.panta.misskeynest.repository.remote.NoteRepository
 import java.io.File
 
 class EditNotePresenter(private val mView: EditNoteContract.View, private val connectionInfo: ConnectionProperty) : EditNoteContract.Presenter{

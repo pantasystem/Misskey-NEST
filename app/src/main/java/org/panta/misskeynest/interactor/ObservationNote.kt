@@ -1,4 +1,4 @@
-package org.panta.misskeynest.usecase
+package org.panta.misskeynest.interactor
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.interfaces.IBindScrollPosition
 import org.panta.misskeynest.interfaces.IOperationAdapter
-import org.panta.misskeynest.repository.NoteCapture
+import org.panta.misskeynest.repository.remote.NoteCapture
 import org.panta.misskeynest.viewdata.NoteViewData
 
 class ObservationNote(private val mAdapterOperator: IOperationAdapter<NoteViewData>, private val bindScrollPosition: IBindScrollPosition, private val info: ConnectionProperty) {

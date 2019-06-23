@@ -1,4 +1,4 @@
-package org.panta.misskeynest.usecase
+package org.panta.misskeynest.interactor
 
 import android.graphics.Bitmap
 import android.os.Handler
@@ -14,7 +14,7 @@ import org.panta.misskeynest.util.BitmapCache
 import org.panta.misskeynest.util.SVGParser
 import java.io.File
 
-class ShowReaction( private val imageView: ImageView, private val textView: TextView) {
+class InjectReaction(private val imageView: ImageView, private val textView: TextView) {
 
 
     fun setTextReaction(emoji: String){
