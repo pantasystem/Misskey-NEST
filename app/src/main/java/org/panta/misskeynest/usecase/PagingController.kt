@@ -42,7 +42,7 @@ class PagingController<I: Any ,E: ID>(
         }
 
         if(requestOldestFlag == oldestId){
-            Log.d("PagingController", "重複を防いだ")
+            Log.d("", "重複を防いだ")
             callBack(emptyList())
             return
         }else{

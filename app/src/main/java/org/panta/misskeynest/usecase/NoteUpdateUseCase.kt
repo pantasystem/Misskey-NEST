@@ -3,7 +3,7 @@ package org.panta.misskeynest.usecase
 import org.panta.misskeynest.entity.ReactionCountPair
 import org.panta.misskeynest.viewdata.NoteViewData
 
-class NoteUpdater{
+class NoteUpdateUseCase{
 
     private val noteAdjustment = NoteAdjustment(false)
 

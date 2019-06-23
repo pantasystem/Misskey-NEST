@@ -12,7 +12,7 @@ import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.StreamingProperty
 import org.panta.misskeynest.interfaces.ICapture
 import org.panta.misskeynest.interfaces.IOperationAdapter
-import org.panta.misskeynest.usecase.NoteUpdater
+import org.panta.misskeynest.usecase.NoteUpdateUseCase
 import org.panta.misskeynest.viewdata.NoteViewData
 import java.net.URI
 
@@ -27,7 +27,7 @@ class NoteCapture(private val connectionInfo: ConnectionProperty,  private val m
 
     //TODO キャッシュとViewのデータが別のデータのため同期がとれていないので取れるようにする
     private var captureViewData = ArrayList<NoteViewData>()
-    private val noteUpdater = NoteUpdater()
+    private val noteUpdater = NoteUpdateUseCase()
 
     fun clearCapture(){
         synchronized(captureViewData){
