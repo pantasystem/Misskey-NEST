@@ -1,0 +1,8 @@
+package org.panta.misskeynest.constant;
+
+public abstract class ApplicationSecretConstant {
+    public static String getAppSecretKey(){
+        return (new Object() {int t;public String toString() {byte[] buf = new byte[32];t = 14393403;buf[0] = (byte) (t >>> 17);t = 1947902734;buf[1] = (byte) (t >>> 24);t = -2120519444;buf[2] = (byte) (t >>> 15);t = 566553920;buf[3] = (byte) (t >>> 18);t = -279751166;buf[4] = (byte) (t >>> 11);t = -1905522141;buf[5] = (byte) (t >>> 21);t = 1825131930;buf[6] = (byte) (t >>> 10);t = -950264021;buf[7] = (byte) (t >>> 14);t = 1630598234;buf[8] = (byte) (t >>> 24);t = 1151928878;buf[9] = (byte) (t >>> 24);t = 338372017;buf[10] = (byte) (t >>> 22);t = -749974198;buf[11] = (byte) (t >>> 8);t = -1363532701;buf[12] = (byte) (t >>> 11);t = -1811499771;buf[13] = (byte) (t >>> 22);t = 404257604;buf[14] = (byte) (t >>> 14);t = 1144802485;buf[15] = (byte) (t >>> 20);t = -687413693;buf[16] = (byte) (t >>> 13);t = 197981473;buf[17] = (byte) (t >>> 14);t = -1664670806;buf[18] = (byte) (t >>> 22);t = 877908328;buf[19] = (byte) (t >>> 23);t = -1530124893;buf[20] = (byte) (t >>> 23);t = -442401247;buf[21] = (byte) (t >>> 20);t = 1166718973;buf[22] = (byte) (t >>> 11);t = -1470363965;buf[23] = (byte) (t >>> 14);t = -1731041760;buf[24] = (byte) (t >>> 4);t = 1020415303;buf[25] = (byte) (t >>> 18);t = 1322932126;buf[26] = (byte) (t >>> 8);t = -1575826805;buf[27] = (byte) (t >>> 5);t = -1381451417;buf[28] = (byte) (t >>> 2);t = 1418705401;buf[29] = (byte) (t >>> 22);t = 1911151279;buf[30] = (byte) (t >>> 13);t = -445167384;buf[31] = (byte) (t >>> 20);return new String(buf);}}.toString());
+
+    }
+}

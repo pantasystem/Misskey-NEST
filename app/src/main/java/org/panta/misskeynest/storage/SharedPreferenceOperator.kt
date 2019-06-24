@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import org.panta.misskeynest.constant.ApplicationConstant
 import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
 
 class SharedPreferenceOperator(private val context: Context) : ISharedPreferenceOperator{

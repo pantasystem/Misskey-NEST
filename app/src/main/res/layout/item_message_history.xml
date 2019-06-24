@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+>
+
+    <ImageView
+            android:id="@+id/history_icon"
+            android:layout_width="65dp" android:layout_height="65dp"
+            android:background="@color/dark_simple_edit_text_shadow_color"
+    />
+    <TextView
+            android:id="@+id/history_title"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="GroupName"
+            android:layout_toEndOf="@+id/history_icon"
+            android:textSize="18sp"
+            android:layout_marginStart="8dp"
+    />
+    <TextView
+            android:id="@+id/history_message"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Hello World"
+            android:layout_below="@+id/history_title"
+            android:layout_toEndOf="@+id/history_icon"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
+    />
+    <TextView
+            android:id="@+id/updated_at"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_below="@+id/history_message"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="4dp"
+            android:text="tttt"
+
+    />
+
+
+
+</RelativeLayout>

@@ -1,12 +1,15 @@
 package org.panta.misskeynest.entity
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.panta.misskeynest.constant.REMOTE_DATE_FORMAT
 import java.io.Serializable
+import java.util.*
 
 @JsonIgnoreProperties(ignoreUnknown=true)  data class FileProperty(
     @JsonProperty("id") val id: String? = null,
-    @JsonProperty("createdAt") val createdAt: String? = null,
+    @JsonProperty("createdAt") @JsonFormat(pattern = REMOTE_DATE_FORMAT) val createdAt: Date?,
     @JsonProperty("name") val name: String?,
     @JsonProperty("type") val type: String? = null,
     @JsonProperty("md5") val md5: String? = null,

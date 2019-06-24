@@ -12,6 +12,7 @@ import java.util.*
     @JsonProperty("userId") val userId: String?,
     @JsonProperty("user") val user: User?,
     @JsonProperty("recipientId") val recipientId: String?,
+    @JsonProperty("recipient") val recipient: User?,
     @JsonProperty("groupId") val groupId: String?,
     @JsonProperty("fileId") val fileId: String?,
     @JsonProperty("file") val file: FileProperty?,

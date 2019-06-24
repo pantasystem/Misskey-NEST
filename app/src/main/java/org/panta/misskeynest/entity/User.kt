@@ -1,8 +1,11 @@
 package org.panta.misskeynest.entity
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.panta.misskeynest.constant.REMOTE_DATE_FORMAT
 import java.io.Serializable
+import java.util.*
 
 @JsonIgnoreProperties(ignoreUnknown=true) data class User(
     @JsonProperty("id") val id:String,
@@ -10,7 +13,7 @@ import java.io.Serializable
     @JsonProperty("name") val name: String?,
     @JsonProperty("host") val host: String?,
     @JsonProperty("description") val description: String?,
-    @JsonProperty("createdAt") val createdAt: String?,
+    @JsonProperty("createdAt") @JsonFormat(pattern = REMOTE_DATE_FORMAT) val createdAt: Date?,
     @JsonProperty("followersCount") val followersCount: Int,
     @JsonProperty("followingCount") val followingCount: Int,
     @JsonProperty("hostLower") val hostLower: String?,

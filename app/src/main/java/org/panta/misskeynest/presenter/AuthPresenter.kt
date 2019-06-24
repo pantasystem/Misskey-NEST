@@ -2,8 +2,8 @@ package org.panta.misskeynest.presenter
 
 import org.panta.misskeynest.constant.getInstanceInfoList
 import org.panta.misskeynest.contract.AuthContract
-import org.panta.misskeynest.repository.remote.AuthRepository
 import org.panta.misskeynest.repository.local.PersonalRepository
+import org.panta.misskeynest.repository.remote.AuthRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 
 class AuthPresenter(private val mView: AuthContract.View, private val sharedPref: SharedPreferenceOperator, domain: String?, appSecret: String?) : AuthContract.Presenter{
@@ -35,9 +35,7 @@ class AuthPresenter(private val mView: AuthContract.View, private val sharedPref
         if(session != null && tmpDomain != null){
             authRepository.getUserToken(session, {}){
                 mView.onLoadUserToken(it.accessToken, tmpDomain)
-                //sharedPref.put(ApplicationConstant.APP_USER_TOKEN_KEY, it)
-                //sharedPref.put(ApplicationConstant.APP_DOMAIN_KEY, tmpDomain)
-                //authRepository.putUserToken(it)
+
 
                 secretRepository.putUserToken(it.accessToken)
                 secretRepository.putDomain(tmpDomain)
