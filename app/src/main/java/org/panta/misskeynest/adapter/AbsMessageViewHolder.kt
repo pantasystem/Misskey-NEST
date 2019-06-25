@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import org.panta.misskeynest.entity.MessageProperty
+import org.panta.misskeynest.viewdata.MessageViewData
 
 /**
  * MessageとHistoryは似たようなところがあるので
@@ -14,8 +14,8 @@ import org.panta.misskeynest.entity.MessageProperty
 abstract class AbsMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
     abstract val messageTextView: TextView
-    abstract val userIconView: ImageView
+    abstract val iconView: ImageView
     abstract val updatedAtView: TextView
 
-    abstract fun onBind(item: MessageProperty)
+    abstract fun onBind(item: MessageViewData)
 }
