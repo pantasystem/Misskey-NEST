@@ -20,8 +20,14 @@ class MessageFilter : IItemFilter<MessageProperty, MessageViewData>{
             item.recipient != null ->{
                 MessageViewData(item.id, false, item, MessageDataType.HISTORY_USER)
             }
+            item.recipientId == null->{
+                MessageViewData( item.id, false, item, MessageDataType.MESSAGE_GROUP)
+            }
+            item.groupId == null ->{
+                MessageViewData( item.id, false, item, MessageDataType.MESSAGE_USER)
+            }
             else ->{
-                MessageViewData(item.id, false, item, MessageDataType.MESSAGE)
+                throw IllegalArgumentException("不正な値")
             }
 
         }
