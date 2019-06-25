@@ -287,6 +287,7 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
         Log.d("MainActivity", "あああああああああああああああああああああああああああonStartが呼び出された")
         mPresenter?.getPersonalMiniProfile()
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            //FIXME Android9.0では強制終了するので修正する
             //startForegroundService(Intent(applicationContext, EmojiDownloadService::class.java))
         }else{
             //startService(Intent(applicationContext, EmojiDownloadService::class.java))
@@ -330,7 +331,7 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
             R.id.nav_notification -> startActivity(Intent(this, NotificationActivity::class.java))
             R.id.nav_search -> startActivity(Intent(this, SearchActivity::class.java))
             R.id.nav_open_web_misskey -> mPresenter?.openMisskeyOnBrowser()
-            R.id.nav_message -> startActivity(Intent(applicationContext, MessageActivity::class.java))
+            R.id.nav_message -> startActivity(Intent(applicationContext, MessageSelectionActivity::class.java))
             R.id.nav_ui_mode -> {
                 //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 

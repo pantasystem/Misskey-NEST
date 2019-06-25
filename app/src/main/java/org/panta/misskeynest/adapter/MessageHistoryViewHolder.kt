@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.item_message_history.view.*
+import org.panta.misskeynest.util.ElapsedTimeFormatter
 import org.panta.misskeynest.util.InjectionImage
 import org.panta.misskeynest.viewdata.MessageDataType
 import org.panta.misskeynest.viewdata.MessageViewData
@@ -23,6 +24,7 @@ class MessageHistoryViewHolder ( itemView: View ) : AbsMessageViewHolder( itemVi
     override fun onBind(item: MessageViewData) {
 
         messageTextView.text = item.message.text
+        updatedAtView.text = ElapsedTimeFormatter().formatTime(item.message.createdAt)
 
         when(item.messageType){
             MessageDataType.HISTORY_USER ->{

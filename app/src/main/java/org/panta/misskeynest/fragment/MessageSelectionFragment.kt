@@ -54,26 +54,13 @@ class MessageSelectionFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val isGroup = arguments?.getBoolean(IS_GROUP_KEY)
+        //val isGroup = arguments?.getBoolean(IS_GROUP_KEY)
 
         val historyUseCase = HistoryUseCase(MessageFilter(), MessageRepository(mConnectionProperty), errorListener)
-        when {
-            isGroup == null -> {
-                historyUseCase.getMixHistory {
-                    if( it != null ) setAdapter(it)
-                }
-            }
-            isGroup -> {
-                historyUseCase.getGroupHistory {
-                    if( it != null ) setAdapter(it)
-                }
-            }
-            else -> {
-                historyUseCase.getHistory {
-                    if( it != null ) setAdapter(it)
-                }
-            }
+        historyUseCase.getMixHistory {
+            if( it != null ) setAdapter(it)
         }
+
 
 
     }
