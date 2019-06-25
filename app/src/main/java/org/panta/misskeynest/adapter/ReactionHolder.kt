@@ -9,7 +9,7 @@ import android.widget.TextView
 import org.panta.misskeynest.R
 import org.panta.misskeynest.constant.ReactionConstData
 import org.panta.misskeynest.interfaces.ItemClickListener
-import org.panta.misskeynest.interactor.InjectReaction
+import org.panta.misskeynest.usecase.interactor.InjectReaction
 import org.panta.misskeynest.util.getEmojiPathFromName
 
 class ReactionHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

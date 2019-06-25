@@ -5,7 +5,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.ReactionCountPair
-import org.panta.misskeynest.interactor.NoteFormatUseCase
+import org.panta.misskeynest.usecase.interactor.NoteFormatUseCase
 import org.panta.misskeynest.network.OkHttpConnection
 import org.panta.misskeynest.repository.IItemRepository
 import java.net.URL

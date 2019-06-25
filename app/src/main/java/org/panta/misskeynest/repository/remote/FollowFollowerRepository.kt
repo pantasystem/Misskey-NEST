@@ -5,7 +5,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.FollowProperty
-import org.panta.misskeynest.interactor.FollowFollowerDataMaker
+import org.panta.misskeynest.usecase.interactor.FollowFollowerDataMaker
 import org.panta.misskeynest.network.OkHttpConnection
 import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.viewdata.FollowViewData

@@ -1,4 +1,4 @@
-package org.panta.misskeynest.interactor
+package org.panta.misskeynest.usecase.interactor
 
 import org.panta.misskeynest.entity.ReactionCountPair
 import org.panta.misskeynest.viewdata.NoteViewData

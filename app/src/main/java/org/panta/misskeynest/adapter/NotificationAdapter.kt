@@ -9,7 +9,7 @@ import org.panta.misskeynest.constant.NotificationType
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.IUserClickListener
-import org.panta.misskeynest.interactor.NoteFormatUseCase
+import org.panta.misskeynest.usecase.interactor.NoteFormatUseCase
 import org.panta.misskeynest.viewdata.NotificationViewData
 
 class NotificationAdapter(private val notificationList: List<NotificationViewData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), IOperationAdapter<NotificationViewData>{

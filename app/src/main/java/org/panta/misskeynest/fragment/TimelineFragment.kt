@@ -18,7 +18,7 @@ import org.panta.misskeynest.contract.TimelineContract
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.User
-import org.panta.misskeynest.interactor.NoteCaptureUseCase
+import org.panta.misskeynest.usecase.interactor.NoteCaptureUseCase
 import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.listener.UserClickListener
 import org.panta.misskeynest.presenter.TimelinePresenter
@@ -115,7 +115,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             else -> throw IllegalArgumentException("不正な値です")
         }
 
-        mNoteCaptureUseCase= NoteCaptureUseCase(null,connectionInfo!!)
+        mNoteCaptureUseCase= NoteCaptureUseCase(null, connectionInfo!!)
         mPresenter = TimelinePresenter(this, mNoteCaptureUseCase,mNoteRepository!!, connectionInfo!!)
         mNoteCaptureUseCase.start()
 

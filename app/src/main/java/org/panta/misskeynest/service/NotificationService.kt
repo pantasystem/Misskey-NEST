@@ -17,7 +17,7 @@ import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.repository.remote.NotificationRepository
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.storage.SharedPreferenceOperator
-import org.panta.misskeynest.interactor.PagingController
+import org.panta.misskeynest.usecase.interactor.PagingController
 import org.panta.misskeynest.MainActivity
 import org.panta.misskeynest.viewdata.NotificationViewData
 
@@ -54,11 +54,15 @@ class NotificationService : Service() {
             NotificationRepository(conProperty.domain, conProperty.i)
 
         pagingController =
-            PagingController(notificationRepository, object : ErrorCallBackListener {
-                override fun callBack(e: Exception) {
-                    Log.w("NotificationService", "エラー発生", e)
-                }
-            }, NotificationFilter())
+            PagingController(
+                notificationRepository,
+                object : ErrorCallBackListener {
+                    override fun callBack(e: Exception) {
+                        Log.w("NotificationService", "エラー発生", e)
+                    }
+                },
+                NotificationFilter()
+            )
         //init~
 
         GlobalScope.launch{

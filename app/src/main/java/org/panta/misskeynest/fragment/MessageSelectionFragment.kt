@@ -1,15 +1,23 @@
 package org.panta.misskeynest.fragment
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.fragment_message_selection.*
 import org.panta.misskeynest.R
+import org.panta.misskeynest.adapter.MessageHistoryAdapter
 import org.panta.misskeynest.entity.ConnectionProperty
+import org.panta.misskeynest.filter.MessageFilter
+import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.repository.remote.MessageRepository
+import org.panta.misskeynest.usecase.interactor.HistoryUseCase
+import org.panta.misskeynest.viewdata.MessageViewData
 
 class MessageSelectionFragment : Fragment(){
 
@@ -47,10 +55,39 @@ class MessageSelectionFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
 
         val isGroup = arguments?.getBoolean(IS_GROUP_KEY)
-        val messageRepository = MessageRepository(mConnectionProperty)
 
-        GlobalScope.launch {
-            //val list = messageRepository.getHistory(isGroup)
+        val historyUseCase = HistoryUseCase(MessageFilter(), MessageRepository(mConnectionProperty), errorListener)
+        when {
+            isGroup == null -> {
+                historyUseCase.getMixHistory {
+                    if( it != null ) setAdapter(it)
+                }
+            }
+            isGroup -> {
+                historyUseCase.getGroupHistory {
+                    if( it != null ) setAdapter(it)
+                }
+            }
+            else -> {
+                historyUseCase.getHistory {
+                    if( it != null ) setAdapter(it)
+                }
+            }
+        }
+
+
+    }
+
+    private fun setAdapter(list: List<MessageViewData>){
+        Handler(Looper.getMainLooper()).post{
+            message_selection_list.adapter = MessageHistoryAdapter(list)
+            message_selection_list.layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    private val errorListener = object: ErrorCallBackListener{
+        override fun callBack(e: Exception) {
+            Log.w("MessageSelection", "error", e)
         }
     }
 }

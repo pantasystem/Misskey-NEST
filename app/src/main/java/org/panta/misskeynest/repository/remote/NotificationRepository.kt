@@ -7,7 +7,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.NotificationProperty
 import org.panta.misskeynest.entity.RequestNotificationProperty
-import org.panta.misskeynest.interactor.NoteFormatUseCase
+import org.panta.misskeynest.usecase.interactor.NoteFormatUseCase
 import org.panta.misskeynest.network.OkHttpConnection
 import org.panta.misskeynest.repository.IItemRepository
 import java.net.URL

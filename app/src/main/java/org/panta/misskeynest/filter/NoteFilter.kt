@@ -3,7 +3,7 @@ package org.panta.misskeynest.filter
 import android.util.Log
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.interfaces.IItemFilter
-import org.panta.misskeynest.interactor.NoteFormatUseCase
+import org.panta.misskeynest.usecase.interactor.NoteFormatUseCase
 import org.panta.misskeynest.viewdata.NoteViewData
 import java.util.*
 

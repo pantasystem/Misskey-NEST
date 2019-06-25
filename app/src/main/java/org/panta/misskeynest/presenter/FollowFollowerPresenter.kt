@@ -2,7 +2,7 @@ package org.panta.misskeynest.presenter
 
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.filter.FollowFollowerFilter
-import org.panta.misskeynest.interactor.PagingController
+import org.panta.misskeynest.usecase.interactor.PagingController
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.contract.FollowFollowerContract
 import org.panta.misskeynest.repository.IItemRepository

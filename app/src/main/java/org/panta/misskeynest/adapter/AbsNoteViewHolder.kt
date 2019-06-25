@@ -14,7 +14,7 @@ import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.ITimeFormat
 import org.panta.misskeynest.interfaces.IUserClickListener
 import org.panta.misskeynest.interfaces.ItemClickListener
-import org.panta.misskeynest.interactor.NoteFormatUseCase
+import org.panta.misskeynest.usecase.interactor.NoteFormatUseCase
 import org.panta.misskeynest.util.InjectionImage
 import org.panta.misskeynest.util.InjectionText
 import org.panta.misskeynest.viewdata.NoteViewData

@@ -3,7 +3,7 @@ package org.panta.misskeynest.viewdata
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.ReactionCountPair
 import org.panta.misskeynest.interfaces.ID
-import org.panta.misskeynest.interactor.NoteFormatUseCase
+import org.panta.misskeynest.usecase.interactor.NoteFormatUseCase
 import java.io.Serializable
 import java.util.*
 

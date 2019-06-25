@@ -9,7 +9,7 @@ import org.panta.misskeynest.constant.ReactionConstData
 import org.panta.misskeynest.entity.NotificationProperty
 import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.interfaces.IUserClickListener
-import org.panta.misskeynest.interactor.InjectReaction
+import org.panta.misskeynest.usecase.interactor.InjectReaction
 import org.panta.misskeynest.util.InjectionImage
 import org.panta.misskeynest.util.InjectionText
 import org.panta.misskeynest.util.getEmojiPathFromName

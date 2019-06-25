@@ -8,8 +8,8 @@ import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.contract.MainContract
 import org.panta.misskeynest.entity.CreateNoteProperty
 import org.panta.misskeynest.entity.User
-import org.panta.misskeynest.interactor.AccountUseCase
-import org.panta.misskeynest.interactor.NoteUseCase
+import org.panta.misskeynest.usecase.interactor.AccountUseCase
+import org.panta.misskeynest.usecase.interactor.NoteUseCase
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
 import org.panta.misskeynest.repository.local.PersonalRepository

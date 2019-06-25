@@ -1,4 +1,4 @@
-package org.panta.misskeynest.interactor
+package org.panta.misskeynest.usecase.interactor
 
 import android.util.Log
 import kotlinx.coroutines.GlobalScope

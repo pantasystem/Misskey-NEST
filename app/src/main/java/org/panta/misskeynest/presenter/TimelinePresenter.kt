@@ -4,7 +4,7 @@ import org.panta.misskeynest.contract.TimelineContract
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.filter.NoteFilter
-import org.panta.misskeynest.interactor.PagingController
+import org.panta.misskeynest.usecase.interactor.PagingController
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.interfaces.IItemFilter
 import org.panta.misskeynest.repository.IItemRepository

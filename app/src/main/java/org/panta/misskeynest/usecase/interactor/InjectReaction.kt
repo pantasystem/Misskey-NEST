@@ -1,4 +1,4 @@
-package org.panta.misskeynest.interactor
+package org.panta.misskeynest.usecase.interactor
 
 import android.graphics.Bitmap
 import android.os.Handler
