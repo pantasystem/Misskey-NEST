@@ -34,7 +34,7 @@
             android:layout_below="@+id/who_reaction_user_link"
             android:layout_toEndOf="@+id/user_icon"/>
     <com.vanniktech.emoji.EmojiTextView
-            android:id="@+id/user_id"
+            android:id="@+id/user_name"
             android:text="@string/id"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:textSize="16sp" android:layout_marginTop="8dp"

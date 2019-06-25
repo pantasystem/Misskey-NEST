@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_message_selection.*
 import org.panta.misskeynest.R
-import org.panta.misskeynest.adapter.MessageHistoryAdapter
+import org.panta.misskeynest.adapter.MessageAdapter
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.filter.MessageFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
@@ -56,7 +56,7 @@ class MessageSelectionFragment : Fragment(){
 
         //val isGroup = arguments?.getBoolean(IS_GROUP_KEY)
 
-        val historyUseCase = HistoryUseCase(MessageFilter(), MessageRepository(mConnectionProperty), errorListener)
+        val historyUseCase = HistoryUseCase(MessageFilter(mConnectionProperty), MessageRepository(mConnectionProperty), errorListener)
         historyUseCase.getMixHistory {
             if( it != null ) setAdapter(it)
         }
@@ -67,7 +67,7 @@ class MessageSelectionFragment : Fragment(){
 
     private fun setAdapter(list: List<MessageViewData>){
         Handler(Looper.getMainLooper()).post{
-            message_selection_list.adapter = MessageHistoryAdapter(list)
+            message_selection_list.adapter = MessageAdapter(list)
             message_selection_list.layoutManager = LinearLayoutManager(context)
         }
     }

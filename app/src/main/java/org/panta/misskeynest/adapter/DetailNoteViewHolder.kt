@@ -13,7 +13,7 @@ class DetailNoteViewHolder(itemView: View) : AbsNoteViewHolder(itemView){
     override val whoReactionUserLink: Button = itemView.who_reaction_user_link
     override val userIcon: ImageView = itemView.user_icon
     override val userName: TextView = itemView.user_name
-    override val userId: TextView = itemView.user_id
+    override val userId: TextView = itemView.user_name
     override val noteText: TextView = itemView.note_text
 
     override val subNote: RelativeLayout = itemView.sub_note

@@ -9,4 +9,4 @@ enum class MessageDataType{
     MESSAGE_GROUP,
     MESSAGE_USER
 }
-data class MessageViewData(override val id: String, override val isIgnore: Boolean, val message: MessageProperty, val messageType: MessageDataType) : ID
+data class MessageViewData(override val id: String, override val isIgnore: Boolean, val message: MessageProperty, val messageType: MessageDataType, val isOwn: Boolean) : ID

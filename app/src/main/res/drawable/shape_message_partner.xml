@@ -9,7 +9,7 @@
 
             />
             <solid
-                    android:color="?android:colorPrimary"
+                    android:color="@color/color_normal_reaction_color"
                     tools:ignore="PrivateResource"/>
         </shape>
     </item>

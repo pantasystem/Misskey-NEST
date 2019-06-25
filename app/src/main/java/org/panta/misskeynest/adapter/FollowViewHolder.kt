@@ -17,7 +17,7 @@ class FollowViewHolder(itemView: View, var clickListener: org.panta.misskeynest.
     private val statusText: EmojiTextView = itemView.status_text
     private val userIcon: ImageView = itemView.user_icon
     private val userName: TextView = itemView.user_name
-    private val userIdView: TextView = itemView.user_id
+    private val userIdView: TextView = itemView.user_name
     private val descriptionView: TextView = itemView.user_description
     private val followUnFollowButton: Button = itemView.follow_un_follow_button
 

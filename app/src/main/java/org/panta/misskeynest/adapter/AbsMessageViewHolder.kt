@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import org.panta.misskeynest.util.InjectionImage
+import org.panta.misskeynest.util.InjectionText
 import org.panta.misskeynest.viewdata.MessageViewData
 
 /**
@@ -17,5 +19,11 @@ abstract class AbsMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(it
     abstract val iconView: ImageView
     abstract val updatedAtView: TextView
 
-    abstract fun onBind(item: MessageViewData)
+    open fun onBind(item: MessageViewData){
+        InjectionImage()
+            .roundInjectionImage(item.message.user?.avatarUrl.toString(), iconView, 180)
+
+        InjectionText()
+            .injectionTextInvisible(item.message.text, messageTextView, null, null)
+    }
 }
