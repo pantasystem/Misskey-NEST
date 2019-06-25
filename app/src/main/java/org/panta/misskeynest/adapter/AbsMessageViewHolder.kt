@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import org.panta.misskeynest.util.ElapsedTimeFormatter
 import org.panta.misskeynest.util.InjectionImage
 import org.panta.misskeynest.util.InjectionText
 import org.panta.misskeynest.viewdata.MessageViewData
@@ -25,5 +26,8 @@ abstract class AbsMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(it
 
         InjectionText()
             .injectionTextInvisible(item.message.text, messageTextView, null, null)
+
+        updatedAtView.text = ElapsedTimeFormatter().formatTime(item.message.createdAt)
+
     }
 }
