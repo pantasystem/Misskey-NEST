@@ -6,15 +6,16 @@ import org.panta.misskeynest.interfaces.IItemFilter
 import org.panta.misskeynest.viewdata.MessageDataType
 import org.panta.misskeynest.viewdata.MessageViewData
 
-class MessageFilter(private val mConnectionproperty: ConnectionProperty) : IItemFilter<MessageProperty, MessageViewData>{
+class MessageFilter(private val mConnectionProperty: ConnectionProperty) : IItemFilter<MessageProperty, MessageViewData>{
     override fun filter(items: List<MessageProperty>): List<MessageViewData> {
         return items.map{
             filter(it)
         }
     }
 
+    //FIXME Streaming APIを用いるときにrecipientはNULLではないのでHistoryと判定されてしまう
     override fun filter(item: MessageProperty): MessageViewData{
-        val isOwn = mConnectionproperty.userPrimaryId == item.userId
+        val isOwn = mConnectionProperty.userPrimaryId == item.userId
         return when{
             item.group != null ->{
                 MessageViewData(item.id, false, item, MessageDataType.HISTORY_GROUP, isOwn)

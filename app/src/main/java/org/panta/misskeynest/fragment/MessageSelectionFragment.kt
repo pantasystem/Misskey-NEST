@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_message_selection.*
 import org.panta.misskeynest.MessageActivity
 import org.panta.misskeynest.R
+import org.panta.misskeynest.adapter.HISTORY
 import org.panta.misskeynest.adapter.MessageAdapter
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.filter.MessageFilter
@@ -69,7 +70,7 @@ class MessageSelectionFragment : Fragment(){
 
     private fun setAdapter(list: List<MessageViewData>){
         Handler(Looper.getMainLooper()).post{
-            message_selection_list.adapter = MessageAdapter(list).apply{
+            message_selection_list.adapter = MessageAdapter(list, HISTORY).apply{
                 this.onItemClickListener = itemClickListener
             }
             message_selection_list.layoutManager = LinearLayoutManager(context)

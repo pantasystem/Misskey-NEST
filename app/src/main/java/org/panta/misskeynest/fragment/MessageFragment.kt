@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_message.*
 import org.panta.misskeynest.R
+import org.panta.misskeynest.adapter.MESSAGE
 import org.panta.misskeynest.adapter.MessageAdapter
 import org.panta.misskeynest.contract.MessageContract
 import org.panta.misskeynest.entity.ConnectionProperty
@@ -79,7 +80,7 @@ class MessageFragment : Fragment(), MessageContract.View {
 
     override fun showMessage(list: List<MessageViewData>) {
         Handler(Looper.getMainLooper()).post{
-            val adapter = MessageAdapter(list)
+            val adapter = MessageAdapter(list, MESSAGE)
             messages_view.layoutManager = mLayoutManager
             messages_view.adapter = adapter
 
@@ -112,6 +113,7 @@ class MessageFragment : Fragment(), MessageContract.View {
                 mAdapter?.addAllLast(list)
 
             Log.d("", "lastPosition $lastPosition, itemCount: $itemCount")
+            Log.d("", "MessageViewData $list")
 
             if( isLast){
                 mLayoutManager.scrollToPosition( itemCount + list.size)

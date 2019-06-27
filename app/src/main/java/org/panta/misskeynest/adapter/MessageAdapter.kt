@@ -10,11 +10,11 @@ import org.panta.misskeynest.R
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.interfaces.ItemClickListener
-import org.panta.misskeynest.viewdata.MessageDataType
 import org.panta.misskeynest.viewdata.MessageViewData
 
-
-class MessageAdapter(list: List<MessageViewData>) : RecyclerView.Adapter<AbsMessageViewHolder>(), IOperationAdapter<MessageViewData> {
+const val MESSAGE = 0
+const val HISTORY = 1
+class MessageAdapter(list: List<MessageViewData>, private val type: Int) : RecyclerView.Adapter<AbsMessageViewHolder>(), IOperationAdapter<MessageViewData> {
 
     companion object{
         private const val TYPE_HISTORY = 0
@@ -34,17 +34,18 @@ class MessageAdapter(list: List<MessageViewData>) : RecyclerView.Adapter<AbsMess
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when( mList[position].messageType ){
-            MessageDataType.HISTORY_USER, MessageDataType.HISTORY_GROUP -> {
+        return when( type ){
+            HISTORY -> {
                 TYPE_HISTORY
             }
-            MessageDataType.MESSAGE_USER, MessageDataType.MESSAGE_GROUP ->{
+            MESSAGE ->{
                 if( mList[position].isOwn ){
                     MESSAGE_OWN
                 }else{
                     MESSAGE_PAIR
                 }
             }
+            else -> throw java.lang.IllegalArgumentException("コンストラクタ引数 typeはMESSAGE(0) HISTORY(1)しか許可されていません")
         }
     }
 
