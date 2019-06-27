@@ -11,8 +11,10 @@ data class StreamingProperty<E>(
 
 @JsonInclude(JsonInclude.Include.NON_NULL) @JsonIgnoreProperties(ignoreUnknown = true) data class BodyProperty<E>(
     val id: String,
+    val channel: String? = null,
     val type: String? = null,
-    val body: E? = null
+    val body: E? = null,
+    val params: Map<String, Any?>? = null
 )
 
 @JsonInclude(JsonInclude.Include.NON_NULL) @JsonIgnoreProperties(ignoreUnknown = true)  data class NoteUpdatedProperty(

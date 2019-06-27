@@ -17,10 +17,10 @@ import org.panta.misskeynest.contract.MessageContract
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.filter.MessageFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
-import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.presenter.MessagePresenter
 import org.panta.misskeynest.repository.remote.MessagePagingRepository
 import org.panta.misskeynest.repository.remote.MessageRepository
+import org.panta.misskeynest.usecase.interactor.MessageChannelUseCase
 import org.panta.misskeynest.viewdata.MessageViewData
 
 class MessageFragment : Fragment(), MessageContract.View {
@@ -42,7 +42,7 @@ class MessageFragment : Fragment(), MessageContract.View {
 
     override var mPresenter: MessageContract.Presenter? = null
 
-    private var mAdapter: IOperationAdapter<MessageViewData>? = null
+    private var mAdapter: MessageAdapter? = null
 
     private lateinit var mLayoutManager: LinearLayoutManager
 
@@ -63,7 +63,9 @@ class MessageFragment : Fragment(), MessageContract.View {
 
         val filter = MessageFilter(connectionProperty)
 
-        mPresenter = MessagePresenter(this,  messageRepository, pagingRepository, filter)
+        val messageChannelUseCase = MessageChannelUseCase(connectionProperty, filter, message)
+
+        mPresenter = MessagePresenter(this,  messageRepository, pagingRepository, filter, messageChannelUseCase)
 
         mPresenter?.start()
 
@@ -81,6 +83,7 @@ class MessageFragment : Fragment(), MessageContract.View {
             messages_view.layoutManager = mLayoutManager
             messages_view.adapter = adapter
 
+            Log.d("", "Messageを取得: $list")
             mAdapter = adapter
             messages_view.scrollToPosition(list.size - 1)
 
@@ -96,6 +99,21 @@ class MessageFragment : Fragment(), MessageContract.View {
     override fun showOldMessage(list: List<MessageViewData>) {
         Handler(Looper.getMainLooper()).post{
             mAdapter?.addAllFirst(list)
+        }
+    }
+
+    override fun showRecievedMessage(list: List<MessageViewData>) {
+        Handler(Looper.getMainLooper()).post{
+            val lastPosition = mLayoutManager.findLastVisibleItemPosition()
+            val itemCount = mLayoutManager.itemCount
+            Log.d("", "lastPosition $lastPosition")
+
+            mAdapter?.addAllLast(list)
+
+            if( lastPosition >=  itemCount){
+                mLayoutManager.scrollToPosition( itemCount + list.size)
+
+            }
         }
     }
 

@@ -14,6 +14,7 @@ interface MessageContract {
         fun showMessage(list: List<MessageViewData>)
         fun showOldMessage(list: List<MessageViewData>)
         fun showNewMessage(list: List<MessageViewData>)
+        fun showRecievedMessage(list: List<MessageViewData>)
     }
 }
 
