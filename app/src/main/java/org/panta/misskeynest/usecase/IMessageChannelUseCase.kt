@@ -4,6 +4,6 @@ import org.panta.misskeynest.interfaces.CallBackListener
 import org.panta.misskeynest.viewdata.MessageViewData
 
 interface IMessageChannelUseCase {
-    var messageReceivedListener: CallBackListener<MessageViewData>?
+    var messageReceivedListener: CallBackListener<List<MessageViewData>>?
     fun start()
 }
