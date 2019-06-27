@@ -10,11 +10,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_message_selection.*
+import org.panta.misskeynest.MessageActivity
 import org.panta.misskeynest.R
 import org.panta.misskeynest.adapter.MessageAdapter
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.filter.MessageFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
+import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.repository.remote.MessageRepository
 import org.panta.misskeynest.usecase.interactor.HistoryUseCase
 import org.panta.misskeynest.viewdata.MessageViewData
@@ -67,8 +69,16 @@ class MessageSelectionFragment : Fragment(){
 
     private fun setAdapter(list: List<MessageViewData>){
         Handler(Looper.getMainLooper()).post{
-            message_selection_list.adapter = MessageAdapter(list)
+            message_selection_list.adapter = MessageAdapter(list).apply{
+                this.onItemClickListener = itemClickListener
+            }
             message_selection_list.layoutManager = LinearLayoutManager(context)
+        }
+    }
+    private val itemClickListener = object : ItemClickListener<MessageViewData>{
+        override fun onClick(e: MessageViewData) {
+            val intent = MessageActivity.getIntent(context!!, e)
+            startActivity(intent)
         }
     }
 

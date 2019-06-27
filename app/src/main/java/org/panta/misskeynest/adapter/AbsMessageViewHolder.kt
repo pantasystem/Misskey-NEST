@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import org.panta.misskeynest.entity.User
+import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.util.ElapsedTimeFormatter
 import org.panta.misskeynest.util.InjectionImage
 import org.panta.misskeynest.util.InjectionText
@@ -20,6 +22,9 @@ abstract class AbsMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(it
     abstract val iconView: ImageView
     abstract val updatedAtView: TextView
 
+    var itemClickListener: ItemClickListener<MessageViewData>? = null
+    var userClickListener: ItemClickListener<User>? = null
+
     open fun onBind(item: MessageViewData){
         InjectionImage()
             .roundInjectionImage(item.message.user?.avatarUrl.toString(), iconView, 180)
@@ -28,6 +33,16 @@ abstract class AbsMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(it
             .injectionTextInvisible(item.message.text, messageTextView, null, null)
 
         updatedAtView.text = ElapsedTimeFormatter().formatTime(item.message.createdAt)
+
+        itemView.setOnClickListener{
+            itemClickListener?.onClick(item)
+        }
+
+        iconView.setOnClickListener{
+            if(item.message.user != null){
+                userClickListener?.onClick(item.message.user)
+            }
+        }
 
     }
 }

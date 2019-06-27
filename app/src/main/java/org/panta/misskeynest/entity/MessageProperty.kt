@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.panta.misskeynest.constant.REMOTE_DATE_FORMAT
+import java.io.Serializable
 import java.util.*
 
 @JsonIgnoreProperties(ignoreUnknown = true) data class MessageProperty(
@@ -19,4 +20,4 @@ import java.util.*
     @JsonProperty("fileId") val fileId: String?,
     @JsonProperty("file") val file: FileProperty?,
     @JsonProperty("isRead") val isRead: Boolean?
-)
+): Serializable

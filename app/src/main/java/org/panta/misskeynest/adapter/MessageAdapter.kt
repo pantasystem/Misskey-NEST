@@ -7,14 +7,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.panta.misskeynest.R
+import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.IOperationAdapter
+import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.viewdata.MessageDataType
 import org.panta.misskeynest.viewdata.MessageViewData
 
-/**
- * 場合によってはMessageAdapterと統合する可能性有り
- * ただし現時点ではMessageAdapterを実装していないのでどんな影響を及ぼすかわからないので別にしている
- */
+
 class MessageAdapter(list: List<MessageViewData>) : RecyclerView.Adapter<AbsMessageViewHolder>(), IOperationAdapter<MessageViewData> {
 
     companion object{
@@ -26,6 +25,9 @@ class MessageAdapter(list: List<MessageViewData>) : RecyclerView.Adapter<AbsMess
     private val mList = ArrayList<MessageViewData>().apply {
         addAll(list)
     }
+
+    var onItemClickListener: ItemClickListener<MessageViewData>? = null
+    var onUserClickListener: ItemClickListener<User>? = null
 
     override fun getItemCount(): Int {
         return mList.size
@@ -52,7 +54,9 @@ class MessageAdapter(list: List<MessageViewData>) : RecyclerView.Adapter<AbsMess
         return when(p1){
             TYPE_HISTORY ->{
                 val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_message_history, p0, false)
-                MessageHistoryViewHolder(inflater)
+                val vh = MessageHistoryViewHolder(inflater)
+                vh.itemClickListener = onItemClickListener
+                vh
             }
             MESSAGE_OWN ->{
                 val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_message_self , p0, false)
@@ -60,7 +64,9 @@ class MessageAdapter(list: List<MessageViewData>) : RecyclerView.Adapter<AbsMess
             }
             MESSAGE_PAIR ->{
                 val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_message_partner, p0, false)
-                PairMessageViewHolder(inflater)
+                PairMessageViewHolder(inflater).apply{
+                    userClickListener = onUserClickListener
+                }
             }
             else -> throw IllegalArgumentException("想定されていない値です")
         }

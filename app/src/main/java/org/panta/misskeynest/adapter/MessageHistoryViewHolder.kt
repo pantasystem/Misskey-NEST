@@ -21,6 +21,8 @@ class MessageHistoryViewHolder ( itemView: View ) : AbsMessageViewHolder( itemVi
 
     private val historyTitle = itemView.history_title
 
+    private val mItem = itemView
+
     override fun onBind(item: MessageViewData) {
 
         messageTextView.text = item.message.text
@@ -42,6 +44,10 @@ class MessageHistoryViewHolder ( itemView: View ) : AbsMessageViewHolder( itemVi
                 historyTitle.text = group.name
             }
             else -> throw IllegalArgumentException( "これはHistory用のVHでありMessageは許可されていません。" )
+        }
+
+        mItem.setOnClickListener {
+            super.itemClickListener?.onClick(item)
         }
     }
 

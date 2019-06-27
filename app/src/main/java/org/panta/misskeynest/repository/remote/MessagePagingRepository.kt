@@ -13,7 +13,7 @@ class MessagePagingRepository(connectionProperty: ConnectionProperty, private va
     }
 
     override fun getItemsUseSinceId(sinceId: String): List<MessageProperty>? {
-        return mMessage.getMessages(groupId = groupId, userId = userId, untilId = null, sinceId = sinceId)
+        return mMessage.getMessages(groupId = groupId, userId = userId, untilId = null, sinceId = sinceId)?.asReversed()
 
     }
 
