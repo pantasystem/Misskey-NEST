@@ -7,9 +7,43 @@
             android:id="@+id/messages_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+            app:layout_constraintTop_toTopOf="parent"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-    />
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/linearLayout4">
+        <ImageButton android:layout_width="50dp" android:layout_height="wrap_content"
+                     android:scaleType="centerInside"
+                     app:srcCompat="@drawable/ic_add"
+
+                     style="?android:attr/borderlessButtonStyle"
+        />
+        <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/shape_edit_text"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:ems="10"
+                android:hint="@string/what_are_you_doing"
+                android:theme="@style/AppSimpleEditTextTheme"
+                android:id="@+id/simple_edit_box" android:layout_weight="1"/>
+        <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="match_parent" app:srcCompat="@drawable/ic_send" android:id="@+id/simple_send_button"
+                android:scaleType="centerInside"
+                style="?android:attr/borderlessButtonStyle"
+        />
+    </LinearLayout>
+
+
 </android.support.constraint.ConstraintLayout>
