@@ -10,6 +10,7 @@
             android:id="@+id/user_icon"
             android:layout_width="65dp" android:layout_height="65dp"
             android:layout_marginEnd="4dp" app:srcCompat="@drawable/ic_human"/>
+
     <TextView
             android:id="@+id/user_name"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -19,6 +20,16 @@
             android:text="@string/mr_user_route_category_name"
             android:textColor="?android:textColorSecondary"
             android:layout_toEndOf="@+id/user_icon"/>
+    <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@color/color_normal_reaction_color"
+            android:rotation="45"
+            android:layout_toEndOf="@+id/user_icon"
+            android:layout_below="@+id/user_name"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="18dp"
+    />
     <TextView
             android:id="@+id/message_text"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
