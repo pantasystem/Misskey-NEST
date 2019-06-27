@@ -31,6 +31,8 @@ class MessageActivity : AppCompatActivity() {
         val message = intent.getSerializableExtra(MESSAGE_VIEW_DATA_PROPERTY) as MessageViewData
         val connectionProperty = PersonalRepository(SharedPreferenceOperator(this)).getConnectionInfo()
 
+        title = message.roomTitle
+
         if( connectionProperty == null){
             startActivity(Intent(this, AuthActivity::class.java))
             finish()

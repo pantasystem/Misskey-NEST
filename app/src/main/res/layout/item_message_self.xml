@@ -9,7 +9,15 @@
             android:layout_width="65dp" android:layout_height="65dp"
             android:layout_marginStart="4dp"
             android:layout_alignParentEnd="true" app:srcCompat="@drawable/ic_human"/>
-
+    <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="?android:colorAccent"
+            android:rotation="45"
+            android:layout_toStartOf="@+id/user_icon"
+            android:layout_marginEnd="4dp"
+            android:layout_marginTop="18dp"
+    />
     <TextView
             android:id="@+id/message_text"
             android:layout_width="wrap_content" android:layout_height="wrap_content"

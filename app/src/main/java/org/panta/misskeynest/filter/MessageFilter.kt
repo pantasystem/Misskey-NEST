@@ -18,16 +18,18 @@ class MessageFilter(private val mConnectionProperty: ConnectionProperty) : IItem
         val isOwn = mConnectionProperty.userPrimaryId == item.userId
         return when{
             item.group != null ->{
-                MessageViewData(item.id, false, item, MessageDataType.HISTORY_GROUP, isOwn)
+                val title = item.group.name
+                MessageViewData(item.id, false, item, MessageDataType.HISTORY_GROUP, isOwn, title)
             }
             item.recipient != null ->{
-                MessageViewData(item.id, false, item, MessageDataType.HISTORY_USER, isOwn)
+                val title = item.user?.name
+                MessageViewData(item.id, false, item, MessageDataType.HISTORY_USER, isOwn, title)
             }
             item.recipientId == null->{
-                MessageViewData( item.id, false, item, MessageDataType.MESSAGE_GROUP, isOwn)
+                MessageViewData( item.id, false, item, MessageDataType.MESSAGE_GROUP, isOwn, null)
             }
             item.groupId == null ->{
-                MessageViewData( item.id, false, item, MessageDataType.MESSAGE_USER, isOwn)
+                MessageViewData( item.id, false, item, MessageDataType.MESSAGE_USER, isOwn, null)
             }
             else ->{
                 throw IllegalArgumentException("不正な値")
