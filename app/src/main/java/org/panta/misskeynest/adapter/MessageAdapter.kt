@@ -80,7 +80,7 @@ class MessageAdapter(list: List<MessageViewData>) : RecyclerView.Adapter<AbsMess
         synchronized(mList){
             mList.addAll(0, list)
             Handler(Looper.getMainLooper()).post{
-                notifyItemRangeChanged(0, list.size)
+                notifyItemRangeInserted(0, list.size)
             }
         }
     }
@@ -92,7 +92,7 @@ class MessageAdapter(list: List<MessageViewData>) : RecyclerView.Adapter<AbsMess
         }
         Handler(Looper.getMainLooper()).post{
             notifyItemRangeChanged(mList.size, list.size)
-                notifyItemRangeChanged(beforeIndex, list.size)
+                notifyItemRangeInserted(beforeIndex, list.size)
 
         }
     }

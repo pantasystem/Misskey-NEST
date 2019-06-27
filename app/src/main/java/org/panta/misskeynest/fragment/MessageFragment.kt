@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -68,6 +69,10 @@ class MessageFragment : Fragment(), MessageContract.View {
 
         mLayoutManager = LinearLayoutManager(context)
 
+        messages_view.addOnScrollListener(scrollListener)
+
+
+
     }
 
     override fun showMessage(list: List<MessageViewData>) {
@@ -77,6 +82,7 @@ class MessageFragment : Fragment(), MessageContract.View {
             messages_view.adapter = adapter
 
             mAdapter = adapter
+            messages_view.scrollToPosition(list.size - 1)
 
         }
     }
@@ -101,4 +107,18 @@ class MessageFragment : Fragment(), MessageContract.View {
         }
     }
 
+    private val scrollListener = object : RecyclerView.OnScrollListener(){
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            val first =mLayoutManager.findFirstVisibleItemPosition()
+            Log.d("Scrolled", "first :$first")
+
+            if( first == 0 ){
+                mPresenter?.getOldMessage()
+            }
+        }
+
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+
+        }
+    }
 }

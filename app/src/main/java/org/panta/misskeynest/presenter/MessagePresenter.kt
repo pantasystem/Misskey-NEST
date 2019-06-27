@@ -25,19 +25,19 @@ class MessagePresenter(private val mView: MessageContract.View,
 
     override fun getNewMessage() {
         mPagingController.getNewItems {
-            mView.showNewMessage(it)
+            mView.showNewMessage(it.asReversed())
         }
     }
 
     override fun getOldMessage() {
         mPagingController.getOldItems{
-            mView.showOldMessage(it)
+            mView.showOldMessage(it.asReversed())
         }
     }
 
     override fun start() {
         mPagingController.init {
-            mView.showMessage(it)
+            mView.showMessage(it.asReversed())
         }
     }
 
