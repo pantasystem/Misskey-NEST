@@ -105,12 +105,15 @@ class MessageFragment : Fragment(), MessageContract.View {
     override fun showRecievedMessage(list: List<MessageViewData>) {
         Handler(Looper.getMainLooper()).post{
             val lastPosition = mLayoutManager.findLastVisibleItemPosition()
-            val itemCount = mLayoutManager.itemCount
-            Log.d("", "lastPosition $lastPosition")
+            val itemCount = mLayoutManager.itemCount - 1
+            val isLast =itemCount == lastPosition
 
-            mAdapter?.addAllLast(list)
 
-            if( lastPosition >=  itemCount){
+                mAdapter?.addAllLast(list)
+
+            Log.d("", "lastPosition $lastPosition, itemCount: $itemCount")
+
+            if( isLast){
                 mLayoutManager.scrollToPosition( itemCount + list.size)
 
             }
