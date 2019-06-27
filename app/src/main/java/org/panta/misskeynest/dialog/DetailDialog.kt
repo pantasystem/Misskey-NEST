@@ -65,10 +65,17 @@ class DetailDialog : DialogFragment(){
                     }
                     5 ->{
                         GlobalScope.launch {
+                            /*
+                            非同期処理のため処理が終わるころにはthis.contextはNullになっているので
+                            NullPointerExceptionが発生するなので以下のcontext変数がcontextに対しての参照を持つことによって
+                            参照が無くなることを阻止している
+                             */
+                            var context:Context? = inflater.context
                             val b = NoteRepository(connectionProperty).remove(note)
                             Handler(Looper.getMainLooper()).post{
                                 val statusMsg = if(b) "成功しました" else "失敗しました"
                                 Toast.makeText(context, statusMsg, Toast.LENGTH_SHORT).show()
+                                context = null
                             }
                         }
                     }
