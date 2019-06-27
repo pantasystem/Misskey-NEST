@@ -13,7 +13,7 @@ class MessageFilter(private val mConnectionproperty: ConnectionProperty) : IItem
         }
     }
 
-    fun filter(item: MessageProperty): MessageViewData{
+    override fun filter(item: MessageProperty): MessageViewData{
         val isOwn = mConnectionproperty.userPrimaryId == item.userId
         return when{
             item.group != null ->{

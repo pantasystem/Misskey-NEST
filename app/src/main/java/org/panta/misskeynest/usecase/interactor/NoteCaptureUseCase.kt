@@ -9,6 +9,7 @@ import okhttp3.*
 import okio.ByteString
 import org.panta.misskeynest.entity.BodyProperty
 import org.panta.misskeynest.entity.ConnectionProperty
+import org.panta.misskeynest.entity.NoteUpdatedProperty
 import org.panta.misskeynest.entity.StreamingProperty
 import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.usecase.INoteCaptureUseCase
@@ -61,7 +62,7 @@ class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteVi
         if(mWebSocket == null){
             Log.d(TAG, "WebSocket が nullのため送信不能")
         }else{
-            val data = StreamingProperty(type = "subNote",
+            val data = StreamingProperty<NoteUpdatedProperty>(type = "subNote",
                 body = BodyProperty(id = viewData.toShowNote.id)
             )
 
@@ -111,7 +112,7 @@ class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteVi
     private fun unCapture(viewData: NoteViewData){
         mWebSocket?: return
 
-        val data = StreamingProperty(type = "unsubNote",
+        val data = StreamingProperty<Any>(type = "unsubNote",
             body = BodyProperty(id = viewData.toShowNote.id)
         )
 
@@ -134,7 +135,7 @@ class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteVi
         if( text.isBlank() ) return
 
         try{
-            val obj: StreamingProperty = jacksonObjectMapper().readValue(text)
+            val obj: StreamingProperty<NoteUpdatedProperty> = jacksonObjectMapper().readValue(text)
 
             val id = obj.body.id
             val userId = obj.body.body?.userId

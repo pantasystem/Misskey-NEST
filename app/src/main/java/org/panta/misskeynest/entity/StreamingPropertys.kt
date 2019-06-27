@@ -3,19 +3,19 @@ package org.panta.misskeynest.entity
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 
-data class StreamingProperty(
+data class StreamingProperty<E>(
     val type: String,
-    val body: BodyProperty
+    val body: BodyProperty<E>
 )
 
 
-@JsonInclude(JsonInclude.Include.NON_NULL) @JsonIgnoreProperties(ignoreUnknown = true) data class BodyProperty(
+@JsonInclude(JsonInclude.Include.NON_NULL) @JsonIgnoreProperties(ignoreUnknown = true) data class BodyProperty<E>(
     val id: String,
     val type: String? = null,
-    val body: InsideBodyProperty? = null
+    val body: E? = null
 )
 
-@JsonInclude(JsonInclude.Include.NON_NULL) @JsonIgnoreProperties(ignoreUnknown = true)  data class InsideBodyProperty(
+@JsonInclude(JsonInclude.Include.NON_NULL) @JsonIgnoreProperties(ignoreUnknown = true)  data class NoteUpdatedProperty(
     val reaction: String? = null,
     val userId: String? = null,
     val choice: Int? = null,

@@ -11,12 +11,16 @@ class NotificationFilter : IItemFilter<NotificationProperty, NotificationViewDat
     private val noteAd = NoteFormatUseCase()
     override fun filter(items: List<NotificationProperty>): List<NotificationViewData> {
         return items.map{
-            if(it.note == null){
-                NotificationViewData(it.id,false, it, null)
-            }else{
-                val viewData = NoteViewData(it.note.id, false,it.note, it.note,noteAd.checkUpNoteType(it.note), noteAd.createReactionCountPair(it.note.reactionCounts), Date())
-                NotificationViewData(it.id, false, it, viewData)
-            }
+            filter(it)
+        }
+    }
+
+    override fun filter(item: NotificationProperty): NotificationViewData {
+        return if(item.note == null){
+            NotificationViewData(item.id,false, item, null)
+        }else{
+            val viewData = NoteViewData(item.note.id, false,item.note, item.note,noteAd.checkUpNoteType(item.note), noteAd.createReactionCountPair(item.note.reactionCounts), Date())
+            NotificationViewData(item.id, false, item, viewData)
         }
     }
 }
