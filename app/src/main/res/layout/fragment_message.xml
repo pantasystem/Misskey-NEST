@@ -17,13 +17,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/linearLayout4">
-        <ImageButton android:layout_width="50dp" android:layout_height="wrap_content"
-                     android:scaleType="centerInside"
-                     app:srcCompat="@drawable/ic_add"
+        <ImageButton
+                android:id="@+id/message_option_button"
+                android:layout_width="50dp" android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_add"
 
-                     style="?android:attr/borderlessButtonStyle"
+                style="?android:attr/borderlessButtonStyle"
         />
         <EditText
+                android:id="@+id/message_input_box"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
@@ -36,10 +39,10 @@
                 android:ems="10"
                 android:hint="@string/what_are_you_doing"
                 android:theme="@style/AppSimpleEditTextTheme"
-                android:id="@+id/simple_edit_box" android:layout_weight="1"/>
+                 android:layout_weight="1"/>
         <ImageButton
                 android:layout_width="50dp"
-                android:layout_height="match_parent" app:srcCompat="@drawable/ic_send" android:id="@+id/simple_send_button"
+                android:layout_height="match_parent" app:srcCompat="@drawable/ic_send" android:id="@+id/message_send_button"
                 android:scaleType="centerInside"
                 style="?android:attr/borderlessButtonStyle"
         />
