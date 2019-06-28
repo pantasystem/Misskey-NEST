@@ -2,15 +2,18 @@ package org.panta.misskeynest.presenter
 
 import android.util.Log
 import org.panta.misskeynest.contract.MessageContract
+import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.entity.MessageProperty
 import org.panta.misskeynest.interfaces.CallBackListener
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.interfaces.IItemFilter
+import org.panta.misskeynest.network.OkHttpConnection
 import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.repository.IMessageRepository
 import org.panta.misskeynest.usecase.IMessageChannelUseCase
 import org.panta.misskeynest.usecase.interactor.PagingController
 import org.panta.misskeynest.viewdata.MessageViewData
+import java.io.File
 
 class MessagePresenter(private val mView: MessageContract.View,
                        private val mRepository: IMessageRepository,
@@ -27,6 +30,9 @@ class MessagePresenter(private val mView: MessageContract.View,
 
     private val mPagingController = PagingController<MessageProperty, MessageViewData>(mPagingRepository, errorListener ,mFilter)
 
+    private var mFileProperty: FileProperty? = null
+
+    private val mConnection = OkHttpConnection()
 
     override fun getNewMessage() {
         mPagingController.getNewItems {
@@ -46,6 +52,23 @@ class MessagePresenter(private val mView: MessageContract.View,
         }
         mMessageChannelUseCase.start()
         mMessageChannelUseCase.messageReceivedListener = mMessageListener
+    }
+
+    override fun sendMessage(text: String?) {
+        /*GlobalScope.launch{
+            mRepository.create(
+
+            )
+        }*/
+
+    }
+
+    override fun uploadFile(file: File) {
+        //FileをPOSTする
+    }
+
+    override fun setFile(file: FileProperty) {
+        mFileProperty = file
     }
 
     private val mMessageListener = object : CallBackListener<List<MessageViewData>>{

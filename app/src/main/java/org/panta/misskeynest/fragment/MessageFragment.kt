@@ -16,6 +16,7 @@ import org.panta.misskeynest.adapter.MESSAGE
 import org.panta.misskeynest.adapter.MessageAdapter
 import org.panta.misskeynest.contract.MessageContract
 import org.panta.misskeynest.entity.ConnectionProperty
+import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.filter.MessageFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.presenter.MessagePresenter
@@ -74,7 +75,13 @@ class MessageFragment : Fragment(), MessageContract.View {
 
         messages_view.addOnScrollListener(scrollListener)
 
+        message_send_button.setOnClickListener{
+            mPresenter?.sendMessage(message_input_box.text.toString())
+        }
 
+        message_option_button.setOnClickListener{
+
+        }
 
     }
 
@@ -120,6 +127,14 @@ class MessageFragment : Fragment(), MessageContract.View {
 
             }
         }
+    }
+
+    override fun showFileManager() {
+
+    }
+
+    override fun onUploadFile(file: FileProperty?) {
+
     }
 
 
