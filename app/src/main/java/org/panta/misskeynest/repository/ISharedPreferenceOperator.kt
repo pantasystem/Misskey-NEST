@@ -1,4 +1,4 @@
-package org.panta.misskeynest.interfaces
+package org.panta.misskeynest.repository
 
 interface ISharedPreferenceOperator {
     fun getString(key: String, defaultValue: String?): String?

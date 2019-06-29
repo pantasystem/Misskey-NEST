@@ -8,7 +8,7 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_message.*
 import org.panta.misskeynest.fragment.MessageFragment
 import org.panta.misskeynest.repository.local.PersonalRepository
-import org.panta.misskeynest.storage.SharedPreferenceOperator
+import org.panta.misskeynest.repository.local.SharedPreferenceOperator
 import org.panta.misskeynest.viewdata.MessageViewData
 
 class MessageActivity : AppCompatActivity() {

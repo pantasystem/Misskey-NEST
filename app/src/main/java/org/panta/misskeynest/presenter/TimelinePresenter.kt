@@ -4,12 +4,12 @@ import org.panta.misskeynest.contract.TimelineContract
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.filter.NoteFilter
-import org.panta.misskeynest.usecase.interactor.PagingController
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.interfaces.IItemFilter
 import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.repository.remote.ReactionRepository
 import org.panta.misskeynest.usecase.INoteCaptureUseCase
+import org.panta.misskeynest.usecase.interactor.PagingController
 import org.panta.misskeynest.viewdata.NoteViewData
 
 class TimelinePresenter(private val mView: TimelineContract.View, private val mNoteCaptureUseCase: INoteCaptureUseCase,
@@ -24,7 +24,9 @@ class TimelinePresenter(private val mView: TimelineContract.View, private val mN
 
     private val mReaction = ReactionRepository(domain = info.domain, authKey = info.i)
 
-
+    override fun start() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun getNewTimeline() {
         pagingController.getNewItems {
@@ -68,9 +70,7 @@ class TimelinePresenter(private val mView: TimelineContract.View, private val mN
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun start() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
 
 
 

@@ -16,7 +16,7 @@ import org.panta.misskeynest.filter.NotificationFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.repository.remote.NotificationRepository
 import org.panta.misskeynest.repository.local.PersonalRepository
-import org.panta.misskeynest.storage.SharedPreferenceOperator
+import org.panta.misskeynest.repository.local.SharedPreferenceOperator
 import org.panta.misskeynest.usecase.interactor.PagingController
 import org.panta.misskeynest.MainActivity
 import org.panta.misskeynest.viewdata.NotificationViewData

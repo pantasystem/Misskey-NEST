@@ -3,7 +3,7 @@ package org.panta.misskeynest.repository.local
 import org.panta.misskeynest.constant.ThemeType
 import org.panta.misskeynest.constant.getInstanceInfoList
 import org.panta.misskeynest.entity.ConnectionProperty
-import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
+import org.panta.misskeynest.repository.ISharedPreferenceOperator
 import org.panta.misskeynest.util.sha256
 
 class PersonalRepository(private val sharedPreferenceOperator: ISharedPreferenceOperator){

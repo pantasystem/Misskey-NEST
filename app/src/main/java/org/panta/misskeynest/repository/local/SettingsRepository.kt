@@ -1,6 +1,6 @@
 package org.panta.misskeynest.repository.local
 
-import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
+import org.panta.misskeynest.repository.ISharedPreferenceOperator
 
 class SettingsRepository(val pref: ISharedPreferenceOperator){
 
