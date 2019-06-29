@@ -28,16 +28,21 @@ class OkHttpConnection{
 
     }
 
-    fun postFile(url: URL,i: String, file: File, force: Boolean, isSensitive: Boolean? = null): String?{
+    fun postFile(url: URL,i: String, file: File, force: Boolean, isSensitive: Boolean? = null, folderId: String? = null): String?{
         Log.d("OkHttpConnection", "url:$url, i:$i, file:$file, force:$force")
         return try{
             val mime = "image/jpg"
             val client = OkHttpClient()
-            val requestBody = MultipartBody.Builder()
+            val requestBodyBuilder = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("i", i)
                 .addFormDataPart("force", force.toString())
-                .addFormDataPart("file", file.name, RequestBody.create(MediaType.parse(mime), file)).build()
+                .addFormDataPart("file", file.name, RequestBody.create(MediaType.parse(mime), file))
+
+            if( isSensitive != null ) requestBodyBuilder.addFormDataPart("isSensitive", isSensitive.toString())
+            if( folderId != null ) requestBodyBuilder.addFormDataPart("folderId", folderId)
+
+            val requestBody = requestBodyBuilder.build()
 
             val request = Request.Builder().url(url).post(requestBody).build()
             val response = client.newCall(request).execute()
