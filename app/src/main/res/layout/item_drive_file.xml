@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+
+>
+    <ImageView
+            android:id="@+id/thumbnail_view"
+            android:layout_width="65dp" android:layout_height="65dp"
+            android:layout_marginEnd="8dp"
+    />
+    <TextView
+            android:id="@+id/file_name"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/thumbnail_view"
+            android:text="fileName"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginBottom="8dp"
+    />
+    <TextView
+            android:id="@+id/file_meta"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_below="@+id/file_name"
+            android:layout_toEndOf="@+id/thumbnail_view"
+            android:text="image/jpg"
+
+    />
+    <TextView
+            android:id="@+id/file_size"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="24byte"
+            android:layout_below="@+id/file_name"
+            android:layout_toEndOf="@+id/file_meta"
+            android:layout_marginStart="8dp"
+    />
+    <TextView
+            android:id="@+id/updated_at"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_below="@+id/file_name"
+            android:layout_toEndOf="@+id/file_size"
+            android:layout_marginStart="8dp"
+            android:text="updated 3 hour"
+    />
+</RelativeLayout>
