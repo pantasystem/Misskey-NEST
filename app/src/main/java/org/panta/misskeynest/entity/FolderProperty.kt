@@ -12,5 +12,5 @@ import java.util.*
     val foldersCount: Int,
     val filesCount: Int,
     val parentId: String?,
-    val parent: FolderProperty
+    val parent: FolderProperty?
 )

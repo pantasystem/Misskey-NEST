@@ -135,3 +135,5 @@ fabric.properties
 
 ApplicationSecretConstant.java
 ApplicationConstant.java
+
+ApplicationTestConstant.java

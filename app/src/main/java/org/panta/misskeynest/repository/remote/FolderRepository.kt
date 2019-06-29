@@ -24,14 +24,14 @@ class FolderRepository(private val mConnectionProperty: ConnectionProperty) : IF
 
     override fun delete(folderId: String): Boolean {
         val res = request(
-            "drive/folder/create",
+            "drive/folders/delete",
             "i" to mConnectionProperty.i,
             "folderId" to folderId
         )
         return res != null
     }
 
-    override fun find(name: String, parentId: String?): FolderProperty? {
+    override fun find(name: String, parentId: String?): List<FolderProperty>? {
         val res = request(
             "drive/folders/find",
             "i" to mConnectionProperty.i,
