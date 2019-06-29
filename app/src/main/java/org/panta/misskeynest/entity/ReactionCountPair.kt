@@ -1,9 +1,9 @@
 package org.panta.misskeynest.entity
 
-import org.panta.misskeynest.constant.ReactionConstData
+import java.io.Serializable
 
 
-data class ReactionCountPair(val reactionType: String, val reactionCount: Int){
+data class ReactionCountPair(val reactionType: String, val reactionCount: Int): Serializable{
 
     companion object{
         fun createList(reactionCount: Map<String, Int>): List<ReactionCountPair>{

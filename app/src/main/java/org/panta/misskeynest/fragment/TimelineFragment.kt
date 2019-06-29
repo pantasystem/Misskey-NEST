@@ -18,11 +18,12 @@ import org.panta.misskeynest.contract.TimelineContract
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.User
-import org.panta.misskeynest.usecase.interactor.NoteCaptureUseCase
 import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.listener.UserClickListener
 import org.panta.misskeynest.presenter.TimelinePresenter
 import org.panta.misskeynest.repository.IItemRepository
+import org.panta.misskeynest.repository.local.SerializableRepository
+import org.panta.misskeynest.usecase.interactor.NoteCaptureUseCase
 import org.panta.misskeynest.util.TimelineRepositoryFactory
 import org.panta.misskeynest.viewdata.NoteViewData
 
@@ -114,9 +115,16 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             searchWord != null -> factory.create(searchWord, isMediaOnly)
             else -> throw IllegalArgumentException("不正な値です")
         }
+        val serializableRepository = SerializableRepository(context!!)
 
         mNoteCaptureUseCase= NoteCaptureUseCase(null, connectionInfo!!)
-        mPresenter = TimelinePresenter(this, mNoteCaptureUseCase,mNoteRepository!!, connectionInfo!!)
+        mPresenter = TimelinePresenter(this,
+            mNoteCaptureUseCase,
+            mNoteRepository!!,
+            connectionInfo!!,
+            timelineTypeEnum,
+            serializableRepository
+        )
         mNoteCaptureUseCase.start()
 
         return inflater.inflate(R.layout.fragment_timeline, container, false)
@@ -125,7 +133,8 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         timelineView.addOnScrollListener(listener)
-        mPresenter?.initTimeline()
+        //mPresenter?.initTimeline()
+        mPresenter?.start()
         //mLayoutManager = LinearLayoutManager(context)
 
         refresh?.setOnRefreshListener(this)
@@ -141,6 +150,15 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         val dividerItemDecoration = DividerItemDecoration(timelineView.context, mLayoutManager.orientation)
         timelineView.addItemDecoration(dividerItemDecoration)
 
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val position = mLayoutManager.findFirstVisibleItemPosition()
+        val visibleFirstItem = mAdapter?.getItem(position)
+        if(visibleFirstItem != null){
+            mPresenter?.saveItem(visibleFirstItem)
+        }
     }
 
 
@@ -225,6 +243,10 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
                 mPresenter?.getOldTimeline()
             }
         }
+    }
+
+    override fun toString(): String {
+        return "package org.panta.misskeynest.fragment.TimelineFragment"
     }
 
 }
