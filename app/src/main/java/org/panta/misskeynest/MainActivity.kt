@@ -28,12 +28,13 @@ import org.panta.misskeynest.constant.FollowFollowerType
 import org.panta.misskeynest.contract.MainContract
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.User
-import org.panta.misskeynest.repository.ISharedPreferenceOperator
+import org.panta.misskeynest.fragment.TimelineFragment
 import org.panta.misskeynest.pager.PagerAdapter
 import org.panta.misskeynest.presenter.MainPresenter
+import org.panta.misskeynest.repository.ISharedPreferenceOperator
+import org.panta.misskeynest.repository.local.SharedPreferenceOperator
 import org.panta.misskeynest.service.EmojiDownloadService
 import org.panta.misskeynest.service.NotificationService
-import org.panta.misskeynest.repository.local.SharedPreferenceOperator
 
 private const val FRAGMENT_HOME = "FRAGMENT_HOME"
 private const val FRAGMENT_OTHER = "FRAGMENT_OTHER"
@@ -142,8 +143,11 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
 
     override fun initDisplay(connectionInfo: ConnectionProperty) {
 
+        //TODO ユーザーがカスタム出来るようにする
+        val columnList = arrayOf("Home", "Local", "Social", "Global")
+
         //val ad = timeline_pager.adapter
-        val adapter = PagerAdapter(supportFragmentManager, connectionInfo)
+        val adapter = PagerAdapter(supportFragmentManager, connectionInfo, columnList)
 
         timeline_pager.offscreenPageLimit = 4
         timeline_pager.adapter = adapter
@@ -155,7 +159,9 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
                 override fun onTabReselected(p0: TabLayout.Tab?) {
                     if(p0 != null){
                         val fragment = adapter.getFragment(p0.position)
-                        fragment.mPresenter?.initTimeline()
+                        if(fragment is TimelineFragment){
+                            fragment.mPresenter?.initTimeline()
+                        }
                     }
                 }
                 override fun onTabSelected(p0: TabLayout.Tab?) {
@@ -169,23 +175,27 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
         //tab_layoutのアイコンを設定
         for(n in 0.until(timeline_tab_layout.tabCount)){
             val tab = timeline_tab_layout.getTabAt(n)
-
-            when(n){
-                0 ->{
+            val tabTitle = columnList[n]
+            when(tabTitle.toLowerCase()){
+                 "home" ->{
                     tab?.setIcon(R.drawable.ic_home)
                     tab?.contentDescription = "Home"
                 }
-                1 ->{
+                "local" ->{
                     tab?.setIcon(R.drawable.ic_local)
                     tab?.contentDescription = "Local"
                 }
-                2 ->{
+                "social" ->{
                     tab?.setIcon(R.drawable.ic_social)
                     tab?.contentDescription = "Social"
                 }
-                3 ->{
+                "global" ->{
                     tab?.setIcon(R.drawable.ic_global)
                     tab?.contentDescription = "Global"
+                }
+                "notification" ->{
+                    tab?.setIcon(R.drawable.ic_notifications_black_24dp)
+                    tab?.contentDescription = "Notification"
                 }
 
             }

@@ -7,15 +7,16 @@ import android.util.Log
 import android.util.SparseArray
 import org.panta.misskeynest.constant.TimelineTypeEnum
 import org.panta.misskeynest.entity.ConnectionProperty
+import org.panta.misskeynest.fragment.NotificationFragment
 import org.panta.misskeynest.fragment.TimelineFragment
 
-class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo: ConnectionProperty) : FragmentPagerAdapter(fragmentManager){
+class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo: ConnectionProperty, private val columnList: Array<String>) : FragmentPagerAdapter(fragmentManager){
 
-    private val fragmentList = SparseArray<TimelineFragment>()
+    private val fragmentList = SparseArray<Fragment>()
 
-    private val tabTitles = arrayOf<CharSequence>("Home", "Local", "Social","Global")
+    //private val tabTitles = arrayOf<CharSequence>("Home", "Local", "Social","Global")
     override fun getCount(): Int {
-        return tabTitles.size
+        return columnList.size
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
@@ -28,11 +29,13 @@ class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo:
 
     override fun getItem(p0: Int): Fragment? {
 
-        val fragment =  when(p0){
-            0 -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.HOME, false)
-            1 -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.LOCAL, false)
-            2 -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.SOCIAL, false)
-            3 -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.GLOBAL, false)
+        val title = columnList[p0].toString()
+        val fragment: Fragment =  when(title.toLowerCase()){
+            "home" -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.HOME, false)
+            "local" -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.LOCAL, false)
+            "social" -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.SOCIAL, false)
+            "global" -> TimelineFragment.getInstance(connectionInfo, TimelineTypeEnum.GLOBAL, false)
+            "notification" -> NotificationFragment.getInstance(connectionInfo)
             else -> throw IllegalArgumentException("異常な呼び出し")
         }
         fragmentList.put(p0, fragment)
@@ -40,7 +43,7 @@ class PagerAdapter(fragmentManager: FragmentManager, private val connectionInfo:
 
     }
 
-    fun getFragment(position: Int): TimelineFragment {
+    fun getFragment(position: Int): Fragment {
         return fragmentList.get(position)
     }
 
