@@ -31,6 +31,7 @@ import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
 import org.panta.misskeynest.pager.PagerAdapter
 import org.panta.misskeynest.presenter.MainPresenter
+import org.panta.misskeynest.service.EmojiDownloadService
 import org.panta.misskeynest.service.NotificationService
 import org.panta.misskeynest.storage.SharedPreferenceOperator
 
@@ -288,9 +289,9 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
         mPresenter?.getPersonalMiniProfile()
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             //FIXME Android9.0では強制終了するので修正する
-            //startForegroundService(Intent(applicationContext, EmojiDownloadService::class.java))
+            startForegroundService(Intent(this ,EmojiDownloadService::class.java))
         }else{
-            //startService(Intent(applicationContext, EmojiDownloadService::class.java))
+            startService(Intent(this, EmojiDownloadService::class.java))
         }
 
     }
