@@ -7,7 +7,7 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_message_selection.*
 import org.panta.misskeynest.fragment.MessageSelectionFragment
 import org.panta.misskeynest.repository.local.PersonalRepository
-import org.panta.misskeynest.storage.SharedPreferenceOperator
+import org.panta.misskeynest.repository.local.SharedPreferenceOperator
 
 class MessageSelectionActivity : AppCompatActivity() {
 

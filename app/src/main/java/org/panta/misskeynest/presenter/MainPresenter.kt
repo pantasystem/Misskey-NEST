@@ -11,7 +11,7 @@ import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.usecase.interactor.AccountUseCase
 import org.panta.misskeynest.usecase.interactor.NoteUseCase
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
-import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
+import org.panta.misskeynest.repository.ISharedPreferenceOperator
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.repository.local.SettingsRepository
 import org.panta.misskeynest.repository.remote.AccountRepository

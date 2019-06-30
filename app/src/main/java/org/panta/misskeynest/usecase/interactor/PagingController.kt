@@ -21,7 +21,7 @@ class PagingController<I: Any ,E: ID>(
 
     override fun getNewItems(callBack:(List<E>)->Unit){
         if(latestId == null){
-            init(callBack)
+            init(null, callBack)
             return
         }
         GlobalScope.launch{
@@ -41,7 +41,7 @@ class PagingController<I: Any ,E: ID>(
     }
     override fun getOldItems(callBack:(List<E>)->Unit){
         if( oldestId == null ){
-            init(callBack)
+            init(null, callBack)
             return
         }
 
@@ -68,8 +68,8 @@ class PagingController<I: Any ,E: ID>(
             }
         }
     }
-    override fun init(callBack:(List<E>)->Unit){
-        GlobalScope.launch{
+    override fun init(initItem: E?, callBack:(List<E>)->Unit){
+        /*GlobalScope.launch{
             val list = mRepository.getItems()
             if( list == null ){
                 errorCallBackListener.callBack(Exception("NULL返ってきちゃった・・"))
@@ -87,6 +87,39 @@ class PagingController<I: Any ,E: ID>(
             if(o != null){
                 oldestId = o
             }
+        }*/
+        GlobalScope.launch{
+            val list: List<E>
+            if( initItem == null ){
+                val items = mRepository.getItems()
+                if( items == null ){
+                    errorCallBackListener.callBack(Exception("NULL返ってきちゃった・・"))
+                    return@launch
+                }
+
+                list = mFilter.filter(items)
+
+            }else{
+                val tmpList = arrayListOf(initItem)
+                val items = mRepository.getItemsUseUntilId(initItem.id)
+                if( items == null ){
+                    errorCallBackListener.callBack(Exception("NULL返ってきちゃった・・"))
+                    return@launch
+                }
+                tmpList.addAll(mFilter.filter(items))
+                list = tmpList
+            }
+            callBack(list)
+
+            val l = searchLatestId(list)
+            val o = searchOldestId(list)
+            if(l != null){
+                latestId = l
+            }
+            if(o != null){
+                oldestId = o
+            }
+
         }
 
     }

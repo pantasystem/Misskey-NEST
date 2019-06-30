@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_search.*
 import org.panta.misskeynest.repository.local.PersonalRepository
-import org.panta.misskeynest.storage.SharedPreferenceOperator
+import org.panta.misskeynest.repository.local.SharedPreferenceOperator
 import org.panta.misskeynest.fragment.TimelineFragment
 
 class SearchActivity : AppCompatActivity() {

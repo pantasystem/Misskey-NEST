@@ -21,6 +21,7 @@ interface TimelineContract{
         fun getOldTimeline()
         fun initTimeline()
         fun captureNote(noteId: String)
+        fun saveItem(viewData: NoteViewData)
         //fun sendReaction(noteId: String, viewData: NoteViewData, reactionType: String)
         //fun setReactionSelectedState(targetId: String?, note: Note?, viewData: NoteViewData, reactionType: String?)
         fun onRefresh()

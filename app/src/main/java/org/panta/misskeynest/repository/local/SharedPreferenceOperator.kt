@@ -1,12 +1,11 @@
-package org.panta.misskeynest.storage
+package org.panta.misskeynest.repository.local
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import org.panta.misskeynest.interfaces.ISharedPreferenceOperator
+import org.panta.misskeynest.repository.ISharedPreferenceOperator
 
-class SharedPreferenceOperator(private val context: Context) : ISharedPreferenceOperator{
+class SharedPreferenceOperator(private val context: Context) :
+    ISharedPreferenceOperator {
 
     companion object {
         private const val APP_NAME = "misskey_for_Android_pref_version_2.0"

@@ -21,7 +21,7 @@ import org.panta.misskeynest.R
 import org.panta.misskeynest.entity.MetaProperty
 import org.panta.misskeynest.network.OkHttpConnection
 import org.panta.misskeynest.repository.local.PersonalRepository
-import org.panta.misskeynest.storage.SharedPreferenceOperator
+import org.panta.misskeynest.repository.local.SharedPreferenceOperator
 import org.panta.misskeynest.util.createFileName
 import org.panta.misskeynest.util.saveImage
 import org.panta.misskeynest.util.saveSVG
