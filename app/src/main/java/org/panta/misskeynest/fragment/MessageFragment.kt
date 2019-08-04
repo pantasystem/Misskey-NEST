@@ -56,11 +56,17 @@ class MessageFragment : Fragment(), MessageContract.View {
 
         val message = arguments?.getSerializable( MESSAGE_DATA_KEY ) as MessageViewData
         val group = message.message.group
-        val user = if( message.message.recipient == null ) null else message.message.user
-
         val connectionProperty = arguments?.getSerializable( CONNECTION_PROPERTY_KEY ) as ConnectionProperty
 
-        val pagingRepository = MessagePagingRepository(groupId = group?.id, userId = user?.id, connectionProperty = connectionProperty)
+        //初期ID導出ロジック
+        val myId = connectionProperty.userPrimaryId
+        val baseUser = if(message.message.recipient?.id == myId){
+            message.message.user
+        }else{
+            message.message.recipient
+        }
+
+        val pagingRepository = MessagePagingRepository(groupId = group?.id, userId = baseUser?.id, connectionProperty = connectionProperty)
         val messageRepository = MessageRepository(connectionProperty)
 
         val filter = MessageFilter(connectionProperty)
