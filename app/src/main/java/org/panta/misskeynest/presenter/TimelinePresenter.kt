@@ -104,10 +104,11 @@ class TimelinePresenter(private val mView: TimelineContract.View,
 
 
     private fun isSavePosition(): Boolean{
-        return type == TimelineTypeEnum.GLOBAL
+        /*return type == TimelineTypeEnum.GLOBAL
                 || type == TimelineTypeEnum.LOCAL
                 || type == TimelineTypeEnum.SOCIAL
-                || type == TimelineTypeEnum.HOME
+                || type == TimelineTypeEnum.HOME*/
+        return false
     }
 
 }

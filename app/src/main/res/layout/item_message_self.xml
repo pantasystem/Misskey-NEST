@@ -18,20 +18,34 @@
             android:layout_marginEnd="4dp"
             android:layout_marginTop="18dp"
     />
-    <TextView
-            android:id="@+id/message_text"
+
+    <LinearLayout
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/shape_message_self"
             android:layout_toStartOf="@+id/user_icon"
             android:layout_marginTop="3dp"
-            android:background="@drawable/shape_message_self"
-            android:textColor="@android:color/white"
-            android:text="hello Wrold"
-            android:padding="10dp"
-            android:layout_marginEnd="8dp"/>
+            android:id="@+id/content_view"
+            android:orientation="vertical"
+    >
+        <TextView
+                android:id="@+id/message_text"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+
+                android:textColor="@android:color/white"
+                android:text="hello Wrold"
+        />
+
+        <ImageView
+                android:id="@+id/message_image"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:scaleType="fitCenter"/>
+    </LinearLayout>
     <TextView
             android:id="@+id/elapsed_time"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_below="@+id/message_text"
+            android:layout_below="@+id/content_view"
             android:layout_toStartOf="@+id/user_icon"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"

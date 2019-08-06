@@ -1,6 +1,7 @@
 package org.panta.misskeynest.adapter
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -21,6 +22,7 @@ abstract class AbsMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(it
     abstract val messageTextView: TextView
     abstract val iconView: ImageView
     abstract val updatedAtView: TextView
+    abstract val imageView: ImageView
 
     var itemClickListener: ItemClickListener<MessageViewData>? = null
     var userClickListener: ItemClickListener<User>? = null
@@ -29,8 +31,10 @@ abstract class AbsMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(it
         InjectionImage()
             .roundInjectionImage(item.message.user?.avatarUrl.toString(), iconView, 180)
 
+        /*InjectionText()
+            .injectionTextInvisible(item.message.text, messageTextView, null, null)*/
         InjectionText()
-            .injectionTextInvisible(item.message.text, messageTextView, null, null)
+            .injectionTextGoneWhenNull(item.message.text, messageTextView, null)
 
         updatedAtView.text = ElapsedTimeFormatter().formatTime(item.message.createdAt)
 
@@ -44,5 +48,13 @@ abstract class AbsMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(it
             }
         }
 
+        val imageUrl = item.message.file?.url
+        if(imageUrl != null){
+            InjectionImage()
+                .injectionImage(imageUrl, imageView, false)
+            Log.d("", "imageUrl: $imageUrl")
+        }else{
+            imageView.visibility = View.GONE
+        }
     }
 }

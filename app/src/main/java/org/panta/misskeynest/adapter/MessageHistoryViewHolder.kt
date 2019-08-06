@@ -17,6 +17,7 @@ class MessageHistoryViewHolder ( itemView: View ) : AbsMessageViewHolder( itemVi
 
 
     override val iconView: ImageView = itemView.history_icon
+    override val imageView: ImageView = itemView.message_image
 
 
     private val historyTitle = itemView.history_title

@@ -10,6 +10,6 @@ class SelfMessageViewHolder(itemView: View) : AbsMessageViewHolder(itemView){
     override val iconView: ImageView = itemView.user_icon
     override val messageTextView: TextView = itemView.message_text
     override val updatedAtView: TextView = itemView.elapsed_time
-
+    override val imageView: ImageView = itemView.message_image
 }
 

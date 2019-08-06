@@ -30,25 +30,42 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="18dp"
     />
-    <TextView
-            android:id="@+id/message_text"
+    <LinearLayout
+            android:id="@+id/content_view"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/user_icon"
             android:layout_below="@+id/user_name"
             android:layout_marginTop="3dp"
             android:background="@drawable/shape_message_partner"
-            android:textColor="@android:color/white"
-            android:text="hello Wrold"
             android:padding="10dp"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginStart="8dp"
+            android:orientation="vertical"
+
+    >
+        <TextView
+                android:id="@+id/message_text"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="aaaaaaa"
+                android:textColor="@android:color/white"
+
+        />
+        <ImageView
+                android:id="@+id/message_image"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+        />
+    </LinearLayout>
+
     <TextView
             android:id="@+id/elapsed_time"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_below="@+id/message_text"
+            android:layout_below="@+id/content_view"
             android:layout_toEndOf="@+id/user_icon"
             android:layout_marginTop="4dp"
             android:layout_marginStart="8dp"
             android:text="10秒前"
     />
+
+
+
 
 </RelativeLayout>
