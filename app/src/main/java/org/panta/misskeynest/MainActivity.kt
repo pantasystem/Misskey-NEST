@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatDelegate
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Switch
 import android.widget.Toast
 import com.squareup.picasso.Picasso
@@ -32,6 +33,7 @@ import org.panta.misskeynest.fragment.TimelineFragment
 import org.panta.misskeynest.pager.PagerAdapter
 import org.panta.misskeynest.presenter.MainPresenter
 import org.panta.misskeynest.repository.ISharedPreferenceOperator
+import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.repository.local.SharedPreferenceOperator
 import org.panta.misskeynest.service.EmojiDownloadService
 import org.panta.misskeynest.service.NotificationService
@@ -125,9 +127,12 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
         }
         mPresenter?.isEnabledNotification()
 
-        //mUiModeManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
-
-        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        //簡易入力の表示、非表示
+        if(PersonalRepository(mSharedOperator).isVisibleSimpleEdit){
+            simple_edit_view.visibility = View.VISIBLE
+        }else{
+            simple_edit_view.visibility = View.GONE
+        }
 
         simple_send_button.setOnClickListener{
             val text = simple_edit_box.text.toString()

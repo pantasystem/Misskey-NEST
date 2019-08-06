@@ -13,11 +13,11 @@
 
     <FrameLayout
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:id="@+id/main_container" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/simple_edit_view"
+
     >
 
         <android.support.v4.view.ViewPager
@@ -26,43 +26,61 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"/>
     </FrameLayout>
-    <Toolbar
-            android:id="@+id/simple_edit_view"
-            android:layout_width="match_parent" android:layout_height="47dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:contentInsetStart="0dp"
-            android:theme="@style/AppSimpleEditTextTheme"
-            android:background="?android:colorPrimary"
-    >
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:windowBackground"
-            android:id="@+id/linearLayout2">
-        <EditText
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:inputType="textPersonName"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/shape_edit_text"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:ems="10"
-                android:hint="@string/what_are_you_doing"
-                android:theme="@style/AppSimpleEditTextTheme"
-                android:id="@+id/simple_edit_box" android:layout_weight="1"/>
-        <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="match_parent" app:srcCompat="@drawable/ic_send" android:id="@+id/simple_send_button"
-                android:scaleType="centerInside"
-                style="?android:attr/borderlessButtonStyle"
-        />
-    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/bottom_controller"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
 
-    </Toolbar>
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="15dp"
+                app:srcCompat="@drawable/ic_send" app:backgroundTint="?attr/colorButtonNormal"
+        />
+
+        <Toolbar
+                android:id="@+id/simple_edit_view"
+                android:layout_width="match_parent" android:layout_height="47dp"
+                android:contentInsetStart="0dp"
+                android:theme="@style/AppSimpleEditTextTheme"
+                android:background="?android:colorPrimary"
+                android:visibility="visible"
+        >
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:windowBackground"
+                    android:id="@+id/linearLayout2">
+                <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:inputType="textPersonName"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/shape_edit_text"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:ems="10"
+                        android:hint="@string/what_are_you_doing"
+                        android:theme="@style/AppSimpleEditTextTheme"
+                        android:id="@+id/simple_edit_box" android:layout_weight="1"/>
+                <ImageButton
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent" app:srcCompat="@drawable/ic_send"
+                        android:id="@+id/simple_send_button"
+                        android:scaleType="centerInside"
+                        style="?android:attr/borderlessButtonStyle"
+                />
+            </LinearLayout>
+
+        </Toolbar>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

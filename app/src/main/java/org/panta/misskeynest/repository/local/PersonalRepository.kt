@@ -13,6 +13,7 @@ class PersonalRepository(private val sharedPreferenceOperator: ISharedPreference
         private const val APP_USER_TOKEN = "misskey_account_user_token"
         private const val APP_USER_PRIMARY_ID = "misskey_account_primary_id"
         private const val APP_THEME_KEY = "misskey_theme_id"
+        private const val APP_SIMPLE_EDIT_VISIBILITY = "misskey_simple_edit_visibility"
     }
 
     fun getDomain(): String?{
@@ -77,5 +78,12 @@ class PersonalRepository(private val sharedPreferenceOperator: ISharedPreference
         sharedPreferenceOperator.putString(APP_THEME_KEY, type.ordinal.toString())
     }
 
+    var isVisibleSimpleEdit: Boolean
+        get(){
+            return sharedPreferenceOperator.getBoolean(APP_SIMPLE_EDIT_VISIBILITY, true)
+        }
+        set(value) {
+            sharedPreferenceOperator.putBoolean(APP_SIMPLE_EDIT_VISIBILITY, value)
+        }
 
 }
