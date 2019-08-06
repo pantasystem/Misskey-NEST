@@ -176,7 +176,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
     override fun showInitTimeline(list: List<NoteViewData>) {
         activity?.runOnUiThread {
-            load_icon?.visibility = View.GONE
+            progress_bar?.visibility = View.GONE
             timelineView?.visibility = View.VISIBLE
             Log.d("TimelineFragment", "データの取得が完了した")
 

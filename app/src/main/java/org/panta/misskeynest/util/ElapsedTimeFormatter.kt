@@ -1,10 +1,6 @@
 package org.panta.misskeynest.util
 
-import android.util.Log
-import org.panta.misskeynest.interfaces.ITimeFormat
-import org.panta.misskeynest.interfaces.ONE_DAY
-import org.panta.misskeynest.interfaces.ONE_HOUR
-import org.panta.misskeynest.interfaces.ONE_MINUTE
+import org.panta.misskeynest.interfaces.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,7 +23,7 @@ class ElapsedTimeFormatter : ITimeFormat{
                 val d = SimpleDateFormat(DATE_FORMAT_SECONDS, Locale.getDefault()).format(Date(timeLag))
                 "${d}秒前"
             }
-            timeLag < ONE_HOUR -> {
+            timeLag < ONE_HOUR-> {
                 val d = SimpleDateFormat(DATE_FORMAT_MINUTE, Locale.getDefault()).format(Date(timeLag))
                 "${d}分前"
             }
@@ -35,7 +31,7 @@ class ElapsedTimeFormatter : ITimeFormat{
                 val d = SimpleDateFormat(DATE_FORMAT_HOUR, Locale.getDefault()).format(Date(timeLag))
                 "${d}時間前"
             }
-            timeLag < ONE_DAY -> {
+            timeLag < ABOUT_ONE_MONTH -> {
                 val d = SimpleDateFormat(DATE_FORMAT_DAY, Locale.getDefault()).format(Date(timeLag))
                 "${d}日前"
             }
