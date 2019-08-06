@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_message.*
 import org.panta.misskeynest.R
 import org.panta.misskeynest.adapter.MESSAGE
@@ -21,8 +22,8 @@ import org.panta.misskeynest.filter.MessageFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.presenter.MessagePresenter
 import org.panta.misskeynest.repository.remote.MessagePagingRepository
-import org.panta.misskeynest.repository.remote.MessageRepository
 import org.panta.misskeynest.usecase.interactor.MessageChannelUseCase
+import org.panta.misskeynest.usecase.interactor.MessageUseCase
 import org.panta.misskeynest.viewdata.MessageViewData
 
 class MessageFragment : Fragment(), MessageContract.View {
@@ -67,13 +68,13 @@ class MessageFragment : Fragment(), MessageContract.View {
         }
 
         val pagingRepository = MessagePagingRepository(groupId = group?.id, userId = baseUser?.id, connectionProperty = connectionProperty)
-        val messageRepository = MessageRepository(connectionProperty)
+        //val messageRepository = MessageRepository(connectionProperty)
 
         val filter = MessageFilter(connectionProperty)
 
         val messageChannelUseCase = MessageChannelUseCase(connectionProperty, filter, message)
 
-        mPresenter = MessagePresenter(this,  messageRepository, pagingRepository, filter, messageChannelUseCase)
+        mPresenter = MessagePresenter(this,  MessageUseCase(connectionProperty, group?.id, baseUser?.id), pagingRepository, filter, messageChannelUseCase)
 
         mPresenter?.start()
 
@@ -141,6 +142,19 @@ class MessageFragment : Fragment(), MessageContract.View {
 
     override fun onUploadFile(file: FileProperty?) {
 
+    }
+
+    override fun showFailureSendMessage() {
+        Handler(Looper.getMainLooper()).post{
+            Toast.makeText(context, "送信失敗", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun showSuccessSendMessage() {
+        Handler(Looper.getMainLooper()).post{
+            Toast.makeText(context, "送信成功", Toast.LENGTH_SHORT).show()
+            message_input_box.setText("")
+        }
     }
 
 

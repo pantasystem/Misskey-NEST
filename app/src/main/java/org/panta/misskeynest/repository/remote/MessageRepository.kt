@@ -20,7 +20,7 @@ class MessageRepository(private val connectionProperty: ConnectionProperty): IMe
         return jacksonObjectMapper().readValue(response)
     }
 
-    override fun create(userId: String?, groupId: String?, text: String, fileId: String?): Boolean{
+    override fun create(userId: String?, groupId: String?, text: String?, fileId: String?): Boolean{
 
         //どちらかしか許容しない
         if( ( userId == null ) xor ( groupId == null ) ){
@@ -29,10 +29,11 @@ class MessageRepository(private val connectionProperty: ConnectionProperty): IMe
             if( userId != null ) objectMap["userId"] = userId
             if( groupId != null ) objectMap["groupId"] = groupId
             if( fileId != null ) objectMap["fileId"] = fileId
-            objectMap["text"] = text
+            if( text != null ) objectMap["text"] = text
             val json = jacksonObjectMapper().writeValueAsString(objectMap)
 
-            return httpConnection.postString(URL(connectionProperty.domain), json) != null
+            //Log.d("", "json: $json")
+            return httpConnection.postString(URL("${connectionProperty.domain}/api/messaging/messages/create"), json) != null
         }else{
             throw IllegalArgumentException("userId, groupIdそのどちらかしか許容されていません")
         }

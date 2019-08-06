@@ -22,6 +22,8 @@ interface MessageContract {
         fun showRecievedMessage(list: List<MessageViewData>)
         fun showFileManager()
         fun onUploadFile(file: FileProperty?)
+        fun showSuccessSendMessage()
+        fun showFailureSendMessage()
     }
 }
 
