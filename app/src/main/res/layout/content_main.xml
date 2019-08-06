@@ -40,7 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?android:windowBackground"
-            android:layout_marginTop="2dp"
             android:id="@+id/linearLayout2">
         <EditText
                 android:layout_width="0dp"
