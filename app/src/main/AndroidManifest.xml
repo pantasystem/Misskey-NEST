@@ -18,6 +18,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".SettingActivity">
+        </activity>
         <activity android:name=".DriveActivity">
         </activity>
         <activity android:name=".MessageSelectionActivity">

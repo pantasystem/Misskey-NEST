@@ -365,6 +365,9 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }
+            R.id.nav_setting -> {
+                startActivity(Intent(this, SettingActivity::class.java))
+            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
