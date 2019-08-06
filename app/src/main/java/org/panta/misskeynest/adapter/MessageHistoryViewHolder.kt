@@ -30,10 +30,16 @@ class MessageHistoryViewHolder ( itemView: View ) : AbsMessageViewHolder( itemVi
 
         when(item.messageType){
             MessageDataType.HISTORY_USER ->{
-                val user = item.message.user!!
+                //val user = item.message.user!!
+                val user = if(item.isOwn ){
+                    item.message.recipient
+                }else{
+                    item.message.user
+                }
+                //val user = item.message.recipient ?: item.message.user!!
                 InjectionImage()
-                    .roundInjectionImage(user.avatarUrl.toString(), iconView, 180)
-                historyTitle.text = user.name?: user.userName
+                    .roundInjectionImage(user?.avatarUrl.toString(), iconView, 180)
+                historyTitle.text = user?.name?: user?.userName
             }
             MessageDataType.HISTORY_GROUP ->{
                 val group = item.message.group!!
