@@ -1,5 +1,6 @@
 package org.panta.misskeynest.util
 
+import android.net.Uri
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
 import android.util.Log
@@ -14,10 +15,20 @@ class TextLinkDecorator {
 
         //FIXME 上手くリンク化できない
         val pattern = Pattern.compile("@([A-Za-z0-9_-]+)")
-        val scheme = "https://misskey.io"
-        val mentionFilter = Linkify.TransformFilter { match, url ->
+
+        val mentionFilter = Linkify.TransformFilter { _, url ->
             Log.d("TextLinkDecorator", "リンクを踏んだ $url")
-            return@TransformFilter "://user"
+            val builder = Uri.Builder()
+            builder.authority("user")
+            builder.appendQueryParameter("userId", url.replace("@", ""))
+            //return@TransformFilter "://user/$url"
+            val uri = ":${builder.build()}"
+            //Log.d("", uri)
+            return@TransformFilter uri
+            //val uri = Uri.Builder()
+            //uri.scheme("misskeynest")
+
+            //return@TransformFilter ""
         }
         Linkify.addLinks(textView, pattern, "misskeynest", null, mentionFilter)
 

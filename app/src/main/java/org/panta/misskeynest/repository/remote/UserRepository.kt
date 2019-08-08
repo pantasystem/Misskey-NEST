@@ -12,6 +12,23 @@ import java.net.URL
 class UserRepository(private val domain: String, private val authKey: String){
 
     private val httpsConnection = OkHttpConnection()
+
+    fun getUserInfoByUserName(userName: String, callBack: (User?)-> Unit){
+        GlobalScope.launch {
+            try{
+                val map = mapOf("i" to authKey, "username" to userName)
+                val res = httpsConnection.postString(URL("$domain/api/users/show"), jacksonObjectMapper().writeValueAsString(map))
+                if(res == null){
+                    callBack(null)
+                }else{
+                    callBack(jacksonObjectMapper().readValue(res))
+                }
+            }catch (e: Exception){
+                Log.d("UserRepository", "", e)
+            }
+        }
+    }
+
     fun getUserInfo(userPrimaryId: String, callBack: (User?)->Unit){
         GlobalScope.launch{
             try{

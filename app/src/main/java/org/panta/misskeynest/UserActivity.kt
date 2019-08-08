@@ -4,7 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import com.squareup.picasso.Picasso
 import com.vanniktech.emoji.EmojiManager
@@ -15,8 +18,8 @@ import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.User
 import org.panta.misskeynest.pager.UserPagerAdapter
 import org.panta.misskeynest.repository.local.PersonalRepository
-import org.panta.misskeynest.repository.remote.UserRepository
 import org.panta.misskeynest.repository.local.SharedPreferenceOperator
+import org.panta.misskeynest.repository.remote.UserRepository
 
 class UserActivity : AppCompatActivity() {
 
@@ -37,62 +40,102 @@ class UserActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user)
         setSupportActionBar(toolbar)
 
-        val intent = intent
-        val tmpUser: User? = intent.getSerializableExtra(USER_PROPERTY_TAG) as User
         val info = PersonalRepository(SharedPreferenceOperator(this)).getConnectionInfo()
-        if(info == null){
-            startActivity(Intent(this, AuthActivity::class.java))
-            finish()
-            return
+
+        //暗黙なIntentの場合uriはnullになる
+        val uri = intent.data
+        val userName = uri?.getQueryParameter("userId")
+        Log.d("UserActivity", "uriは: $uri, query: $userName")
+
+        if(userName != null){
+            UserRepository(info!!.domain, info.i).getUserInfoByUserName(userName){
+                Handler(Looper.getMainLooper()).post{
+                    setUserOnView(it)
+                    if(it!=null){
+                        setUserPagerAdapter(it, info)
+                    }
+                }
+
+            }
+        }else{
+            val intent = intent
+            val tmpUser: User? = intent.getSerializableExtra(USER_PROPERTY_TAG) as User
+
+
+            if(info == null){
+                startActivity(Intent(this, AuthActivity::class.java))
+                finish()
+                return
+            }
+            if(tmpUser == null){
+                finish()
+                throw IllegalArgumentException("user propertyがNULL")
+            }
+            setUserPagerAdapter(tmpUser, info)
+
+            UserRepository(info.domain, info.i).getUserInfo(tmpUser.id){
+                setUserOnView(it)
+                if(it!= null){
+                }
+            }
         }
-        if(tmpUser == null){
-            finish()
-            throw IllegalArgumentException("user propertyがNULL")
-        }
 
-        UserRepository(info.domain, info.i).getUserInfo(tmpUser.id){
-            if(it == null) return@getUserInfo
-            runOnUiThread{
-                Picasso.get().load(it.avatarUrl).into(profile_icon)
 
-                profile_user_id.text = if(it.host == null){
-                    "@${it.userName}"
-                }else{
-                    "@${it.userName}@${it.host}"
-                }
-                profile_user_name.text = it.name ?: it.userName
-                profile_description.text = it.description
-                profile_follow_count.text = "${it.followingCount} フォロー"
-                profile_follower_count.text = "${it.followersCount} フォロワー"
-                posts_count.text = "${it.notesCount} 投稿"
-                profile_age.visibility = View.GONE
-                profile_follow_count.setOnClickListener{_ ->
-                    startActivity(
-                        FollowFollowerActivity.getIntent(
-                            applicationContext,
-                            FollowFollowerType.FOLLOWING,
-                            it.id
-                        )
+
+        /*
+
+
+
+
+*/
+
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setUserOnView(user: User?){
+        if(user == null) return
+        runOnUiThread{
+            Picasso.get().load(user.avatarUrl).into(profile_icon)
+
+            profile_user_id.text = if(user.host == null){
+                "@${user.userName}"
+            }else{
+                "@${user.userName}@${user.host}"
+            }
+            profile_user_name.text = user.name ?: user.userName
+            profile_description.text = user.description
+            profile_follow_count.text = "${user.followingCount} フォロー"
+            profile_follower_count.text = "${user.followersCount} フォロワー"
+            posts_count.text = "${user.notesCount} 投稿"
+            profile_age.visibility = View.GONE
+            profile_follow_count.setOnClickListener{_ ->
+                startActivity(
+                    FollowFollowerActivity.getIntent(
+                        applicationContext,
+                        FollowFollowerType.FOLLOWING,
+                        user.id
                     )
-                }
-                profile_follower_count.setOnClickListener{_ ->
-                    startActivity(
-                        FollowFollowerActivity.getIntent(
-                            applicationContext,
-                            FollowFollowerType.FOLLOWER,
-                            it.id
-                        )
+                )
+            }
+            profile_follower_count.setOnClickListener{_ ->
+                startActivity(
+                    FollowFollowerActivity.getIntent(
+                        applicationContext,
+                        FollowFollowerType.FOLLOWER,
+                        user.id
                     )
-                }
-
-                Picasso.get().load(it.bannerUrl).into(header_image)
+                )
             }
 
+            Picasso.get().load(user.bannerUrl).into(header_image)
         }
+    }
 
+    private fun setUserPagerAdapter(user: User, info: ConnectionProperty){
         val ad = profile_view_pager.adapter
         val adapter = if(ad == null){
-            UserPagerAdapter(supportFragmentManager, tmpUser, info)
+            UserPagerAdapter(supportFragmentManager, user, info)
         }else{
             ad.notifyDataSetChanged()
             ad
@@ -101,9 +144,6 @@ class UserActivity : AppCompatActivity() {
         profile_view_pager.adapter = adapter
 
         profile_tab.setupWithViewPager(profile_view_pager)
-
-
-
     }
 
     private fun showFollowList(info: ConnectionProperty, user: User, type: FollowFollowerType){

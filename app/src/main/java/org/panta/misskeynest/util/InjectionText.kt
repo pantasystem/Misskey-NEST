@@ -41,7 +41,8 @@ class InjectionText(var isEnableLink: Boolean = false){
             view.text = text
             view.visibility = View.VISIBLE
 
-            TextLinkDecorator().execute(view)
+            setLink(view)
+
 
             return
         }
@@ -50,7 +51,9 @@ class InjectionText(var isEnableLink: Boolean = false){
             view.text = text
             view.visibility = View.VISIBLE
 
-            TextLinkDecorator().execute(view)
+
+            setLink(view)
+
 
             return
         }
@@ -71,9 +74,7 @@ class InjectionText(var isEnableLink: Boolean = false){
                         view.text = span
                     }
                     //Log.d("InjectionText", "描画した内容 ${view.text}")
-                    if(isEnableLink){
-                        TextLinkDecorator().execute(view)
-                    }
+                    setLink(view)
 
                 }
             }catch (e: Exception){
@@ -83,6 +84,12 @@ class InjectionText(var isEnableLink: Boolean = false){
         }
 
 
+    }
+
+    private fun setLink(view: TextView){
+        if(isEnableLink){
+            TextLinkDecorator().execute(view)
+        }
     }
 
     private fun countEmoji(text: String, emojis: List<EmojiProperty>): Int{
