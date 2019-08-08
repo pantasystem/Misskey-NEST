@@ -32,7 +32,7 @@ class TextLinkDecorator {
         }
         Linkify.addLinks(textView, pattern, "misskeynest", null, mentionFilter)
 
-        val hashTagPattern = Pattern.compile("#([A-Za-z0-9_-ぁ-んァ-ヶ亜-熙_]+)")
+        val hashTagPattern = Pattern.compile("#([A-Za-z0-9_-ぁ-んァ-ヶ一-龥_]+)")
         val hashTagFilter = Linkify.TransformFilter { match, url ->
             return@TransformFilter "https://"
         }
