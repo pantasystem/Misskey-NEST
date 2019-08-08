@@ -127,12 +127,7 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
         }
         mPresenter?.isEnabledNotification()
 
-        //簡易入力の表示、非表示
-        if(PersonalRepository(mSharedOperator).isVisibleSimpleEdit){
-            simple_edit_view.visibility = View.VISIBLE
-        }else{
-            simple_edit_view.visibility = View.GONE
-        }
+
 
         simple_send_button.setOnClickListener{
             val text = simple_edit_box.text.toString()
@@ -309,6 +304,9 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
             startService(Intent(this, EmojiDownloadService::class.java))
         }
 
+        //簡易入力の表示、非表示
+        applySimpleEditVisibility()
+
     }
 
     override fun onBackPressed() {
@@ -372,6 +370,15 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return false
+    }
+
+    private fun applySimpleEditVisibility(){
+        //簡易入力の表示、非表示
+        if(PersonalRepository(mSharedOperator).isVisibleSimpleEdit){
+            simple_edit_view.visibility = View.VISIBLE
+        }else{
+            simple_edit_view.visibility = View.GONE
+        }
     }
 
 

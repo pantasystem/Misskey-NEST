@@ -68,6 +68,14 @@
         <activity
                 android:name=".UserActivity"
                 android:label="@string/title_activity_user">
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                        android:host="user"
+                        android:scheme="misskeynest"
+                />
+            </intent-filter>
         </activity>
         <activity android:name=".ImageViewerActivity">
         </activity>

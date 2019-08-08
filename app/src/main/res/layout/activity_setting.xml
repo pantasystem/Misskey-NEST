@@ -7,7 +7,9 @@
         android:layout_height="match_parent"
         tools:context=".SettingActivity"
         android:orientation="vertical"
+        android:padding="10dp"
 >
+
     <CheckBox
             android:text="@string/visible_edit"
             android:layout_width="match_parent"

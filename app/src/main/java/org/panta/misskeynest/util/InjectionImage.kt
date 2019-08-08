@@ -16,6 +16,8 @@ class InjectionImage{
             Picasso
                 .get()
                 .load(imageUrl)
+                .centerCrop()
+                .fit()
                 .into(imageView)
         }
 
@@ -30,6 +32,8 @@ class InjectionImage{
             Picasso
                 .get()
                 .load(file)
+                .centerCrop()
+                .fit()
                 .into(imageView)
         }
     }
@@ -43,6 +47,8 @@ class InjectionImage{
             Picasso
                 .get()
                 .load(id)
+                .centerCrop()
+                .fit()
                 .into(imageView)
         }
     }
@@ -62,6 +68,8 @@ class InjectionImage{
         Picasso
             .get()
             .load(R.drawable.sensitive_image)
+            .centerCrop()
+            .fit()
             .into(imageView)
     }
 }

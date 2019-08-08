@@ -10,7 +10,10 @@ import kotlinx.coroutines.launch
 import org.panta.misskeynest.emoji.CustomEmojiTextBuilder
 import org.panta.misskeynest.entity.EmojiProperty
 
-class InjectionText{
+class InjectionText(var isEnableLink: Boolean = false){
+
+
+
     fun injectionTextGoneWhenNull(text: String?, view: TextView, emojis: List<EmojiProperty>? = null){
         if(text == null){
             view.visibility = View.GONE
@@ -33,17 +36,22 @@ class InjectionText{
         if(text == null){
             return
         }
-
         if(emojis == null || emojis.isEmpty()){
             //setAndVisibleView()
             view.text = text
             view.visibility = View.VISIBLE
+
+            TextLinkDecorator().execute(view)
+
             return
         }
         if( ! text.contains(":")){
             //setAndVisibleView()
             view.text = text
             view.visibility = View.VISIBLE
+
+            TextLinkDecorator().execute(view)
+
             return
         }
 
@@ -62,6 +70,11 @@ class InjectionText{
                     }else{
                         view.text = span
                     }
+                    //Log.d("InjectionText", "描画した内容 ${view.text}")
+                    if(isEnableLink){
+                        TextLinkDecorator().execute(view)
+                    }
+
                 }
             }catch (e: Exception){
                 Log.e("InjectionText", "error $text", e)

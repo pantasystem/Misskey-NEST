@@ -60,7 +60,7 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 
     abstract val mTimeFormatter: ITimeFormat
 
-    private val injectionText = InjectionText()
+    //private val injectionText = InjectionText()
     private val injectionImage = InjectionImage()
 
     private val mLinearLayoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
@@ -142,7 +142,7 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         injectionName(note.user?.name, note.user?.userName, userName, note.user?.emojis)
         injectionId(note.user?.userName, note.user?.host, userId)
         injectionImage.roundInjectionImage(note.user?.avatarUrl?:"non", userIcon, 180)
-        injectionText.injectionTextGoneWhenNull(note.text, noteText, note.emojis)
+        InjectionText(true).injectionTextGoneWhenNull(note.text, noteText, note.emojis)
         setRelationUserListener(note.user!!, userName, userId, userIcon)
         setImage(filterImageData(note))
         injectionMediaPlayButton(note.files?.firstOrNull(), mediaPlayButton)
@@ -168,7 +168,7 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         injectionName(note.user?.name, note.user?.userName, subUserName, note.user?.emojis)
         injectionId(note.user?.userName, note.user?.host, subUserId)
         injectionImage.roundInjectionImage(note.user?.avatarUrl?:"non", subUserIcon, 180)
-        injectionText.injectionTextGoneWhenNull(note.text, subNoteText)
+        InjectionText(true).injectionTextGoneWhenNull(note.text, subNoteText)
 
         setRelationNoteListener(note, subNote, subNoteText)
         setRelationUserListener(note.user!!, subUserName, subUserId, subUserIcon)
@@ -178,7 +178,7 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
     private fun setWhoReactionUserLink(user: User?, status: String){
         whoReactionUserLink.visibility = View.VISIBLE
         val text = "${user?.name?:user?.userName}さんが${status}しました"
-        injectionText.injectionTextGoneWhenNull(text, whoReactionUserLink, user?.emojis)
+        InjectionText().injectionTextGoneWhenNull(text, whoReactionUserLink, user?.emojis)
         whoReactionUserLink.setOnClickListener{
             if(user != null){
                 userClickListener?.onClickedUser(user)
@@ -249,13 +249,13 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 
     //NP
     private fun setReplyCount(count: Int){
-        injectionText.injectionTextInvisible(count.toString(), replyCount, "0")
+        InjectionText().injectionTextInvisible(count.toString(), replyCount, "0")
 
     }
 
     //NP
     private fun setReNoteCount(count: Int){
-        injectionText.injectionTextInvisible(count.toString(), reNoteCount, "0")
+        InjectionText().injectionTextInvisible(count.toString(), reNoteCount, "0")
     }
 
     private fun setFourControlButtonListener(note: Note, viewData: NoteViewData){
@@ -277,7 +277,7 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 
     private fun injectionName(name: String?, id: String?, view: TextView, emojis: List<EmojiProperty>?){
         val tmpName = name?: id.toString()
-        injectionText.injection(tmpName, view, emojis)
+        InjectionText().injection(tmpName, view, emojis)
     }
 
     private fun injectionId(id: String?, host: String?, view: TextView){
