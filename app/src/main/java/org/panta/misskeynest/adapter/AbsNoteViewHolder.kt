@@ -143,7 +143,7 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         injectionId(note.user?.userName, note.user?.host, userId)
         injectionImage.roundInjectionImage(note.user?.avatarUrl?:"non", userIcon, 180)
         InjectionText(true).injectionTextGoneWhenNull(note.text, noteText, note.emojis)
-        setRelationUserListener(note.user!!, userName, userId, userIcon)
+        setRelationUserListener(note.user!!, userIcon)
         setImage(filterImageData(note))
         injectionMediaPlayButton(note.files?.firstOrNull(), mediaPlayButton)
 
@@ -171,7 +171,7 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         InjectionText(true).injectionTextGoneWhenNull(note.text, subNoteText)
 
         setRelationNoteListener(note, subNote, subNoteText)
-        setRelationUserListener(note.user!!, subUserName, subUserId, subUserIcon)
+        setRelationUserListener(note.user!!,  subUserIcon)
 
     }
 

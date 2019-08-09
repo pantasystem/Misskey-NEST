@@ -22,7 +22,9 @@ import org.panta.misskeynest.listener.NoteClickListener
 import org.panta.misskeynest.listener.UserClickListener
 import org.panta.misskeynest.presenter.TimelinePresenter
 import org.panta.misskeynest.repository.IItemRepository
+import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.repository.local.SerializableRepository
+import org.panta.misskeynest.repository.local.SharedPreferenceOperator
 import org.panta.misskeynest.usecase.interactor.NoteCaptureUseCase
 import org.panta.misskeynest.util.TimelineRepositoryFactory
 import org.panta.misskeynest.viewdata.NoteViewData
@@ -140,7 +142,10 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         refresh?.setOnRefreshListener(this)
 
         if(context != null && activity != null && connectionInfo != null){
-            mNoteClickListener = NoteClickListener(context!!, activity!!, connectionInfo!!)
+            val isNoteClickable = PersonalRepository(SharedPreferenceOperator(this.context!!))
+                .isNoteClickable
+
+            mNoteClickListener = NoteClickListener(context!!, activity!!, connectionInfo!!, isNoteClickable)
             mNoteClickListener.onShowReactionDialog = {
                 it.show(activity?.supportFragmentManager, "reaction_tag")
             }

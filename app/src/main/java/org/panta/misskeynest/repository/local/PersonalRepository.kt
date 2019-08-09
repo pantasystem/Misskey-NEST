@@ -14,6 +14,7 @@ class PersonalRepository(private val sharedPreferenceOperator: ISharedPreference
         private const val APP_USER_PRIMARY_ID = "misskey_account_primary_id"
         private const val APP_THEME_KEY = "misskey_theme_id"
         private const val APP_SIMPLE_EDIT_VISIBILITY = "misskey_simple_edit_visibility"
+        private const val APP_NOTE_CLICK_ABLE = "misskey_note_click_able"
     }
 
     fun getDomain(): String?{
@@ -84,6 +85,14 @@ class PersonalRepository(private val sharedPreferenceOperator: ISharedPreference
         }
         set(value) {
             sharedPreferenceOperator.putBoolean(APP_SIMPLE_EDIT_VISIBILITY, value)
+        }
+
+    var isNoteClickable: Boolean
+        get(){
+            return sharedPreferenceOperator.getBoolean(APP_NOTE_CLICK_ABLE, true)
+        }
+        set(value){
+            sharedPreferenceOperator.putBoolean(APP_NOTE_CLICK_ABLE, value)
         }
 
 }

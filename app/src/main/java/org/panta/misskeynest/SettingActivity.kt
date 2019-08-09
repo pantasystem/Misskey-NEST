@@ -17,6 +17,7 @@ class SettingActivity : AppCompatActivity() {
         settingRepository = PersonalRepository(SharedPreferenceOperator(this))
 
         setSimpleEdit()
+        setIsNoteClickable()
 
     }
 
@@ -24,6 +25,13 @@ class SettingActivity : AppCompatActivity() {
         is_visible_simple_edit.isChecked = settingRepository.isVisibleSimpleEdit
         is_visible_simple_edit.setOnCheckedChangeListener { _, isChecked ->
             settingRepository.isVisibleSimpleEdit = isChecked
+        }
+    }
+
+    private fun setIsNoteClickable(){
+        is_note_clickable.isChecked = settingRepository.isNoteClickable
+        is_note_clickable.setOnCheckedChangeListener { _, isChecked ->
+            settingRepository.isNoteClickable = isChecked
         }
     }
 

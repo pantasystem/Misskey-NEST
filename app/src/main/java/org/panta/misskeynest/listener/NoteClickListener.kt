@@ -24,7 +24,12 @@ import org.panta.misskeynest.interfaces.INoteClickListener
 import org.panta.misskeynest.repository.remote.ReactionRepository
 import org.panta.misskeynest.viewdata.NoteViewData
 
-class NoteClickListener(private val context: Context, private val activity: Activity, private val connectionProperty: ConnectionProperty) :INoteClickListener {
+class NoteClickListener(
+    private val context: Context,
+    private val activity: Activity,
+    private val connectionProperty: ConnectionProperty,
+    private val isNoteClickable: Boolean = true
+) :INoteClickListener {
 
     var onShowReactionDialog: (DialogFragment)->Unit = {
         Log.d("NoteClickListener", "onShowReactionDialog is not init")
@@ -34,10 +39,12 @@ class NoteClickListener(private val context: Context, private val activity: Acti
         authKey = connectionProperty.i
     )
     override fun onNoteClicked(note: Note) {
-        Log.d("TimelineFragment", "Noteをクリックした :$note")
-        val intent = Intent(context, NoteDescriptionActivity::class.java)
-        intent.putExtra(NoteDescriptionActivity.NOTE_DESCRIPTION_NOTE_PROPERTY, note)
-        context.startActivity(intent)
+        if(isNoteClickable){
+            Log.d("TimelineFragment", "Noteをクリックした :$note")
+            val intent = Intent(context, NoteDescriptionActivity::class.java)
+            intent.putExtra(NoteDescriptionActivity.NOTE_DESCRIPTION_NOTE_PROPERTY, note)
+            context.startActivity(intent)
+        }
     }
     override fun onReplyButtonClicked(targetId: String?, note: Note?) {
         context.startActivity(EditNoteActivity.getIntent(context, targetId, NoteType.REPLY))
@@ -54,7 +61,7 @@ class NoteClickListener(private val context: Context, private val activity: Acti
 
     override fun onDetailButtonClicked(note: Note) {
 
-        val dialog = DetailDialog.getInstance(connectionProperty, note)
+        val dialog = DetailDialog.getInstance(connectionProperty, note, isNoteClickable)
         onShowReactionDialog(dialog)
 
 

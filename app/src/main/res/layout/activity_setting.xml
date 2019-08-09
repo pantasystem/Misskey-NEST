@@ -14,4 +14,8 @@
             android:text="@string/visible_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/is_visible_simple_edit"/>
+    <CheckBox
+            android:text="クリック可能なノート"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/is_note_clickable"/>
 </LinearLayout>

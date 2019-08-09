@@ -3,14 +3,17 @@ package org.panta.misskeynest.dialog
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.support.v4.app.DialogFragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.panta.misskeynest.NoteDescriptionActivity
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.repository.remote.NoteRepository
@@ -22,12 +25,14 @@ class DetailDialog : DialogFragment(){
     companion object{
         private const val NOTE = "DescriptionDialog_NOTE"
         private const val CONNECTION_PROPERTY_KEY = "DetailDialogConnectionPropertyKey"
+        private const val NOTE_CLICKABLE = "DetailDialogNoteClickable"
 
-        fun getInstance(connectionProperty: ConnectionProperty, note: Note): DetailDialog{
+        fun getInstance(connectionProperty: ConnectionProperty, note: Note, isNoteClickable: Boolean = true): DetailDialog{
             return DetailDialog().apply{
                 val bundle = Bundle()
                 bundle.putSerializable(NOTE, note)
                 bundle.putSerializable(CONNECTION_PROPERTY_KEY, connectionProperty)
+                bundle.putBoolean(NOTE_CLICKABLE, isNoteClickable)
                 this.arguments = bundle
             }
         }
@@ -39,8 +44,16 @@ class DetailDialog : DialogFragment(){
 
         val note = arguments?.getSerializable(NOTE) as Note
         val connectionProperty = arguments?.getSerializable(CONNECTION_PROPERTY_KEY) as ConnectionProperty
-
-        val itemList = arrayListOf("内容をコピー", "リンクをコピー", "お気に入り", "ウォッチ", "デバッグ")
+        val isNoteClickable = arguments?.getBoolean(NOTE_CLICKABLE, false)!!
+        val itemList = if(isNoteClickable){
+            Log.d("DetailDialog", "ノートはクリック可能")
+            ArrayList()
+        }else{
+            Log.d("DetailDialog", "ノートはクリック不可")
+            arrayListOf("詳細")
+        }
+        val tmpList = arrayListOf("内容をコピー", "リンクをコピー", "お気に入り", "ウォッチ", "デバッグ")
+        itemList.addAll(tmpList)
         if(note.user?.id == connectionProperty.userPrimaryId){
             itemList.add("削除")
         }
@@ -51,11 +64,16 @@ class DetailDialog : DialogFragment(){
         builder.setView(content)
         builder.setTitle("詳細")
             .setItems(itemList.toTypedArray()){_, which ->
-                when(which){
-                    0 -> copyToClipboad(context, note.text.toString())
-                    1 -> copyToClipboad(context, "${connectionProperty.domain}/notes/${note.id}")
-                    2,3 -> Toast.makeText(context, "未実装ですごめんなさい", Toast.LENGTH_SHORT)
-                    4 ->{
+                when(itemList[which]){
+                    "詳細" ->{
+                        val intent = Intent(context, NoteDescriptionActivity::class.java)
+                        intent.putExtra(NoteDescriptionActivity.NOTE_DESCRIPTION_NOTE_PROPERTY, note)
+                        startActivity(intent)
+                    }
+                    "内容をコピー" -> copyToClipboad(context, note.text.toString())
+                    "リンクをコピー" -> copyToClipboad(context, "${connectionProperty.domain}/notes/${note.id}")
+                    "お気に入り","ウォッチ" -> Toast.makeText(context, "未実装ですごめんなさい", Toast.LENGTH_SHORT)
+                    "デバッグ" ->{
                         AlertDialog.Builder(activity).apply{
                             val noteString = note.toString().replace(",","\n")
                             setMessage(noteString)
@@ -63,7 +81,7 @@ class DetailDialog : DialogFragment(){
                             }
                         }.show()
                     }
-                    5 ->{
+                    "削除" ->{
                         GlobalScope.launch {
                             /*
                             非同期処理のため処理が終わるころにはthis.contextはNullになっているので
