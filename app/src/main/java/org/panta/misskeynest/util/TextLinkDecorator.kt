@@ -16,7 +16,7 @@ class TextLinkDecorator {
 
         //pattern1 @?([A-Za-z0-9_-]+)(?:\.[a-zA-Z0-9-]+)*?
         //pattern2
-        val pattern = Pattern.compile("@([A-Za-z0-9_-]+)@?([A-Za-z0-9_-]+)*\\.?([a-zA-Z0-9_-]+)*")
+        val pattern = Pattern.compile("@([A-Za-z0-9_-]+)@?([A-Za-z0-9_-]+)*(?:\\.[a-zA-Z0-9_-]+)*")
 
         val mentionFilter = Linkify.TransformFilter { _, url ->
             Log.d("TextLinkDecorator", "リンクを踏んだ $url")
