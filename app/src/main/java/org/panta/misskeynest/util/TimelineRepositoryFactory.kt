@@ -26,7 +26,11 @@ class TimelineRepositoryFactory(private val connectionInfo: ConnectionProperty){
         }
     }
 
-    fun create(keyWord: String, isMediaOnly: Boolean): IItemRepository<Note> {
-        return SearchRepository(connectionInfo, keyWord)
+    fun create(word: String, isMediaOnly: Boolean): IItemRepository<Note> {
+        return if(word.contains("#")){
+            SearchHashTagRepository(connectionInfo, word.replace("#", ""))
+        }else{
+            SearchRepository(connectionInfo, word)
+        }
     }
 }

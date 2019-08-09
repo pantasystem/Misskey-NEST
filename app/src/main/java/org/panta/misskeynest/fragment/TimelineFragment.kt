@@ -59,11 +59,11 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             }
         }
 
-        fun getInstance(info: ConnectionProperty, keyWord: String, isMediaOnly: Boolean): TimelineFragment {
+        fun getInstance(info: ConnectionProperty, word: String, isMediaOnly: Boolean): TimelineFragment {
             return TimelineFragment().apply{
                 val args = Bundle()
                 args.putSerializable(CONNECTION_PROPERTY, info)
-                args.putString(SEARCH_WORD, keyWord)
+                args.putString(SEARCH_WORD, word)
                 args.putBoolean(IS_MEDIA_ONLY, isMediaOnly)
                 this.arguments = args
             }

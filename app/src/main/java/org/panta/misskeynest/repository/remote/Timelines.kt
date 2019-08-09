@@ -179,3 +179,24 @@ class SearchRepository(private val connectionProperty: ConnectionProperty, priva
         return jacksonObjectMapper().writeValueAsString(property)
     }
 }
+
+class SearchHashTagRepository(private val connectionProperty: ConnectionProperty, private val hashTag: String) : AbsTimeline(URL("${connectionProperty.domain}/api/notes/search-by-tag")){
+    override fun createRequestTimelineJson(
+        sinceId: String?,
+        untilId: String?,
+        sinceDate: Long?,
+        untilDate: Long?
+    ): String {
+        val property = RequestTimelineProperty()
+        property.i = connectionProperty.i
+        property.limit = 20
+        property.apply{
+            this.untilId = untilId
+            this.sinceId = sinceId
+            this.untilDate = untilDate
+            this.tag = hashTag
+        }
+        Log.d("SearchHashTagRepository", "ハッシュタグ検索をした")
+        return jacksonObjectMapper().writeValueAsString(property)
+    }
+}

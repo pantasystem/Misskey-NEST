@@ -10,10 +10,10 @@ import java.util.regex.Pattern
 
 class TextLinkDecorator {
 
+    //var currentWord: String? = null
 
     fun execute(textView: TextView){
 
-        //FIXME 上手くリンク化できない
         val pattern = Pattern.compile("@([A-Za-z0-9_-]+)")
 
         val mentionFilter = Linkify.TransformFilter { _, url ->
@@ -21,29 +21,25 @@ class TextLinkDecorator {
             val builder = Uri.Builder()
             builder.authority("user")
             builder.appendQueryParameter("userId", url.replace("@", ""))
-            //return@TransformFilter "://user/$url"
             val uri = ":${builder.build()}"
-            //Log.d("", uri)
             return@TransformFilter uri
-            //val uri = Uri.Builder()
-            //uri.scheme("misskeynest")
-
-            //return@TransformFilter ""
         }
         Linkify.addLinks(textView, pattern, "misskeynest", null, mentionFilter)
 
         val hashTagPattern = Pattern.compile("#([A-Za-z0-9_-ぁ-んァ-ヶ一-龥_]+)")
         val hashTagFilter = Linkify.TransformFilter { match, url ->
-            return@TransformFilter "https://"
+            val builder = Uri.Builder()
+            builder.authority("hashTag")
+                .appendQueryParameter("hashTag", url.replace("#", ""))
+            return@TransformFilter ":${builder.build()}"
         }
-        Linkify.addLinks(textView, hashTagPattern, null,null, hashTagFilter)
+        Linkify.addLinks(textView, hashTagPattern, "misskeynest",null, hashTagFilter)
 
 
         val webUrlFilter = Linkify.TransformFilter { match, url ->
             Log.d("TextLinkDecorator", "Webリンクを踏んだ $url")
             return@TransformFilter url
         }
-        //Linkify.addLinks(textView, Linkify.WEB_URLS)
         Linkify.addLinks(textView, Patterns.WEB_URL, null, null, webUrlFilter)
         textView.linksClickable = true
         textView.movementMethod = LinkMovementMethod.getInstance()
