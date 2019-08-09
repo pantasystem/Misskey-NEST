@@ -29,8 +29,8 @@ class TextLinkDecorator {
         val hashTagPattern = Pattern.compile("#([A-Za-z0-9_-ぁ-んァ-ヶ一-龥_]+)")
         val hashTagFilter = Linkify.TransformFilter { match, url ->
             val builder = Uri.Builder()
-            builder.authority("hashTag")
-                .appendQueryParameter("hashTag", url.replace("#", ""))
+            builder.authority("search")
+                .appendQueryParameter("searchWord", url)
             return@TransformFilter ":${builder.build()}"
         }
         Linkify.addLinks(textView, hashTagPattern, "misskeynest",null, hashTagFilter)

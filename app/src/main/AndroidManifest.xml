@@ -37,6 +37,15 @@
         </service>
 
         <activity android:name=".SearchActivity">
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data
+                        android:host="search"
+                        android:scheme="misskeynest"/>
+            </intent-filter>
         </activity>
         <activity android:name=".NotificationActivity">
         </activity>
