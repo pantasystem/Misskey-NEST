@@ -33,6 +33,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:inputType="textPersonName"
+                        android:imeOptions="actionSearch"
                         android:ems="10"
                         android:layout_weight="1"
                         android:hint="@string/search_keywords"
