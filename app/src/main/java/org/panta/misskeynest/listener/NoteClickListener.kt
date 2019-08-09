@@ -28,7 +28,7 @@ class NoteClickListener(
     private val context: Context,
     private val activity: Activity,
     private val connectionProperty: ConnectionProperty,
-    private val isNoteClickable: Boolean = true
+    var isNoteClickable: Boolean = true
 ) :INoteClickListener {
 
     var onShowReactionDialog: (DialogFragment)->Unit = {

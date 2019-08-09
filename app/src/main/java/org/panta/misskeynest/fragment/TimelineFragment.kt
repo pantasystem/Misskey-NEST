@@ -141,20 +141,17 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
         refresh?.setOnRefreshListener(this)
 
-        if(context != null && activity != null && connectionInfo != null){
-            val isNoteClickable = PersonalRepository(SharedPreferenceOperator(this.context!!))
-                .isNoteClickable
-
-            mNoteClickListener = NoteClickListener(context!!, activity!!, connectionInfo!!, isNoteClickable)
-            mNoteClickListener.onShowReactionDialog = {
-                it.show(activity?.supportFragmentManager, "reaction_tag")
-            }
-            mUserClickListener = UserClickListener(context!!)
-        }
-
         val dividerItemDecoration = DividerItemDecoration(timelineView.context, mLayoutManager.orientation)
         timelineView.addItemDecoration(dividerItemDecoration)
 
+        initContentActionListener()
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        updateContentActionListener()
     }
 
     override fun onStop() {
@@ -252,6 +249,25 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
     override fun toString(): String {
         return "package org.panta.misskeynest.fragment.TimelineFragment"
+    }
+
+    private fun updateContentActionListener(){
+        val isNoteClickable = PersonalRepository(SharedPreferenceOperator(this.context!!))
+            .isNoteClickable
+        mNoteClickListener.isNoteClickable = isNoteClickable
+    }
+
+    private fun initContentActionListener(){
+        if(context != null && activity != null && connectionInfo != null){
+            val isNoteClickable = PersonalRepository(SharedPreferenceOperator(this.context!!))
+                .isNoteClickable
+
+            mNoteClickListener = NoteClickListener(context!!, activity!!, connectionInfo!!, isNoteClickable)
+            mNoteClickListener.onShowReactionDialog = {
+                it.show(activity?.supportFragmentManager, "reaction_tag")
+            }
+            mUserClickListener = UserClickListener(context!!)
+        }
     }
 
 }
