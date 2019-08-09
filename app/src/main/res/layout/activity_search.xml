@@ -13,30 +13,34 @@
             android:background="?attr/colorPrimary"
             android:theme="?attr/actionBarTheme"
             android:minHeight="?attr/actionBarSize"
-            android:id="@+id/toolbar2" app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/search_toolbar" app:layout_constraintTop_toTopOf="parent"
             android:elevation="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
     >
         <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+
+        >
 
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    >
                 <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:inputType="textPersonName"
                         android:ems="10"
                         android:layout_weight="1"
                         android:hint="@string/search_keywords"
-                        android:id="@+id/search_keyword_box"/>
+                        android:id="@+id/search_keyword_box"
+                />
                 <ImageButton
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" app:srcCompat="@drawable/places_ic_search"
+                        android:layout_height="match_parent" app:srcCompat="@drawable/places_ic_search"
                         android:id="@+id/search_button"/>
             </LinearLayout>
         </FrameLayout>
@@ -46,7 +50,7 @@
             android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar2" android:id="@+id/result_area">
+            app:layout_constraintTop_toBottomOf="@+id/search_toolbar" android:id="@+id/result_area">
 
     </FrameLayout>
 
