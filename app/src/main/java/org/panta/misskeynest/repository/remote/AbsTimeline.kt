@@ -1,13 +1,12 @@
 package org.panta.misskeynest.repository.remote
 
-import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.panta.misskeynest.entity.Note
 import org.panta.misskeynest.entity.ReactionCountPair
-import org.panta.misskeynest.usecase.interactor.NoteFormatUseCase
 import org.panta.misskeynest.network.OkHttpConnection
 import org.panta.misskeynest.repository.IItemRepository
+import org.panta.misskeynest.usecase.interactor.NoteFormatUseCase
 import java.net.URL
 import java.util.*
 
@@ -81,7 +80,7 @@ abstract class AbsTimeline(private val timelineURL: URL, private val isDeployRep
 
 
     private fun requestTimeline(json: String): List<Note>?{
-        Log.d("AbsTimeline", "json $json")
+        //Log.d("AbsTimeline", "json $json")
         val receivedResult =mConnection.postString(timelineURL, json)
         return if(receivedResult == null){
             null
