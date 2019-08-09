@@ -14,13 +14,15 @@ class TextLinkDecorator {
 
     fun execute(textView: TextView){
 
-        val pattern = Pattern.compile("@([A-Za-z0-9_-]+)")
+        //pattern1 @?([A-Za-z0-9_-]+)(?:\.[a-zA-Z0-9-]+)*?
+        //pattern2
+        val pattern = Pattern.compile("@([A-Za-z0-9_-]+)@?([A-Za-z0-9_-]+)*\\.?([a-zA-Z0-9_-]+)*")
 
         val mentionFilter = Linkify.TransformFilter { _, url ->
             Log.d("TextLinkDecorator", "リンクを踏んだ $url")
             val builder = Uri.Builder()
             builder.authority("user")
-            builder.appendQueryParameter("userId", url.replace("@", ""))
+            builder.appendQueryParameter("userId", url)
             val uri = ":${builder.build()}"
             return@TransformFilter uri
         }

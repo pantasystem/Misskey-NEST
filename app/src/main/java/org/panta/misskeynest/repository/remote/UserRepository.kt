@@ -13,11 +13,17 @@ class UserRepository(private val domain: String, private val authKey: String){
 
     private val httpsConnection = OkHttpConnection()
 
-    fun getUserInfoByUserName(userName: String, callBack: (User?)-> Unit){
+    fun getUserInfoByUserName(userName: String, host: String?, callBack: (User?)-> Unit){
         GlobalScope.launch {
             try{
-                val map = mapOf("i" to authKey, "username" to userName)
-                val res = httpsConnection.postString(URL("$domain/api/users/show"), jacksonObjectMapper().writeValueAsString(map))
+                val map = hashMapOf("i" to authKey, "username" to userName)
+                if(host != null){
+                    map["host"] = host
+                }
+                //Log.d("", "$map")
+                val json = jacksonObjectMapper().writeValueAsString(map)
+                //Log.d("", json)
+                val res = httpsConnection.postString(URL("$domain/api/users/show"), json)
                 if(res == null){
                     callBack(null)
                 }else{

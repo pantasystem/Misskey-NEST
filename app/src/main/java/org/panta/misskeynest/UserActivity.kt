@@ -45,10 +45,16 @@ class UserActivity : AppCompatActivity() {
         //暗黙なIntentの場合uriはnullになる
         val uri = intent.data
         val userName = uri?.getQueryParameter("userId")
-        Log.d("UserActivity", "uriは: $uri, query: $userName")
 
         if(userName != null){
-            UserRepository(info!!.domain, info.i).getUserInfoByUserName(userName){
+            val list = userName.split("@").filter{ it.isNotBlank() }
+            val userId = list[0]
+            val host = if(list.size >= 2){
+                list[1]
+            }else{
+                null
+            }
+            UserRepository(info!!.domain, info.i).getUserInfoByUserName(userId, host){
                 Handler(Looper.getMainLooper()).post{
                     setUserOnView(it)
                     if(it!=null){

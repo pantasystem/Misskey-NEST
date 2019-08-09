@@ -16,7 +16,8 @@
             android:id="@+id/notification_toolbar" app:layout_constraintTop_toTopOf="parent"
             android:elevation="2dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:title="通知"/>
     <FrameLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
