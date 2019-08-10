@@ -36,7 +36,7 @@ class TimelinePresenter(private val mView: TimelineContract.View,
         if( settingRepository.isBackgroundUpdatable ){
             mNoteCaptureUseCase.start()
         }
-
+        mView.showLoading()
         initTimeline()
     }
 
@@ -73,6 +73,7 @@ class TimelinePresenter(private val mView: TimelineContract.View,
             }else{
                 mNoteCaptureUseCase.start()
             }
+            mView.showTimeline()
         }
     }
 
@@ -85,6 +86,7 @@ class TimelinePresenter(private val mView: TimelineContract.View,
             }else{
                 mNoteCaptureUseCase.start()
             }
+            mView.showTimeline()
         }
     }
 
@@ -93,6 +95,7 @@ class TimelinePresenter(private val mView: TimelineContract.View,
             mView.showInitTimeline(it)
             mNoteCaptureUseCase.clear()
             mNoteCaptureUseCase.addAll(it)
+            mView.showTimeline()
         }
     }
 

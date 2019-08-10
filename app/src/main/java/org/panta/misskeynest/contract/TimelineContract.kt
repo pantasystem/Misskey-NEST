@@ -13,6 +13,8 @@ interface TimelineContract{
         fun stopRefreshing()
         fun onError(errorMsg: String)
         fun showUpdatedNote(noteViewData: NoteViewData)
+        fun showLoading()
+        fun showTimeline()
         //fun showReactionSelectorView(targetId: String, viewData: NoteViewData)
     }
 

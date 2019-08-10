@@ -160,7 +160,7 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
                     if(p0 != null){
                         val fragment = adapter.getFragment(p0.position)
                         if(fragment is TimelineFragment){
-                            fragment.mPresenter?.initTimeline()
+                            fragment.mPresenter?.start()
                         }
                     }
                 }

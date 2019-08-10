@@ -1,6 +1,8 @@
 package org.panta.misskeynest.fragment
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
@@ -186,8 +188,8 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
     override fun showInitTimeline(list: List<NoteViewData>) {
         activity?.runOnUiThread {
-            progress_bar?.visibility = View.GONE
-            timelineView?.visibility = View.VISIBLE
+            //progress_bar?.visibility = View.GONE
+            //timelineView?.visibility = View.VISIBLE
             Log.d("TimelineFragment", "データの取得が完了した")
 
 
@@ -252,6 +254,20 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
                 refresh.isEnabled = false   //stopRefreshing関数を設けているがあえてこの形にしている
                 mPresenter?.getOldTimeline()
             }
+        }
+    }
+
+    override fun showLoading() {
+        Handler(Looper.getMainLooper()).post{
+            timelineView?.visibility = View.GONE
+            progress_bar?.visibility = View.VISIBLE
+        }
+    }
+
+    override fun showTimeline() {
+        Handler(Looper.getMainLooper()).post{
+            timelineView?.visibility = View.VISIBLE
+            progress_bar?.visibility = View.GONE
         }
     }
 
