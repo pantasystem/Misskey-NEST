@@ -1,4 +1,4 @@
-package org.panta.misskeynest.usecase
+package org.panta.misskeynest.streaming
 
 import org.panta.misskeynest.interfaces.IOperationAdapter
 import org.panta.misskeynest.viewdata.NoteViewData

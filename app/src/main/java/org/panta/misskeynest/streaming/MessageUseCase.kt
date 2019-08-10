@@ -1,12 +1,13 @@
-package org.panta.misskeynest.usecase.interactor
+package org.panta.misskeynest.streaming
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.repository.remote.MessageRepository
-import org.panta.misskeynest.usecase.IMessageUseCase
+import org.panta.misskeynest.streaming.IMessageUseCase
 
-class MessageUseCase(private val connectionProperty: ConnectionProperty, private val groupId: String?, private val userId: String?) : IMessageUseCase{
+class MessageUseCase(private val connectionProperty: ConnectionProperty, private val groupId: String?, private val userId: String?) :
+    IMessageUseCase {
 
     private val mRepository = MessageRepository(connectionProperty)
     override val isGroup: Boolean

@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_note_description.*
 import org.panta.misskeynest.adapter.NoteDetailAdapter
 import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.Note
-import org.panta.misskeynest.usecase.interactor.NoteCaptureUseCase
+import org.panta.misskeynest.streaming.NoteCaptureUseCase
 import org.panta.misskeynest.usecase.interactor.NoteUseCase
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.listener.NoteClickListener

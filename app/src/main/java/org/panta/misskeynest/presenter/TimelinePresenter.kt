@@ -10,7 +10,7 @@ import org.panta.misskeynest.interfaces.IItemFilter
 import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.repository.remote.ReactionRepository
-import org.panta.misskeynest.usecase.INoteCaptureUseCase
+import org.panta.misskeynest.streaming.INoteCaptureUseCase
 import org.panta.misskeynest.usecase.interactor.PagingController
 import org.panta.misskeynest.viewdata.NoteViewData
 

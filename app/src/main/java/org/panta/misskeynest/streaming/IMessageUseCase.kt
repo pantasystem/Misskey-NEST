@@ -1,4 +1,4 @@
-package org.panta.misskeynest.usecase
+package org.panta.misskeynest.streaming
 
 interface IMessageUseCase {
     val isGroup: Boolean

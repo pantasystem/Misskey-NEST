@@ -22,8 +22,8 @@ import org.panta.misskeynest.filter.MessageFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.presenter.MessagePresenter
 import org.panta.misskeynest.repository.remote.MessagePagingRepository
-import org.panta.misskeynest.usecase.interactor.MessageChannelUseCase
-import org.panta.misskeynest.usecase.interactor.MessageUseCase
+import org.panta.misskeynest.streaming.MessageChannelUseCase
+import org.panta.misskeynest.streaming.MessageUseCase
 import org.panta.misskeynest.viewdata.MessageViewData
 
 class MessageFragment : Fragment(), MessageContract.View {
@@ -72,9 +72,11 @@ class MessageFragment : Fragment(), MessageContract.View {
 
         val filter = MessageFilter(connectionProperty)
 
-        val messageChannelUseCase = MessageChannelUseCase(connectionProperty, filter, message)
+        val messageChannelUseCase =
+            MessageChannelUseCase(connectionProperty, filter, message)
 
-        mPresenter = MessagePresenter(this,  MessageUseCase(connectionProperty, group?.id, baseUser?.id), pagingRepository, filter, messageChannelUseCase)
+        mPresenter = MessagePresenter(this,
+            MessageUseCase(connectionProperty, group?.id, baseUser?.id), pagingRepository, filter, messageChannelUseCase)
 
         mPresenter?.start()
 

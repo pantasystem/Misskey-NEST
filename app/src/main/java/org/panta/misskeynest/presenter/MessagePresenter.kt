@@ -9,8 +9,8 @@ import org.panta.misskeynest.interfaces.ErrorCallBackListener
 import org.panta.misskeynest.interfaces.IItemFilter
 import org.panta.misskeynest.network.OkHttpConnection
 import org.panta.misskeynest.repository.IItemRepository
-import org.panta.misskeynest.usecase.IMessageChannelUseCase
-import org.panta.misskeynest.usecase.IMessageUseCase
+import org.panta.misskeynest.streaming.IMessageChannelUseCase
+import org.panta.misskeynest.streaming.IMessageUseCase
 import org.panta.misskeynest.usecase.interactor.PagingController
 import org.panta.misskeynest.viewdata.MessageViewData
 import java.io.File

@@ -1,4 +1,4 @@
-package org.panta.misskeynest.usecase.interactor
+package org.panta.misskeynest.streaming
 
 import android.os.Handler
 import android.os.Looper
@@ -12,7 +12,7 @@ import org.panta.misskeynest.entity.ConnectionProperty
 import org.panta.misskeynest.entity.NoteUpdatedProperty
 import org.panta.misskeynest.entity.StreamingProperty
 import org.panta.misskeynest.interfaces.IOperationAdapter
-import org.panta.misskeynest.usecase.INoteCaptureUseCase
+import org.panta.misskeynest.usecase.interactor.NoteUpdateUseCase
 import org.panta.misskeynest.viewdata.NoteViewData
 import java.io.IOException
 import java.util.*
@@ -20,7 +20,8 @@ import kotlin.collections.HashMap
 
 private const val TAG = "NoteCaptureUseCase"
 class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteViewData>?,
-                         private val mConnectionProperty: ConnectionProperty) : INoteCaptureUseCase {
+                         private val mConnectionProperty: ConnectionProperty) :
+    INoteCaptureUseCase {
 
 
 
@@ -45,13 +46,16 @@ class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteVi
     }
 
     override fun pause(){
-        val iterator = captureNoteMap.iterator()
-        while(iterator.hasNext()){
-            val item = iterator.next()
-            unCapture(item.value)
-            couldNoteBeSentDataQueue.add(item.value)
-            iterator.remove()
+        synchronized(captureNoteMap){
+            val iterator = captureNoteMap.iterator()
+            while(iterator.hasNext()){
+                val item = iterator.next()
+                unCapture(item.value)
+                couldNoteBeSentDataQueue.add(item.value)
+                iterator.remove()
+            }
         }
+
         mWebSocket?.close(1001, null)
     }
 
@@ -111,7 +115,10 @@ class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteVi
                 iterator.remove()
                 unCapture(next.value)
             }
-            couldNoteBeSentDataQueue.clear()
+
+            synchronized(couldNoteBeSentDataQueue){
+                couldNoteBeSentDataQueue.clear()
+            }
         }
 
 
@@ -200,10 +207,13 @@ class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteVi
         override fun onOpen(webSocket: WebSocket, response: Response) {
             Log.d(TAG, "onOpenコネクション開始")
 
-            while( couldNoteBeSentDataQueue.isNotEmpty() ){
-                val item = couldNoteBeSentDataQueue.removeFirst()
-                add(item)
+            synchronized(couldNoteBeSentDataQueue){
+                while( couldNoteBeSentDataQueue.isNotEmpty() ){
+                    val item = couldNoteBeSentDataQueue.removeFirst()
+                    add(item)
+                }
             }
+
         }
 
         override fun onMessage(webSocket: WebSocket, text: String) {

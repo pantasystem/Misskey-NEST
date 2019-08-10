@@ -1,4 +1,4 @@
-package org.panta.misskeynest.usecase
+package org.panta.misskeynest.streaming
 
 import org.panta.misskeynest.interfaces.CallBackListener
 import org.panta.misskeynest.viewdata.MessageViewData

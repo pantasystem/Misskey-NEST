@@ -1,4 +1,4 @@
-package org.panta.misskeynest.usecase.interactor
+package org.panta.misskeynest.streaming
 
 import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -10,13 +10,13 @@ import org.panta.misskeynest.entity.MessageProperty
 import org.panta.misskeynest.entity.StreamingProperty
 import org.panta.misskeynest.interfaces.CallBackListener
 import org.panta.misskeynest.interfaces.IItemFilter
-import org.panta.misskeynest.usecase.IMessageChannelUseCase
 import org.panta.misskeynest.viewdata.MessageDataType
 import org.panta.misskeynest.viewdata.MessageViewData
 import java.util.*
 
 private const val TAG = "MessageChannelUseCase"
-class MessageChannelUseCase(private val mConnectionProperty: ConnectionProperty, private val mFilter: IItemFilter<MessageProperty, MessageViewData>, val messagingProperty: MessageViewData) : IMessageChannelUseCase{
+class MessageChannelUseCase(private val mConnectionProperty: ConnectionProperty, private val mFilter: IItemFilter<MessageProperty, MessageViewData>, val messagingProperty: MessageViewData) :
+    IMessageChannelUseCase {
 
     override var messageReceivedListener: CallBackListener<List<MessageViewData>>? = null
 

@@ -26,7 +26,7 @@ import org.panta.misskeynest.presenter.TimelinePresenter
 import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.repository.local.SharedPreferenceOperator
-import org.panta.misskeynest.usecase.interactor.NoteCaptureUseCase
+import org.panta.misskeynest.streaming.NoteCaptureUseCase
 import org.panta.misskeynest.util.TimelineRepositoryFactory
 import org.panta.misskeynest.viewdata.NoteViewData
 
