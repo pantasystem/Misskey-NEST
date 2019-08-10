@@ -36,16 +36,8 @@ class TimelinePresenter(private val mView: TimelineContract.View,
         if( settingRepository.isBackgroundUpdatable ){
             mNoteCaptureUseCase.start()
         }
-        if( isSavePosition() ){
-            /*val obj = mSerializableRepository?.load(key) as? NoteViewData
-            pagingController.init(obj) {
-                mView.showInitTimeline(it)
-                mNoteCaptureUseCase.clear()
-                mNoteCaptureUseCase.addAll(it)
-            }*/
-        }else{
-            initTimeline()
-        }
+
+        initTimeline()
     }
 
     //一時停止
@@ -59,12 +51,7 @@ class TimelinePresenter(private val mView: TimelineContract.View,
     }
 
     override fun resume() {
-        /*if( settingRepository.isBackgroundUpdatable ){
-            Log.d("TMPresenter", "バックグラウンド更新可")
-        }else{
-            Log.d("TMPresenter", "バックグラウンド更新不可")
-            mNoteCaptureUseCase.start()
-        }*/
+
         if( mNoteCaptureUseCase.isActive() ){
 
         }else{
@@ -111,35 +98,6 @@ class TimelinePresenter(private val mView: TimelineContract.View,
 
     override fun callBack(e: Exception) {
         mView.stopRefreshing()
-    }
-
-
-    override fun captureNote(noteId: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-
-    override fun saveItem(viewData: NoteViewData) {
-        //mSerializableRepository?.write(key, viewData)
-    }
-
-
-
-    private fun deleteReaction(noteId: String){
-        mReaction.deleteReaction(noteId)
-    }
-
-    override fun onRefresh() {
-        //observationStreaming.onRefresh()
-    }
-
-
-    private fun isSavePosition(): Boolean{
-        /*return type == TimelineTypeEnum.GLOBAL
-                || type == TimelineTypeEnum.LOCAL
-                || type == TimelineTypeEnum.SOCIAL
-                || type == TimelineTypeEnum.HOME*/
-        return false
     }
 
 }

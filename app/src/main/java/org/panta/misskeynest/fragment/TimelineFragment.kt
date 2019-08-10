@@ -161,9 +161,6 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         super.onStop()
         val position = mLayoutManager.findFirstVisibleItemPosition()
         val visibleFirstItem = mAdapter?.getItem(position)
-        if(visibleFirstItem != null){
-            mPresenter?.saveItem(visibleFirstItem)
-        }
 
         mPresenter?.pause()
     }
@@ -211,7 +208,7 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
 
 
     override fun showNewTimeline(list: List<NoteViewData>) {
-        mPresenter?.onRefresh()
+        //mPresenter?.onRefresh()
         activity?.runOnUiThread {
             stopRefreshing()
             mAdapter?.addAllFirst(list)
