@@ -23,7 +23,6 @@ import org.panta.misskeynest.listener.UserClickListener
 import org.panta.misskeynest.presenter.TimelinePresenter
 import org.panta.misskeynest.repository.IItemRepository
 import org.panta.misskeynest.repository.local.PersonalRepository
-import org.panta.misskeynest.repository.local.SerializableRepository
 import org.panta.misskeynest.repository.local.SharedPreferenceOperator
 import org.panta.misskeynest.usecase.interactor.NoteCaptureUseCase
 import org.panta.misskeynest.util.TimelineRepositoryFactory
@@ -117,17 +116,16 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
             searchWord != null -> factory.create(searchWord, isMediaOnly)
             else -> throw IllegalArgumentException("不正な値です")
         }
-        val serializableRepository = SerializableRepository(context!!)
+        //val serializableRepository = SerializableRepository(context!!)
 
         mNoteCaptureUseCase= NoteCaptureUseCase(null, connectionInfo!!)
         mPresenter = TimelinePresenter(this,
             mNoteCaptureUseCase,
             mNoteRepository!!,
             connectionInfo!!,
-            timelineTypeEnum,
-            serializableRepository
+            PersonalRepository(SharedPreferenceOperator(this.context!!))
         )
-        mNoteCaptureUseCase.start()
+        //mNoteCaptureUseCase.start()
 
         return inflater.inflate(R.layout.fragment_timeline, container, false)
     }
@@ -152,7 +150,12 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         super.onStart()
 
         updateContentActionListener()
+
+        //mPresenter?.start()
+        mPresenter?.resume()
     }
+
+
 
     override fun onStop() {
         super.onStop()
@@ -161,6 +164,8 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         if(visibleFirstItem != null){
             mPresenter?.saveItem(visibleFirstItem)
         }
+
+        mPresenter?.pause()
     }
 
 

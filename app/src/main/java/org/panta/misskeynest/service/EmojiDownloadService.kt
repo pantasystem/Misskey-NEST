@@ -75,7 +75,7 @@ class EmojiDownloadService : Service() {
                 meta.emojis.forEach{
                     val fileList = applicationContext.fileList()
                     if(fileList.any{ file -> file.contains(it.name)} ){
-                        Log.d(this.toString(), "既に存在しています: ${it.name}")
+                        //Log.d(this.toString(), "既に存在しています: ${it.name}")
                     }else{
 
                         //val fileName = it.name.split("/").last()
@@ -106,7 +106,7 @@ class EmojiDownloadService : Service() {
                 val fos = applicationContext.openFileOutput("$fileName.png", Context.MODE_PRIVATE)
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
 
-                Log.d(this.toString(), "保存成功 $fileName")
+                //Log.d(this.toString(), "保存成功 $fileName")
 
             }catch(e: Exception){
                 Log.d(this.toString(), "保存中にエラー $url, $fileName", e)

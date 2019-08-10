@@ -18,6 +18,7 @@ class SettingActivity : AppCompatActivity() {
 
         setSimpleEdit()
         setIsNoteClickable()
+        setBackgroundUpdatable()
 
     }
 
@@ -32,6 +33,13 @@ class SettingActivity : AppCompatActivity() {
         is_note_clickable.isChecked = settingRepository.isNoteClickable
         is_note_clickable.setOnCheckedChangeListener { _, isChecked ->
             settingRepository.isNoteClickable = isChecked
+        }
+    }
+
+    private fun setBackgroundUpdatable(){
+        background_updatable.isChecked = settingRepository.isBackgroundUpdatable
+        background_updatable.setOnCheckedChangeListener { _, isChecked ->
+            settingRepository.isBackgroundUpdatable = isChecked
         }
     }
 

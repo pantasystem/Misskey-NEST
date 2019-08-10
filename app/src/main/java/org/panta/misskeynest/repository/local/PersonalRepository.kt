@@ -15,6 +15,7 @@ class PersonalRepository(private val sharedPreferenceOperator: ISharedPreference
         private const val APP_THEME_KEY = "misskey_theme_id"
         private const val APP_SIMPLE_EDIT_VISIBILITY = "misskey_simple_edit_visibility"
         private const val APP_NOTE_CLICK_ABLE = "misskey_note_click_able"
+        private const val APP_BACKGROUND_UPDATABLE = "misskey_timeline_background_updatable"
     }
 
     fun getDomain(): String?{
@@ -93,6 +94,14 @@ class PersonalRepository(private val sharedPreferenceOperator: ISharedPreference
         }
         set(value){
             sharedPreferenceOperator.putBoolean(APP_NOTE_CLICK_ABLE, value)
+        }
+
+    var isBackgroundUpdatable: Boolean
+        get(){
+            return sharedPreferenceOperator.getBoolean(APP_BACKGROUND_UPDATABLE, true)
+        }
+        set(value){
+            sharedPreferenceOperator.putBoolean(APP_BACKGROUND_UPDATABLE, value)
         }
 
 }

@@ -7,6 +7,7 @@ interface INoteCaptureUseCase {
     val mAdapterOperator: IOperationAdapter<NoteViewData>?
 
     fun start()
+    fun pause()
 
     fun add(viewData: NoteViewData)
     fun addAll(list: List<NoteViewData>)

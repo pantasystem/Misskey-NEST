@@ -44,16 +44,27 @@ class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteVi
 
     }
 
+    override fun pause(){
+        val iterator = captureNoteMap.iterator()
+        while(iterator.hasNext()){
+            val item = iterator.next()
+            unCapture(item.value)
+            couldNoteBeSentDataQueue.add(item.value)
+            iterator.remove()
+        }
+        mWebSocket?.close(1001, null)
+    }
+
+    /*override fun resume(){
+        val iterator = couldNoteBeSentDataQueue.iterator()
+        while(iterator.hasNext()){
+            this.add(iterator.next())
+        }
+    }*/
+
     override fun add(viewData: NoteViewData) {
 
-        synchronized(captureNoteMap){
-            val isIncludeNote = captureNoteMap[viewData.id]
-            if( isIncludeNote != null ){
-                couldNoteBeSentDataQueue.add(viewData)
-                return
-            }
-            captureNoteMap[viewData.id] = viewData
-        }
+
 
 
         //登録処理
@@ -61,6 +72,7 @@ class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteVi
 
         if(mWebSocket == null){
             Log.d(TAG, "WebSocket が nullのため送信不能")
+            couldNoteBeSentDataQueue.add(viewData)
         }else{
             val data = StreamingProperty<NoteUpdatedProperty>(type = "subNote",
                 body = BodyProperty(id = viewData.toShowNote.id)
@@ -68,6 +80,14 @@ class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteVi
 
 
             try{
+                synchronized(captureNoteMap){
+                    val isIncludeNote = captureNoteMap[viewData.id]
+                    if( isIncludeNote != null ){
+                        couldNoteBeSentDataQueue.add(viewData)
+                        return
+                    }
+                    captureNoteMap[viewData.id] = viewData
+                }
                 mWebSocket?.send(jacksonObjectMapper().writeValueAsString(data))
             }catch (e: IOException){
                 Log.d(TAG, "送信中にエラーが発生してしまった・・", e)
@@ -126,6 +146,7 @@ class NoteCaptureUseCase(override var mAdapterOperator: IOperationAdapter<NoteVi
 
 
     }
+
 
     override fun isActive(): Boolean {
         return mWebSocket != null

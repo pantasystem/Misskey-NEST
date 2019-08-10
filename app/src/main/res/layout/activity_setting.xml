@@ -10,12 +10,16 @@
         android:padding="10dp"
 >
 
-    <CheckBox
-            android:text="@string/visible_edit"
+    <Switch
+            android:text="簡易入力を表示"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/is_visible_simple_edit"/>
-    <CheckBox
+    <Switch
             android:text="クリック可能なノート"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/is_note_clickable"/>
+    <Switch
+            android:text="バックグラウンド更新"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/background_updatable"/>
 </LinearLayout>

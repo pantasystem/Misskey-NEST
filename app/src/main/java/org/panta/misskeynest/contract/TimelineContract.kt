@@ -25,5 +25,7 @@ interface TimelineContract{
         //fun sendReaction(noteId: String, viewData: NoteViewData, reactionType: String)
         //fun setReactionSelectedState(targetId: String?, note: Note?, viewData: NoteViewData, reactionType: String?)
         fun onRefresh()
+        fun pause()
+        fun resume()
     }
 }
