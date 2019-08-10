@@ -59,10 +59,15 @@ class TimelinePresenter(private val mView: TimelineContract.View,
     }
 
     override fun resume() {
-        if( settingRepository.isBackgroundUpdatable ){
+        /*if( settingRepository.isBackgroundUpdatable ){
             Log.d("TMPresenter", "バックグラウンド更新可")
         }else{
             Log.d("TMPresenter", "バックグラウンド更新不可")
+            mNoteCaptureUseCase.start()
+        }*/
+        if( mNoteCaptureUseCase.isActive() ){
+
+        }else{
             mNoteCaptureUseCase.start()
         }
     }
