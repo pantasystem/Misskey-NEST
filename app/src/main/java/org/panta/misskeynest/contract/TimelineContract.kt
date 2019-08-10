@@ -27,5 +27,6 @@ interface TimelineContract{
         fun onRefresh()
         fun pause()
         fun resume()
+        fun destroy()
     }
 }

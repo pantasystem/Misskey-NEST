@@ -168,6 +168,12 @@ class TimelineFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, Timeli
         mPresenter?.pause()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        mPresenter?.destroy()
+    }
+
 
     override fun onRefresh() {
         mPresenter?.getNewTimeline()

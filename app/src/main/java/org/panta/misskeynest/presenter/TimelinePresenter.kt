@@ -72,6 +72,11 @@ class TimelinePresenter(private val mView: TimelineContract.View,
         }
     }
 
+    override fun destroy() {
+        Log.d("TMPresenter", "destroyが呼び出された")
+        mNoteCaptureUseCase.clear()
+    }
+
     override fun getNewTimeline() {
         pagingController.getNewItems {
             mView.showNewTimeline(it)
