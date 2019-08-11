@@ -363,6 +363,9 @@ class MainActivity : AbsBaseActivity(), NavigationView.OnNavigationItemSelectedL
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }
+            R.id.nav_drive ->{
+                startActivity(Intent(this, DriveActivity::class.java))
+            }
             R.id.nav_setting -> {
                 startActivity(Intent(this, SettingActivity::class.java))
             }

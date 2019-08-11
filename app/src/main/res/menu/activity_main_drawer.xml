@@ -26,13 +26,22 @@
                 android:id="@+id/nav_open_web_misskey"
                 android:icon="@drawable/ic_global"
                 android:title="Webで開く"/>
+
         <item
-                android:id="@+id/nav_ui_mode"
-                android:title="ナイトモード"/>
+                android:id="@+id/nav_drive"
+                android:title="ドライブ"
+                android:icon="@drawable/ic_cloud_storage"
+        />
+
         <item
                 android:id="@+id/nav_setting"
                 android:title="設定"
         />
+
+        <item
+                android:id="@+id/nav_ui_mode"
+                android:title="ナイトモード"/>
+
 
 
     </group>
