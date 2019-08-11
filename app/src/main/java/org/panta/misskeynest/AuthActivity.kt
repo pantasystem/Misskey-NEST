@@ -57,9 +57,9 @@ class AuthActivity : AppCompatActivity(), AuthContract.View {
 
             val c = this
             adapter.clickListener = object : ItemClickListener<DomainAndAppSecret> {
-                override fun onClick(e: DomainAndAppSecret) {
+                override fun onClick(item: DomainAndAppSecret) {
                     mPresenter =
-                        AuthPresenter(c, sharedPref, e.domain, e.appSecret)
+                        AuthPresenter(c, sharedPref, item.domain, item.appSecret)
                 }
             }
         }

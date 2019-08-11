@@ -50,14 +50,14 @@ class ReactionDialog : DialogFragment(){
 
 
         val listener = object : ItemClickListener<String> {
-            override fun onClick(e: String) {
+            override fun onClick(item: String) {
                 val iconId = ReactionConstData.getAllConstReactionList().firstOrNull {
-                    it == e
+                    it == item
                 }
                 val reaction = if( iconId != null ){
-                    e
+                    item
                 }else{
-                    ":$e:"
+                    ":$item:"
                 }
                 Log.d("ReactionDialog", "選択したりアクションは $reaction")
                 mCallBackListener?.callBack(targetNoteId, reaction)

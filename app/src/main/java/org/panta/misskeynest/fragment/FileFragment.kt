@@ -6,16 +6,19 @@ import android.os.Looper
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_file.*
+import org.panta.misskeynest.DriveActivity
 import org.panta.misskeynest.R
 import org.panta.misskeynest.adapter.DriveAdapter
 import org.panta.misskeynest.entity.FileProperty
 import org.panta.misskeynest.entity.FolderProperty
 import org.panta.misskeynest.filter.FileFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
+import org.panta.misskeynest.interfaces.ResetFragment
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.repository.local.SharedPreferenceOperator
 import org.panta.misskeynest.repository.remote.FilePagingRepository
@@ -23,10 +26,21 @@ import org.panta.misskeynest.repository.remote.FileRepository
 import org.panta.misskeynest.usecase.interactor.PagingController
 import org.panta.misskeynest.viewdata.DriveViewData
 
-class FileFragment : Fragment(){
+class FileFragment : Fragment(), ResetFragment{
 
     companion object{
         const val EXTRA_FOLDER_PROPERTY = "org.panta.misskey.fragment.extra.folder.property"
+
+        fun newInstance(property: DriveViewData.FolderViewData? = null): FileFragment{
+            val fragment = FileFragment()
+
+            fragment.arguments = Bundle().apply{
+                if(property != null){
+                    putSerializable(EXTRA_FOLDER_PROPERTY, property)
+                }
+            }
+            return fragment
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,12 +66,24 @@ class FileFragment : Fragment(){
 
         initLoad()
         list_view.addOnScrollListener(mScrollListener)
+
+        Log.d("FileFragment", "${activity?.toString()}")
+    }
+
+    override fun reset(viewData: DriveViewData.FolderViewData?){
+        val connectionProperty = PersonalRepository(SharedPreferenceOperator(this.context!!))
+            .getConnectionInfo()
+
+        val repository = FileRepository(connectionProperty!!)
+        mPagingController = PagingController<FileProperty, DriveViewData.FileViewData>(FilePagingRepository(repository, viewData?.id), mPagingErrorListener, FileFilter())
+        initLoad()
     }
 
     private fun initLoad(){
         mPagingController.init {
             Handler(Looper.getMainLooper()).post{
                 mAdapter = DriveAdapter(it)
+                mAdapter.itemClickListener = activity as DriveActivity
                 list_view.adapter = mAdapter
                 refresh.isRefreshing = false
             }

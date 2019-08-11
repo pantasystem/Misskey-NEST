@@ -77,8 +77,8 @@ class MessageSelectionFragment : Fragment(){
         }
     }
     private val itemClickListener = object : ItemClickListener<MessageViewData>{
-        override fun onClick(e: MessageViewData) {
-            val intent = MessageActivity.getIntent(context!!, e)
+        override fun onClick(item: MessageViewData) {
+            val intent = MessageActivity.getIntent(context!!, item)
             startActivity(intent)
         }
     }

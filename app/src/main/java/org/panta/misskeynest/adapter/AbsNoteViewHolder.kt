@@ -205,9 +205,9 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
             viewData.toShowNote.myReaction
         )
         adapter.reactionItemClickListener = object : ItemClickListener<String> {
-            override fun onClick(e: String) {
+            override fun onClick(item: String) {
                 Log.d("NoteViewHolder", "setReactionCountがクリックされた")
-                contentClickListener?.onReactionClicked(viewData.toShowNote.id, viewData.toShowNote, viewData, e)
+                contentClickListener?.onReactionClicked(viewData.toShowNote.id, viewData.toShowNote, viewData, item)
             }
         }
         reactionView.adapter = adapter

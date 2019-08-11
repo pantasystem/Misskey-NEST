@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.panta.misskeynest.R
 import org.panta.misskeynest.interfaces.IOperationAdapter
+import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.viewdata.DriveViewData
 
 class DriveAdapter(list: List<DriveViewData>) : RecyclerView.Adapter<AbsViewHolder<DriveViewData>>(), IOperationAdapter<DriveViewData>{
@@ -14,6 +15,7 @@ class DriveAdapter(list: List<DriveViewData>) : RecyclerView.Adapter<AbsViewHold
         private const val FILE = 1
     }
     private val mArrayList = ArrayList<DriveViewData>()
+    var itemClickListener: ItemClickListener<DriveViewData>? = null
     init{
         mArrayList.addAll(list)
     }
@@ -37,14 +39,21 @@ class DriveAdapter(list: List<DriveViewData>) : RecyclerView.Adapter<AbsViewHold
             FILE -> {
                 val inflater = LayoutInflater.from(p0.context).inflate(R.layout.item_drive_file, p0, false)
                 FileViewHolder(inflater)
+
             }
             else -> throw IllegalArgumentException("あり得ない値です")
         }
+
     }
 
     override fun onBindViewHolder(p0: AbsViewHolder<DriveViewData>, p1: Int) {
+        //p0.itemView
+        p0.itemView.setOnClickListener {
+            itemClickListener?.onClick(mArrayList[p1])
+        }
         val item = mArrayList[p1]
         p0.onBind(item)
+
     }
 
     override fun addAllFirst(list: List<DriveViewData>) {

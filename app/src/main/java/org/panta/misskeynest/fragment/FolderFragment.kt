@@ -10,11 +10,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_file.*
+import org.panta.misskeynest.DriveActivity
 import org.panta.misskeynest.R
 import org.panta.misskeynest.adapter.DriveAdapter
 import org.panta.misskeynest.entity.FolderProperty
 import org.panta.misskeynest.filter.FolderFilter
 import org.panta.misskeynest.interfaces.ErrorCallBackListener
+import org.panta.misskeynest.interfaces.ResetFragment
 import org.panta.misskeynest.repository.local.PersonalRepository
 import org.panta.misskeynest.repository.local.SharedPreferenceOperator
 import org.panta.misskeynest.repository.remote.FolderPagingRepository
@@ -22,10 +24,21 @@ import org.panta.misskeynest.repository.remote.FolderRepository
 import org.panta.misskeynest.usecase.interactor.PagingController
 import org.panta.misskeynest.viewdata.DriveViewData
 
-class FolderFragment : Fragment(){
+class FolderFragment : Fragment(), ResetFragment{
 
     companion object{
         const val EXTRA_FOLDER_PROPERTY = "org.panta.misskeynest.fragment.FolderFragment.extra_folder_property"
+
+        fun newInstance(property: DriveViewData.FolderViewData? = null): FolderFragment{
+            val fragment = FolderFragment()
+
+            fragment.arguments = Bundle().apply{
+                if(property != null){
+                    putSerializable(FileFragment.EXTRA_FOLDER_PROPERTY, property)
+                }
+            }
+            return fragment
+        }
     }
 
     private lateinit var mPagingController: PagingController<FolderProperty, DriveViewData.FolderViewData>
@@ -57,11 +70,21 @@ class FolderFragment : Fragment(){
 
     }
 
+    override fun reset(viewData: DriveViewData.FolderViewData?){
+        val connectionProperty = PersonalRepository(SharedPreferenceOperator(this.context!!))
+            .getConnectionInfo()
+
+        val repository = FolderRepository(connectionProperty!!)
+        mPagingController = PagingController<FolderProperty, DriveViewData.FolderViewData>(FolderPagingRepository(repository, viewData?.id), mPagingErrorListener, FolderFilter())
+        initLoad()
+    }
+
     private fun initLoad(){
         mPagingController.init {
             Handler(Looper.getMainLooper()).post{
                 mAdapter = DriveAdapter(it)
                 list_view.adapter = mAdapter
+                mAdapter.itemClickListener = activity as DriveActivity
                 refresh.isRefreshing = false
             }
         }
