@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_drive.*
 import org.panta.misskeynest.R
 import org.panta.misskeynest.adapter.DriveIndexAdapter
+import org.panta.misskeynest.entity.FolderProperty
 import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.pager.DrivePagerAdapter
 import org.panta.misskeynest.viewdata.DriveViewData
@@ -74,7 +75,9 @@ class DriveFragment : Fragment(){
     }
 
     private fun setIndexListView(queue: Queue<DriveViewData.FolderViewData>){
-        val list = queue.toList()
+        val list = queue.toMutableList()
+        val rootData = DriveViewData.FolderViewData("", false, FolderProperty("", Date(), "root", 0, 0, null, null))
+        list.add(0, rootData)
         val adapter = DriveIndexAdapter(list)
         adapter.itemClickListener = mDriveIndexListItemClickListener
         val lm = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
@@ -94,6 +97,8 @@ class DriveFragment : Fragment(){
                         break
                     }
                 }catch(e: Exception){
+                    pagerAdapter?.refresh(null)
+                    setIndexListView(currentHistoryQueue)
                     break
                 }
             }
