@@ -2,12 +2,15 @@ package org.panta.misskeynest.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_drive.*
 import org.panta.misskeynest.R
+import org.panta.misskeynest.adapter.DriveIndexAdapter
+import org.panta.misskeynest.interfaces.ItemClickListener
 import org.panta.misskeynest.pager.DrivePagerAdapter
 import org.panta.misskeynest.viewdata.DriveViewData
 import java.util.*
@@ -49,11 +52,13 @@ class DriveFragment : Fragment(){
     fun reset(viewData: DriveViewData.FolderViewData){
         pagerAdapter?.refresh(viewData.id)
         currentHistoryQueue.add(viewData)
+        setIndexListView(currentHistoryQueue)
     }
 
     fun goBack(): Boolean{
         return try{
             val item = currentHistoryQueue.removeLast()
+            setIndexListView(currentHistoryQueue)
             Log.d("DriveFragment", "取り出されたデータ $item")
             if(item == null){
                 false
@@ -66,7 +71,33 @@ class DriveFragment : Fragment(){
             false
         }
 
+    }
 
+    private fun setIndexListView(queue: Queue<DriveViewData.FolderViewData>){
+        val list = queue.toList()
+        val adapter = DriveIndexAdapter(list)
+        adapter.itemClickListener = mDriveIndexListItemClickListener
+        val lm = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+        drive_index_list_view.layoutManager = lm
+        drive_index_list_view.adapter = adapter
+    }
+
+    private val mDriveIndexListItemClickListener = object : ItemClickListener<DriveViewData.FolderViewData>{
+        override fun onClick(item: DriveViewData.FolderViewData) {
+            while(true){
+                try{
+                    val listItem = currentHistoryQueue.removeLast()
+                    if(listItem.id == item.id){
+                        //pagerAdapter?.refresh(listItem.id)
+                        reset(listItem)
+                        setIndexListView(currentHistoryQueue)
+                        break
+                    }
+                }catch(e: Exception){
+                    break
+                }
+            }
+        }
     }
 
     override fun toString(): String{
