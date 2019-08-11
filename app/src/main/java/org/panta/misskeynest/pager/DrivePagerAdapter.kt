@@ -45,9 +45,9 @@ class DrivePagerAdapter(fm: FragmentManager, private val folderProperty: DriveVi
         //return fragment
     }
 
-    fun refresh(property: DriveViewData.FolderViewData){
+    fun refresh(id: String?){
         mFragmentMap.forEach{
-            it.value.reset(property)
+            it.value.reset(id)
         }
     }
 }

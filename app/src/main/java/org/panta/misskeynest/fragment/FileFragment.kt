@@ -70,12 +70,12 @@ class FileFragment : Fragment(), ResetFragment{
         Log.d("FileFragment", "${activity?.toString()}")
     }
 
-    override fun reset(viewData: DriveViewData.FolderViewData?){
+    override fun reset(id: String?){
         val connectionProperty = PersonalRepository(SharedPreferenceOperator(this.context!!))
             .getConnectionInfo()
 
         val repository = FileRepository(connectionProperty!!)
-        mPagingController = PagingController<FileProperty, DriveViewData.FileViewData>(FilePagingRepository(repository, viewData?.id), mPagingErrorListener, FileFilter())
+        mPagingController = PagingController<FileProperty, DriveViewData.FileViewData>(FilePagingRepository(repository, id), mPagingErrorListener, FileFilter())
         initLoad()
     }
 

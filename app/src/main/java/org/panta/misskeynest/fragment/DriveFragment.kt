@@ -47,7 +47,7 @@ class DriveFragment : Fragment(){
     }
 
     fun reset(viewData: DriveViewData.FolderViewData){
-        pagerAdapter?.refresh(viewData)
+        pagerAdapter?.refresh(viewData.id)
         currentHistoryQueue.add(viewData)
     }
 
@@ -58,7 +58,7 @@ class DriveFragment : Fragment(){
             if(item == null){
                 false
             }else{
-                pagerAdapter?.refresh(item)
+                pagerAdapter?.refresh(item.folder.parentId)
                 true
             }
         }catch(e: NoSuchElementException){
