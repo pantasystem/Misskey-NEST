@@ -20,12 +20,13 @@ class FileViewHolder(itemView: View) : AbsViewHolder<DriveViewData>(itemView){
         if( item is DriveViewData.FileViewData){
             val property = item.fileProperty
 
-            if(property.thumbnalUrl == null){
+            /*if(property.thumbnailUrl == null){
                 //thumbnailIcon.visibility = View.INVISIBLE
                 InjectionImage().injectionImage(property.url?: "", thumbnailIcon, property.isSensitive)
             }else{
-                InjectionImage().injectionImage(property.thumbnalUrl, thumbnailIcon, property.isSensitive)
-            }
+                InjectionImage().injectionImage(property.thumbnailUrl, thumbnailIcon, property.isSensitive)
+            }*/
+            InjectionImage().injectionImage(thumbnailIcon, property)
 
             fileName.text = property.name
             fileMeta.text = property.type

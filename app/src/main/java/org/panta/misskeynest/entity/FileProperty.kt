@@ -21,6 +21,6 @@ import java.util.*
     @JsonProperty("isSensitive") val isSensitive: Boolean? = null,
     @JsonProperty("url") val url: String? = null,
     @JsonProperty("webpublicUrl") val webPublicUrl: String? = null,
-    @JsonProperty("thumbnalUrl") val thumbnalUrl: String? = null,
+    @JsonProperty("thumbnailUrl") val thumbnailUrl: String? = null,
     @JsonProperty("attachedNoteIds") val attachedNoteIds: List<String?>? = null
 ):Serializable

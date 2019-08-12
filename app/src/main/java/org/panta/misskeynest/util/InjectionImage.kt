@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import org.panta.misskeynest.R
+import org.panta.misskeynest.entity.FileProperty
 import java.io.File
 
 class InjectionImage{
@@ -50,6 +51,18 @@ class InjectionImage{
                 .centerCrop()
                 .fit()
                 .into(imageView)
+        }
+    }
+
+    fun injectionImage(imageView: ImageView, fileProperty: FileProperty){
+        val thumbnailUrl = fileProperty.thumbnailUrl
+        val url = fileProperty.url
+        val isSensitive = fileProperty.isSensitive
+        //imageView.visibility = View.VISIBLE
+        if( thumbnailUrl != null ){
+            injectionImage(thumbnailUrl, imageView, isSensitive)
+        }else if( url != null ){
+            injectionImage(url, imageView, isSensitive)
         }
     }
 

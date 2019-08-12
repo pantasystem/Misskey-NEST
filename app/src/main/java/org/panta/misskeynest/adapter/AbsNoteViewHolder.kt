@@ -238,7 +238,8 @@ abstract class AbsNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 
 
         for(n in 0.until(fileList.size)){
-            injectionImage.injectionImage(fileList[n].url!!, imageViewList[n], fileList[n].isSensitive)
+            //injectionImage.injectionImage(fileList[n].url!!, imageViewList[n], fileList[n].isSensitive)
+            InjectionImage().injectionImage(imageViewList[n], fileList[n])
         }
 
     }
