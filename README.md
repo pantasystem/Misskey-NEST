@@ -1,4 +1,7 @@
 # Misskey Nest
+このプロジェクトは https://github.com/Kinoshita0623/MisskeyAndroidClient のプロトタイプです。
+現在メンテナンスされていません。
+
 MisskeyのためのAndroidクライアント（作りかけ）
 ## Description
 これはMisskeyのためのAndroidクライアントです。これは公式のような名前をしていますが非公式クライアントです。
